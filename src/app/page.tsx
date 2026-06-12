@@ -1,65 +1,106 @@
-import Image from "next/image";
+'use client';
+
+import React from 'react';
+import { KnowledgeGraphView } from '@/features/knowledge-graph/components/KnowledgeGraphView';
+import { AnatomyCanvas } from '@/features/anatomy-viewer/components/AnatomyCanvas';
+import { GraphData } from '@/types/graph';
+import { useAppStore } from '@/store/useAppStore';
+
+// Mock data based on the Neo4j System Architecture Schema
+const mockHandGraph: GraphData = {
+  nodes: [
+    {
+      id: "NERV-01",
+      name: "Median Nerve",
+      system: "NERVOUS",
+      color: "#fbbf24", // Yellow
+      val: 8,
+      visualBinding: {
+        meshId: "mesh_median_nerve_01",
+        glbObject: "median_nerve_main_geo",
+        materialId: "mat_nerves_yellow",
+        layerDepth: 7
+      }
+    },
+    {
+      id: "MUSC-01",
+      name: "Abductor Pollicis Brevis",
+      system: "MUSCULAR",
+      color: "#ef4444", // Red
+      val: 4,
+      visualBinding: {
+        meshId: "mesh_apb_01",
+        glbObject: "apb_geo",
+        materialId: "mat_muscle_red",
+        layerDepth: 4
+      }
+    },
+    {
+      id: "CLIN-01",
+      name: "Carpal Tunnel Syndrome",
+      system: "CONNECTIVE", // Treat clinical nodes differently later
+      color: "#a855f7", // Purple
+      val: 6,
+      visualBinding: {
+        meshId: "", // Clinical conditions don't have direct 3D meshes
+        glbObject: "",
+        materialId: "",
+        layerDepth: 0
+      }
+    }
+  ],
+  links: [
+    {
+      source: "NERV-01",
+      target: "MUSC-01",
+      type: "INNERVATES",
+      color: "#9ca3af" // Gray edge
+    },
+    {
+      source: "CLIN-01",
+      target: "NERV-01",
+      type: "AFFECTS",
+      color: "#f87171" // Red warning edge
+    }
+  ]
+};
 
 export default function Home() {
+  const { selectedGraphNodeId, selectedMeshId } = useAppStore();
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="flex h-screen w-screen bg-[#0f0f11] text-white overflow-hidden">
+      
+      {/* LEFT PANEL: 3D Scene (React Three Fiber) */}
+      <div className="flex-1 border-r border-gray-800 relative">
+        <div className="absolute top-4 left-4 z-10 pointer-events-none">
+          <h1 className="text-xl font-bold tracking-tight">Interactive Anatomy</h1>
+          <p className="text-sm text-gray-400">WebGL Production Engine</p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        
+        <AnatomyCanvas />
+
+        {/* Diagnostic Event Bus View (Positioned at bottom) */}
+        <div className="absolute bottom-4 left-4 z-10 pointer-events-none">
+          <div className="bg-gray-900/80 backdrop-blur-md p-4 rounded border border-gray-800 text-sm font-mono text-gray-300">
+            <h3 className="text-gray-500 mb-2">Zustand Event Bus Sync:</h3>
+            <p>Selected Mesh ID: <span className="text-blue-400">{selectedMeshId || 'none'}</span></p>
+            <p>Selected Graph ID: <span className="text-blue-400">{selectedGraphNodeId || 'none'}</span></p>
+          </div>
         </div>
-      </main>
-    </div>
+      </div>
+
+      {/* RIGHT PANEL: Obsidian Knowledge Graph */}
+      <div className="flex-1 relative border-l border-gray-800">
+        <div className="absolute top-4 left-4 z-10 pointer-events-none">
+          <h2 className="text-xl font-bold tracking-tight bg-gray-900/80 px-2 py-1 rounded">Medical Knowledge Graph</h2>
+          <p className="text-sm text-gray-400 px-2">Neo4j Hybrid Resolver</p>
+        </div>
+        
+        {/* The Graph Component */}
+        <KnowledgeGraphView data={mockHandGraph} engine="force-graph" />
+      </div>
+
+    </main>
   );
 }

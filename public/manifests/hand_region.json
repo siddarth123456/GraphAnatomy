@@ -1,0 +1,32 @@
+{
+  "regionId": "REGION_HAND",
+  "name": "Hand and Wrist",
+  "meshes": [
+    {
+      "meshId": "mesh_median_nerve_01",
+      "graphNodeId": "NERV-01",
+      "name": "Median Nerve",
+      "category": "Nerve",
+      "system": "Nervous",
+      "glbPath": "/models/hand/median_nerve.glb",
+      "materialId": "mat_nerves_yellow",
+      "layer": 6,
+      "boundingBox": [-0.5, -0.5, -2.5, 0.5, 0.5, 2.5],
+      "searchableTerms": ["median", "nerve", "carpal tunnel"],
+      "clinicalTags": ["carpal_tunnel_syndrome", "neuropathy"]
+    },
+    {
+      "meshId": "mesh_apb_01",
+      "graphNodeId": "MUSC-01",
+      "name": "Abductor Pollicis Brevis",
+      "category": "Muscle",
+      "system": "Muscular",
+      "glbPath": "/models/hand/apb.glb",
+      "materialId": "mat_muscle_red",
+      "layer": 3,
+      "boundingBox": [1.0, -1.5, -1.5, 3.0, -0.5, 1.5],
+      "searchableTerms": ["abductor", "pollicis", "brevis", "thumb", "muscle"],
+      "clinicalTags": ["thenar_atrophy"]
+    }
+  ]
+}
