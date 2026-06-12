@@ -1,0 +1,8 @@
+{
+  "regions": [
+    "Hand"
+  ],
+  "manifests": {
+    "Hand": "/manifests/hand_region.json"
+  }
+}

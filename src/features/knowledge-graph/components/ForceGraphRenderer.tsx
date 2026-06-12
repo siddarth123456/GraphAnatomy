@@ -11,7 +11,7 @@ export default function ForceGraphRenderer({
   highlightedNodes,
   highlightedLinks,
 }: IGraphRendererProps) {
-  const fgRef = useRef<any>();
+  const fgRef = useRef<any>(null);
 
   // Center camera on the graph when data loads
   useEffect(() => {
@@ -19,7 +19,8 @@ export default function ForceGraphRenderer({
       fgRef.current.d3Force('charge').strength(-120);
       fgRef.current.zoomToFit(400, 100);
     }
-  }, [data]);
+    // Deep equality or primitive dependency to prevent infinite loops from object recreation
+  }, [data.nodes.length]);
 
   const handleNodeClick = useCallback((node: any) => {
     // Fly to the node

@@ -1,14 +1,14 @@
 export enum AnatomyLayer {
-  Skin = 0,
-  Fat = 1,
-  Fascia = 2,
-  Muscle = 3,
-  Tendon = 4,
-  Ligament = 5,
-  Nerve = 6,
-  Artery = 7,
-  Vein = 8,
-  Bone = 9
+  Skin = "Skin",
+  Fat = "Fat",
+  Fascia = "Fascia",
+  Muscle = "Muscle",
+  Tendon = "Tendon",
+  Ligament = "Ligament",
+  Nerve = "Nerve",
+  Artery = "Artery",
+  Vein = "Vein",
+  Bone = "Bone"
 }
 
 export enum HighlightState {
@@ -23,18 +23,32 @@ export enum HighlightState {
 export interface AnatomySceneNode {
   meshId: string;
   graphNodeId: string;
+  fmaId?: string;
+  snomedId?: string | null;
   name: string;
   category: string;
   system: string;
-  glbPath: string;
+  lod: {
+    high: string;
+    medium: string;
+    low: string;
+  };
+  explosionDirection: [number, number, number];
   materialId: string;
   layer: AnatomyLayer;
   boundingBox: [number, number, number, number, number, number]; // minX, minY, minZ, maxX, maxY, maxZ
+  position?: [number, number, number]; // World-space origin for centered meshes
+  rotation?: [number, number, number]; // Euler rotation if needed
   searchableTerms: string[];
   clinicalTags: string[];
 }
 
 export interface RegionManifest {
+  version: string;
+  dataset: string;
+  datasetVersion: string;
+  pipelineVersion: string;
+  generatedAt: string;
   regionId: string;
   name: string;
   meshes: AnatomySceneNode[];

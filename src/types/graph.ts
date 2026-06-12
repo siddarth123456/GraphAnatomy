@@ -5,6 +5,7 @@ export type AnatomicalSystem =
   | "MUSCULAR" 
   | "NERVOUS" 
   | "VASCULAR" 
+  | "CARDIOVASCULAR"
   | "TENDON" 
   | "LIGAMENT" 
   | "INTEGUMENTARY" 
@@ -21,9 +22,9 @@ export type BodyRegion =
 
 export interface VisualBinding {
   meshId: string;
-  glbObject: string;
-  materialId: string;
-  layerDepth: number;
+  glbObject?: string;
+  materialId?: string;
+  layerDepth?: number;
   boundingBoxCenter?: [number, number, number];
 }
 

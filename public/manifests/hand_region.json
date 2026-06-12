@@ -1,32 +1,433 @@
 {
-  "regionId": "REGION_HAND",
-  "name": "Hand and Wrist",
+  "region": "Hand",
+  "version": "2.0",
   "meshes": [
     {
-      "meshId": "mesh_median_nerve_01",
-      "graphNodeId": "NERV-01",
-      "name": "Median Nerve",
-      "category": "Nerve",
-      "system": "Nervous",
-      "glbPath": "/models/hand/median_nerve.glb",
-      "materialId": "mat_nerves_yellow",
-      "layer": 6,
-      "boundingBox": [-0.5, -0.5, -2.5, 0.5, 0.5, 2.5],
-      "searchableTerms": ["median", "nerve", "carpal tunnel"],
-      "clinicalTags": ["carpal_tunnel_syndrome", "neuropathy"]
+      "meshId": "mesh_scaphoid_01",
+      "graphNodeId": "BONE_SCAPHOID",
+      "fmaId": "FMA23709",
+      "name": "Scaphoid",
+      "category": "Bone",
+      "system": "Skeletal",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "boundingBox": [
+        -0.1801,
+        -0.0423,
+        -0.1014,
+        0.0571,
+        0.1086,
+        0.053
+      ],
+      "position": [
+        -0.0615,
+        0.0332,
+        -0.0242
+      ],
+      "layer": "Bone",
+      "materialId": "mat_bone",
+      "lod": {
+        "high": "/models/mesh_scaphoid_01.glb",
+        "medium": "/models/mesh_scaphoid_01_med.glb",
+        "low": "/models/mesh_scaphoid_01_low.glb"
+      },
+      "explosionDirection": [
+        0,
+        0,
+        0
+      ],
+      "searchableTerms": [
+        "SCAPHOID",
+        "FMA23709"
+      ],
+      "clinicalTags": [],
+      "confidenceScore": 0.99,
+      "ontologyValidated": true
     },
     {
-      "meshId": "mesh_apb_01",
-      "graphNodeId": "MUSC-01",
+      "meshId": "mesh_radial_artery_01",
+      "graphNodeId": "ARTERY_RADIAL_ARTERY",
+      "fmaId": "FMA22730",
+      "name": "Radial Artery",
+      "category": "Artery",
+      "system": "Cardiovascular",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "boundingBox": [
+        -0.2447,
+        -0.0469,
+        -0.1531,
+        0.4143,
+        0.3928,
+        2.1796
+      ],
+      "position": [
+        0.0848,
+        0.173,
+        1.0132
+      ],
+      "layer": "Artery",
+      "materialId": "mat_artery",
+      "lod": {
+        "high": "/models/mesh_radial_artery_01.glb",
+        "medium": "/models/mesh_radial_artery_01_med.glb",
+        "low": "/models/mesh_radial_artery_01_low.glb"
+      },
+      "explosionDirection": [
+        0,
+        0,
+        0
+      ],
+      "searchableTerms": [
+        "RADIAL ARTERY",
+        "FMA22730"
+      ],
+      "clinicalTags": [],
+      "confidenceScore": 0.99,
+      "ontologyValidated": true
+    },
+    {
+      "meshId": "mesh_abductor_pollicis_brevis_01",
+      "graphNodeId": "MUSCLE_ABDUCTOR_POLLICIS_BREVIS",
+      "fmaId": "FMA37373",
       "name": "Abductor Pollicis Brevis",
       "category": "Muscle",
       "system": "Muscular",
-      "glbPath": "/models/hand/apb.glb",
-      "materialId": "mat_muscle_red",
-      "layer": 3,
-      "boundingBox": [1.0, -1.5, -1.5, 3.0, -0.5, 1.5],
-      "searchableTerms": ["abductor", "pollicis", "brevis", "thumb", "muscle"],
-      "clinicalTags": ["thenar_atrophy"]
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "boundingBox": [
+        -0.4749,
+        -0.3031,
+        -0.3658,
+        -0.0831,
+        -0.0059,
+        0.0159
+      ],
+      "position": [
+        -0.279,
+        -0.1545,
+        -0.1749
+      ],
+      "layer": "Muscle",
+      "materialId": "mat_muscle",
+      "lod": {
+        "high": "/models/mesh_abductor_pollicis_brevis_01.glb",
+        "medium": "/models/mesh_abductor_pollicis_brevis_01_med.glb",
+        "low": "/models/mesh_abductor_pollicis_brevis_01_low.glb"
+      },
+      "explosionDirection": [
+        0,
+        0,
+        0
+      ],
+      "searchableTerms": [
+        "ABDUCTOR POLLICIS BREVIS",
+        "FMA37373"
+      ],
+      "clinicalTags": [],
+      "confidenceScore": 0.99,
+      "ontologyValidated": true
+    },
+    {
+      "meshId": "mesh_lunate_01",
+      "graphNodeId": "BONE_LUNATE",
+      "fmaId": "FMA23712",
+      "name": "Lunate",
+      "category": "Bone",
+      "system": "Skeletal",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "boundingBox": [
+        0.0232,
+        -0.0449,
+        -0.0903,
+        0.1884,
+        0.118,
+        0.0333
+      ],
+      "position": [
+        0.1058,
+        0.0366,
+        -0.0285
+      ],
+      "layer": "Bone",
+      "materialId": "mat_bone",
+      "lod": {
+        "high": "/models/mesh_lunate_01.glb",
+        "medium": "/models/mesh_lunate_01_med.glb",
+        "low": "/models/mesh_lunate_01_low.glb"
+      },
+      "explosionDirection": [
+        0,
+        0,
+        0
+      ],
+      "searchableTerms": [
+        "LUNATE",
+        "FMA23712"
+      ],
+      "clinicalTags": [],
+      "confidenceScore": 0.99,
+      "ontologyValidated": true
+    },
+    {
+      "meshId": "mesh_triquetral_01",
+      "graphNodeId": "BONE_TRIQUETRAL",
+      "fmaId": "FMA23715",
+      "name": "Triquetral",
+      "category": "Bone",
+      "system": "Skeletal",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "boundingBox": [
+        0.1228,
+        -0.073,
+        -0.1772,
+        0.2289,
+        0.078,
+        -0.039
+      ],
+      "position": [
+        0.1758,
+        0.0025,
+        -0.1081
+      ],
+      "layer": "Bone",
+      "materialId": "mat_bone",
+      "lod": {
+        "high": "/models/mesh_triquetral_01.glb",
+        "medium": "/models/mesh_triquetral_01_med.glb",
+        "low": "/models/mesh_triquetral_01_low.glb"
+      },
+      "explosionDirection": [
+        0,
+        0,
+        0
+      ],
+      "searchableTerms": [
+        "TRIQUETRAL",
+        "FMA23715"
+      ],
+      "clinicalTags": [],
+      "confidenceScore": 0.99,
+      "ontologyValidated": true
+    },
+    {
+      "meshId": "mesh_pisiform_01",
+      "graphNodeId": "BONE_PISIFORM",
+      "fmaId": "FMA23718",
+      "name": "Pisiform",
+      "category": "Bone",
+      "system": "Skeletal",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "boundingBox": [
+        0.1483,
+        -0.1522,
+        -0.1682,
+        0.2309,
+        -0.0481,
+        -0.0517
+      ],
+      "position": [
+        0.1896,
+        -0.1002,
+        -0.1099
+      ],
+      "layer": "Bone",
+      "materialId": "mat_bone",
+      "lod": {
+        "high": "/models/mesh_pisiform_01.glb",
+        "medium": "/models/mesh_pisiform_01_med.glb",
+        "low": "/models/mesh_pisiform_01_low.glb"
+      },
+      "explosionDirection": [
+        0,
+        0,
+        0
+      ],
+      "searchableTerms": [
+        "PISIFORM",
+        "FMA23718"
+      ],
+      "clinicalTags": [],
+      "confidenceScore": 0.99,
+      "ontologyValidated": true
+    },
+    {
+      "meshId": "mesh_trapezium_01",
+      "graphNodeId": "BONE_TRAPEZIUM",
+      "fmaId": "FMA23721",
+      "name": "Trapezium",
+      "category": "Bone",
+      "system": "Skeletal",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "boundingBox": [
+        -0.2668,
+        -0.1214,
+        -0.2069,
+        -0.0989,
+        0.047,
+        -0.0076
+      ],
+      "position": [
+        -0.1828,
+        -0.0372,
+        -0.1072
+      ],
+      "layer": "Bone",
+      "materialId": "mat_bone",
+      "lod": {
+        "high": "/models/mesh_trapezium_01.glb",
+        "medium": "/models/mesh_trapezium_01_med.glb",
+        "low": "/models/mesh_trapezium_01_low.glb"
+      },
+      "explosionDirection": [
+        0,
+        0,
+        0
+      ],
+      "searchableTerms": [
+        "TRAPEZIUM",
+        "FMA23721"
+      ],
+      "clinicalTags": [],
+      "confidenceScore": 0.99,
+      "ontologyValidated": true
+    },
+    {
+      "meshId": "mesh_trapezoid_01",
+      "graphNodeId": "BONE_TRAPEZOID",
+      "fmaId": "FMA23724",
+      "name": "Trapezoid",
+      "category": "Bone",
+      "system": "Skeletal",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "boundingBox": [
+        -0.1822,
+        -0.0595,
+        -0.2363,
+        -0.0709,
+        0.0891,
+        -0.1118
+      ],
+      "position": [
+        -0.1266,
+        0.0148,
+        -0.1741
+      ],
+      "layer": "Bone",
+      "materialId": "mat_bone",
+      "lod": {
+        "high": "/models/mesh_trapezoid_01.glb",
+        "medium": "/models/mesh_trapezoid_01_med.glb",
+        "low": "/models/mesh_trapezoid_01_low.glb"
+      },
+      "explosionDirection": [
+        0,
+        0,
+        0
+      ],
+      "searchableTerms": [
+        "TRAPEZOID",
+        "FMA23724"
+      ],
+      "clinicalTags": [],
+      "confidenceScore": 0.99,
+      "ontologyValidated": true
+    },
+    {
+      "meshId": "mesh_capitate_01",
+      "graphNodeId": "BONE_CAPITATE",
+      "fmaId": "FMA23727",
+      "name": "Capitate",
+      "category": "Bone",
+      "system": "Skeletal",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "boundingBox": [
+        -0.0944,
+        -0.0506,
+        -0.243,
+        0.0664,
+        0.119,
+        -0.019
+      ],
+      "position": [
+        -0.014,
+        0.0342,
+        -0.131
+      ],
+      "layer": "Bone",
+      "materialId": "mat_bone",
+      "lod": {
+        "high": "/models/mesh_capitate_01.glb",
+        "medium": "/models/mesh_capitate_01_med.glb",
+        "low": "/models/mesh_capitate_01_low.glb"
+      },
+      "explosionDirection": [
+        0,
+        0,
+        0
+      ],
+      "searchableTerms": [
+        "CAPITATE",
+        "FMA23727"
+      ],
+      "clinicalTags": [],
+      "confidenceScore": 0.99,
+      "ontologyValidated": true
+    },
+    {
+      "meshId": "mesh_hamate_01",
+      "graphNodeId": "BONE_HAMATE",
+      "fmaId": "FMA23730",
+      "name": "Hamate",
+      "category": "Bone",
+      "system": "Skeletal",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "boundingBox": [
+        0.0312,
+        -0.115,
+        -0.252,
+        0.1845,
+        0.1103,
+        -0.0584
+      ],
+      "position": [
+        0.1078,
+        -0.0023,
+        -0.1552
+      ],
+      "layer": "Bone",
+      "materialId": "mat_bone",
+      "lod": {
+        "high": "/models/mesh_hamate_01.glb",
+        "medium": "/models/mesh_hamate_01_med.glb",
+        "low": "/models/mesh_hamate_01_low.glb"
+      },
+      "explosionDirection": [
+        0,
+        0,
+        0
+      ],
+      "searchableTerms": [
+        "HAMATE",
+        "FMA23730"
+      ],
+      "clinicalTags": [],
+      "confidenceScore": 0.99,
+      "ontologyValidated": true
     }
-  ]
+  ],
+  "regionCentroid": [
+    -255.05,
+    -122.43,
+    806.49
+  ],
+  "coordinateScale": 0.01,
+  "coordinateUnit": "normalized (mm * 0.01)"
 }

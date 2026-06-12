@@ -1,10 +1,32 @@
 import { create } from 'zustand';
 import { AnatomyLayer, HighlightState, AnatomySceneNode } from '@/types/anatomy';
 
+export interface ClippingState {
+  enabled: boolean;
+  plane: 'axial' | 'sagittal' | 'coronal';
+  position: number;
+}
+
+export type ViewPreset = 'SKELETON' | 'MUSCULOSKELETAL' | 'NEUROVASCULAR' | 'CLINICAL' | 'SURGICAL' | 'EDUCATIONAL' | 'CUSTOM';
+export type LearningMode = 'BEGINNER' | 'INTERMEDIATE' | 'ADVANCED';
+export type GraphPanelMode = 'HIDDEN' | 'DRAWER' | 'FULLSCREEN';
+
 interface AppState {
   // Global View State
   activeView: 'EXPLORE' | 'LEARN' | 'CLINICAL';
   setActiveView: (view: 'EXPLORE' | 'LEARN' | 'CLINICAL') => void;
+
+  // New ViewerState
+  selectedMeshId: string | null;
+  hoveredMeshId: string | null;
+  activePreset: ViewPreset;
+  graphPanelMode: GraphPanelMode;
+  learningMode: LearningMode;
+
+  setHoveredMeshId: (id: string | null) => void;
+  setActivePreset: (preset: ViewPreset) => void;
+  setGraphPanelMode: (mode: GraphPanelMode) => void;
+  setLearningMode: (mode: LearningMode) => void;
 
   // Highlight State Map (allows multiple overlapping highlights)
   meshHighlightStates: Record<string, HighlightState>;
@@ -15,6 +37,20 @@ interface AppState {
 
   // Camera Bus
   cameraTargetBox: [number, number, number, number, number, number] | null;
+
+  // Region Management
+  activeRegionIds: string[];
+  setActiveRegions: (regions: string[]) => void;
+
+  // Visual Modes
+  isolationMode: boolean;
+  setIsolationMode: (enabled: boolean) => void;
+  explosionAmount: number;
+  setExplosionAmount: (amount: number) => void;
+
+  // Clipping Management
+  clippingState: ClippingState;
+  setClippingState: (state: Partial<ClippingState>) => void;
 
   // Layer Management
   activeLayers: AnatomyLayer[];
@@ -34,6 +70,18 @@ export const useAppStore = create<AppState>((set) => ({
   activeView: 'EXPLORE',
   setActiveView: (view) => set({ activeView: view }),
 
+  // New ViewerState
+  selectedMeshId: null,
+  hoveredMeshId: null,
+  activePreset: 'EDUCATIONAL',
+  graphPanelMode: 'HIDDEN',
+  learningMode: 'BEGINNER',
+
+  setHoveredMeshId: (id) => set({ hoveredMeshId: id }),
+  setActivePreset: (preset) => set({ activePreset: preset }),
+  setGraphPanelMode: (mode) => set({ graphPanelMode: mode }),
+  setLearningMode: (mode) => set({ learningMode: mode }),
+
   meshHighlightStates: {},
   
   activeMeshNode: null,
@@ -41,7 +89,24 @@ export const useAppStore = create<AppState>((set) => ({
 
   cameraTargetBox: null,
 
-  activeLayers: [AnatomyLayer.Skin, AnatomyLayer.Bone, AnatomyLayer.Nerve, AnatomyLayer.Muscle],
+  activeRegionIds: ['Hand'], // Default region
+  setActiveRegions: (regions) => set({ activeRegionIds: regions }),
+
+  isolationMode: false,
+  setIsolationMode: (enabled) => set({ isolationMode: enabled }),
+  explosionAmount: 0,
+  setExplosionAmount: (amount) => set({ explosionAmount: amount }),
+
+  activeLayers: [AnatomyLayer.Skin, AnatomyLayer.Bone, AnatomyLayer.Nerve, AnatomyLayer.Muscle, AnatomyLayer.Artery],
+
+  clippingState: {
+    enabled: false,
+    plane: 'axial',
+    position: 0
+  },
+  setClippingState: (state) => set((prev) => ({ 
+    clippingState: { ...prev.clippingState, ...state } 
+  })),
 
   setMeshHighlight: (meshId, state) => set((prev) => ({
     meshHighlightStates: {
@@ -74,6 +139,7 @@ export const useAppStore = create<AppState>((set) => ({
     return { 
       activeMeshNode: node,
       activeGraphNodeId: node.graphNodeId,
+      selectedMeshId: node.meshId,
       meshHighlightStates: newHighlights,
       cameraTargetBox: node.boundingBox
     };
@@ -88,6 +154,7 @@ export const useAppStore = create<AppState>((set) => ({
     return { 
       activeMeshNode: null, 
       activeGraphNodeId: null,
+      selectedMeshId: null,
       cameraTargetBox: null,
       meshHighlightStates: newHighlights
     };

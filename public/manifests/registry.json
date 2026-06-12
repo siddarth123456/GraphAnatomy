@@ -1,0 +1,80 @@
+{
+  "meshes": {
+    "mesh_median_nerve_01": {
+      "graphNodeId": "NERVE_MEDIAN",
+      "name": "Median Nerve",
+      "category": "Nerve",
+      "system": "Nervous System",
+      "region": "Hand",
+      "layer": "Nerve",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "confidenceScore": 0.99
+    },
+    "mesh_scaphoid_01": {
+      "graphNodeId": "BONE_SCAPHOID",
+      "name": "Scaphoid Bone",
+      "category": "Bone",
+      "system": "Skeletal System",
+      "region": "Hand",
+      "layer": "Bone",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "confidenceScore": 0.99
+    },
+    "mesh_abductor_pollicis_brevis_01": {
+      "graphNodeId": "MUSCLE_ABDUCTOR_POLLICIS_BREVIS",
+      "name": "Abductor Pollicis Brevis",
+      "category": "Muscle",
+      "system": "Muscular System",
+      "region": "Hand",
+      "layer": "Muscle",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "confidenceScore": 0.99
+    },
+    "mesh_radial_artery_01": {
+      "graphNodeId": "ARTERY_RADIAL",
+      "name": "Radial Artery",
+      "category": "Artery",
+      "system": "Cardiovascular System",
+      "region": "Hand",
+      "layer": "Artery",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "confidenceScore": 0.99
+    }
+  },
+  "graphNodes": {
+    "NERVE_MEDIAN": {
+      "fmaId": "FMA59762",
+      "meshIds": [
+        "mesh_median_nerve_01"
+      ]
+    },
+    "BONE_SCAPHOID": {
+      "fmaId": "FMA23709",
+      "meshIds": [
+        "mesh_scaphoid_01"
+      ]
+    },
+    "MUSCLE_ABDUCTOR_POLLICIS_BREVIS": {
+      "fmaId": "FMA37947",
+      "meshIds": [
+        "mesh_abductor_pollicis_brevis_01"
+      ]
+    },
+    "ARTERY_RADIAL": {
+      "fmaId": "FMA22730",
+      "meshIds": [
+        "mesh_radial_artery_01"
+      ]
+    }
+  },
+  "ontologies": {
+    "FMA59762": "http://purl.org/sig/ont/fma/fma59762",
+    "FMA23709": "http://purl.org/sig/ont/fma/fma23709",
+    "FMA37947": "http://purl.org/sig/ont/fma/fma37947",
+    "FMA22730": "http://purl.org/sig/ont/fma/fma22730"
+  }
+}

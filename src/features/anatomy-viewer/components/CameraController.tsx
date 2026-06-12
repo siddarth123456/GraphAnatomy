@@ -5,7 +5,7 @@ import { useAppStore } from '@/store/useAppStore';
 
 export function CameraController() {
   const cameraControlsRef = useRef<CameraControls>(null);
-  const { cameraTargetBox } = useAppStore();
+  const cameraTargetBox = useAppStore(state => state.cameraTargetBox);
 
   useEffect(() => {
     if (cameraControlsRef.current && cameraTargetBox) {
