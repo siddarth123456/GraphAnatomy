@@ -3,6 +3,7 @@
 import React from 'react';
 import { KnowledgeGraphView } from '@/features/knowledge-graph/components/KnowledgeGraphView';
 import { AnatomyCanvas } from '@/features/anatomy-viewer/components/AnatomyCanvas';
+import { MetadataPanel } from '@/features/anatomy-viewer/components/MetadataPanel';
 import { GraphData } from '@/types/graph';
 import { useAppStore } from '@/store/useAppStore';
 
@@ -19,7 +20,7 @@ const mockHandGraph: GraphData = {
         meshId: "mesh_median_nerve_01",
         glbObject: "median_nerve_main_geo",
         materialId: "mat_nerves_yellow",
-        layerDepth: 7
+        layerDepth: 6
       }
     },
     {
@@ -30,22 +31,9 @@ const mockHandGraph: GraphData = {
       val: 4,
       visualBinding: {
         meshId: "mesh_apb_01",
-        glbObject: "apb_geo",
+        glbObject: "apb.glb",
         materialId: "mat_muscle_red",
-        layerDepth: 4
-      }
-    },
-    {
-      id: "CLIN-01",
-      name: "Carpal Tunnel Syndrome",
-      system: "CONNECTIVE", // Treat clinical nodes differently later
-      color: "#a855f7", // Purple
-      val: 6,
-      visualBinding: {
-        meshId: "", // Clinical conditions don't have direct 3D meshes
-        glbObject: "",
-        materialId: "",
-        layerDepth: 0
+        layerDepth: 3
       }
     }
   ],
@@ -55,18 +43,12 @@ const mockHandGraph: GraphData = {
       target: "MUSC-01",
       type: "INNERVATES",
       color: "#9ca3af" // Gray edge
-    },
-    {
-      source: "CLIN-01",
-      target: "NERV-01",
-      type: "AFFECTS",
-      color: "#f87171" // Red warning edge
     }
   ]
 };
 
 export default function Home() {
-  const { selectedGraphNodeId, selectedMeshId } = useAppStore();
+  const { activeMeshNode } = useAppStore();
 
   return (
     <main className="flex h-screen w-screen bg-[#0f0f11] text-white overflow-hidden">
@@ -74,18 +56,21 @@ export default function Home() {
       {/* LEFT PANEL: 3D Scene (React Three Fiber) */}
       <div className="flex-1 border-r border-gray-800 relative">
         <div className="absolute top-4 left-4 z-10 pointer-events-none">
-          <h1 className="text-xl font-bold tracking-tight">Interactive Anatomy</h1>
+          <h1 className="text-xl font-bold tracking-tight">Interactive Anatomy (V2)</h1>
           <p className="text-sm text-gray-400">WebGL Production Engine</p>
         </div>
         
         <AnatomyCanvas />
 
-        {/* Diagnostic Event Bus View (Positioned at bottom) */}
+        {/* Floating Metadata Panel (Triggered on Selection) */}
+        <MetadataPanel />
+        
+        {/* Diagnostic Layer Panel */}
         <div className="absolute bottom-4 left-4 z-10 pointer-events-none">
           <div className="bg-gray-900/80 backdrop-blur-md p-4 rounded border border-gray-800 text-sm font-mono text-gray-300">
-            <h3 className="text-gray-500 mb-2">Zustand Event Bus Sync:</h3>
-            <p>Selected Mesh ID: <span className="text-blue-400">{selectedMeshId || 'none'}</span></p>
-            <p>Selected Graph ID: <span className="text-blue-400">{selectedGraphNodeId || 'none'}</span></p>
+            <h3 className="text-gray-500 mb-2">Active Node State:</h3>
+            <p>Selected Mesh ID: <span className="text-blue-400">{activeMeshNode?.meshId || 'none'}</span></p>
+            <p>Fly-To Target: <span className="text-blue-400">{activeMeshNode?.name || 'none'}</span></p>
           </div>
         </div>
       </div>
@@ -97,7 +82,6 @@ export default function Home() {
           <p className="text-sm text-gray-400 px-2">Neo4j Hybrid Resolver</p>
         </div>
         
-        {/* The Graph Component */}
         <KnowledgeGraphView data={mockHandGraph} engine="force-graph" />
       </div>
 

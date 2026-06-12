@@ -1,73 +1,61 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { useAppStore } from '@/store/useAppStore';
 import { GraphData } from '@/types/graph';
+import { HighlightState, RegionManifest } from '@/types/anatomy';
 
-// Dynamically import the renderer to disable SSR (since WebGL requires the window object)
-// This fulfills Task 6: Abstract GraphRenderer Interface
 const ForceGraphRenderer = dynamic(
   () => import('./ForceGraphRenderer'),
-  { 
-    ssr: false,
-    loading: () => (
-      <div className="w-full h-full flex items-center justify-center bg-[#0f0f11] text-gray-400">
-        Loading Knowledge Graph Engine...
-      </div>
-    )
-  }
+  { ssr: false, loading: () => <div className="text-gray-400">Loading Engine...</div> }
 );
 
 interface KnowledgeGraphViewProps {
   data: GraphData;
-  engine?: 'force-graph' | 'cytoscape' | 'webgpu'; // Future-proofing
+  engine?: 'force-graph' | 'cytoscape' | 'webgpu';
 }
 
 export function KnowledgeGraphView({ data, engine = 'force-graph' }: KnowledgeGraphViewProps) {
-  const { selectAnatomy, setHoveredAnatomy, selectedGraphNodeId } = useAppStore();
-  
-  // Local state for graph-specific highlights (e.g. paths)
-  const [highlightedNodes, setHighlightedNodes] = useState<Set<string>>(new Set());
-  const [highlightedLinks, setHighlightedLinks] = useState<Set<string>>(new Set());
+  const { selectAnatomy, activeGraphNodeId } = useAppStore();
+  const [manifest, setManifest] = useState<RegionManifest | null>(null);
 
-  // Sync Neo4j graph clicks to the global Zustand store, which will trigger Three.js
+  // Load manifest to sync graph clicks to full 3D nodes
+  useEffect(() => {
+    fetch('/manifests/hand_region.json')
+      .then(res => res.json())
+      .then(data => setManifest(data));
+  }, []);
+
+  const [highlightedNodes, setHighlightedNodes] = useState<Set<string>>(new Set());
+
   const handleNodeClick = (nodeId: string, meshId?: string) => {
-    if (meshId) {
-      selectAnatomy(meshId, nodeId);
+    if (meshId && manifest) {
+      // Find the full AnatomySceneNode from the JSON manifest
+      const targetNode = manifest.meshes.find(m => m.meshId === meshId);
+      if (targetNode) {
+        selectAnatomy(targetNode);
+      }
     }
   };
 
-  const handleNodeHover = (nodeId: string | null) => {
-    // Could sync with 3D mesh hover state here
-  };
-
-  // Keep the selected node highlighted in the graph
   React.useEffect(() => {
-    if (selectedGraphNodeId) {
-      setHighlightedNodes(new Set([selectedGraphNodeId]));
+    if (activeGraphNodeId) {
+      setHighlightedNodes(new Set([activeGraphNodeId]));
     } else {
       setHighlightedNodes(new Set());
     }
-  }, [selectedGraphNodeId]);
+  }, [activeGraphNodeId]);
 
   return (
     <div className="w-full h-full relative overflow-hidden">
-      {/* Renderer Abstraction */}
       {engine === 'force-graph' && (
         <ForceGraphRenderer
           data={data}
           onNodeClick={handleNodeClick}
-          onNodeHover={handleNodeHover}
           highlightedNodes={highlightedNodes}
-          highlightedLinks={highlightedLinks}
         />
       )}
-      
-      {/* 
-        Future engines can be added here without touching the Neo4j or 3D layers:
-        {engine === 'cytoscape' && <CytoscapeRenderer ... />} 
-      */}
     </div>
   );
 }
