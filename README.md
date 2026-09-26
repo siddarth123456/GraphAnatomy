@@ -81,7 +81,7 @@ npx playwright install chromium
 npm run test:e2e
 ```
 
-`check` runs lint, TypeScript, behavioral/unit tests, asset and ontology validation, and a production build. Browser tests cover the demo journey, search, selection, evidence, mobile layout, and catalog failure/retry. By default they start or reuse a development server on port 3100. Set `TEST_BASE_URL` to test an already running production server.
+`check` runs lint, TypeScript, behavioral/unit tests, asset and ontology validation, and a production build. Browser tests cover the demo journey, search, selection, evidence, mobile layout, and catalog failure/retry. Locally they start or reuse a development server on port 3100; CI tests the production server after the build. Set `TEST_BASE_URL` to test an already running production server.
 
 With an app running on port 3000, `npm run test:retrieval` verifies the live HTTP evidence endpoint. `npm run test:neo4j` requires the configured local database. GitHub Actions runs the core checks, Chromium flows, and an independent Neo4j round-trip.
 

@@ -3,7 +3,11 @@ import { expect, test, type Page } from '@playwright/test';
 /** Inspect the browser's rendered pixels, including WebGL, rather than store state. */
 async function anatomyPixels(page: Page) {
   const canvas = page.locator('canvas').first();
-  const screenshot = await canvas.screenshot();
+  const bounds = await canvas.boundingBox();
+  if (!bounds) throw new Error('The anatomy canvas has no visible bounds.');
+  // The canvas stays fixed in the workspace. Capture its actual pixels without
+  // repeated scroll/stability actions, which stall on software-rendered CI.
+  const screenshot = await page.screenshot({ clip: bounds });
   return page.evaluate(async (base64) => {
     const image = new Image();
     image.src = `data:image/png;base64,${base64}`;
