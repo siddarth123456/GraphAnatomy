@@ -1,70 +1,26 @@
 'use client';
-
-import React, { useRef, useCallback, useEffect } from 'react';
-import ForceGraph3D from 'react-force-graph-3d';
-import { IGraphRendererProps } from '@/types/graph';
-
-export default function ForceGraphRenderer({
-  data,
-  onNodeClick,
-  onNodeHover,
-  highlightedNodes,
-  highlightedLinks,
-}: IGraphRendererProps) {
-  const fgRef = useRef<any>(null);
-
-  // Center camera on the graph when data loads
+import { useEffect, useMemo, useRef, useState } from 'react';
+import ForceGraph3D, { type ForceGraphMethods } from 'react-force-graph-3d';
+import type { GraphNode, GraphLink, IGraphRendererProps } from '@/types/graph';
+export default function ForceGraphRenderer({ data, onNodeClick, highlightedNodes }: IGraphRendererProps) {
+  const ref = useRef<ForceGraphMethods<GraphNode, GraphLink> | undefined>(undefined);
+  const container = useRef<HTMLDivElement>(null);
+  const [size, setSize] = useState({ width: 350, height: 340 });
+  // The renderer mutates positions and edge endpoints; isolate those from application data.
+  const graph = useMemo(() => ({ nodes: data.nodes.map((node) => ({ ...node })), links: data.links.map((link) => ({ ...link })) }), [data]);
   useEffect(() => {
-    if (fgRef.current && data.nodes.length > 0) {
-      fgRef.current.d3Force('charge').strength(-120);
-      fgRef.current.zoomToFit(400, 100);
-    }
-    // Deep equality or primitive dependency to prevent infinite loops from object recreation
-  }, [data.nodes.length]);
-
-  const handleNodeClick = useCallback((node: any) => {
-    // Fly to the node
-    if (fgRef.current) {
-      const distance = 40;
-      const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
-      
-      fgRef.current.cameraPosition(
-        { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio },
-        node, 
-        3000 // ms transition duration
-      );
-    }
-
-    // Trigger external event bus
-    if (onNodeClick) {
-      // Pass both the graph ID and the associated 3D mesh ID
-      onNodeClick(node.id, node.visualBinding?.meshId);
-    }
-  }, [onNodeClick]);
-
-  return (
-    <div className="w-full h-full bg-[#0f0f11]">
-      <ForceGraph3D
-        ref={fgRef}
-        graphData={data}
-        nodeLabel="name"
-        nodeColor={(node: any) => {
-          if (highlightedNodes && highlightedNodes.has(node.id)) return '#ffffff';
-          return node.color || '#9ca3af';
-        }}
-        nodeVal={(node: any) => node.val || 1}
-        linkColor={(link: any) => {
-          if (highlightedLinks && highlightedLinks.has(link.id)) return '#ffffff';
-          return link.color || '#374151';
-        }}
-        linkWidth={(link: any) => (highlightedLinks && highlightedLinks.has(link.id) ? 2 : 1)}
-        linkDirectionalParticles={2}
-        linkDirectionalParticleWidth={(link: any) => (highlightedLinks && highlightedLinks.has(link.id) ? 4 : 0)}
-        onNodeClick={handleNodeClick}
-        onNodeHover={(node: any) => onNodeHover?.(node ? node.id : null)}
-        backgroundColor="#0f0f11"
-        showNavInfo={false}
-      />
-    </div>
-  );
+    const element = container.current;
+    if (!element) return;
+    const observer = new ResizeObserver(([entry]) => setSize({ width: entry.contentRect.width, height: entry.contentRect.height }));
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+  return <div className="force-graph" ref={container} aria-label="Interactive anatomy knowledge graph">
+    <ForceGraph3D<GraphNode, GraphLink> ref={ref} width={size.width} height={size.height} graphData={graph}
+      nodeLabel="name" nodeColor={(node) => highlightedNodes?.has(node.id) ? '#ffffff' : node.color}
+      nodeVal={(node) => highlightedNodes?.has(node.id) ? 7 : node.val} linkLabel={(link) => link.type.toLowerCase().replaceAll('_', ' ')}
+      linkColor={() => '#62738c'} linkWidth={0.6} linkDirectionalArrowLength={2} linkDirectionalArrowRelPos={0.85}
+      onNodeClick={(node) => onNodeClick?.(node.id, node.visualBinding?.meshId)}
+      onEngineStop={() => ref.current?.zoomToFit(350, 35)} cooldownTicks={80} backgroundColor="#111827" showNavInfo={false} />
+  </div>;
 }

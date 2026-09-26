@@ -64,7 +64,7 @@ Object.values(MedicalMaterials).forEach(mat => {
   mat.clipIntersection = false;
 });
 
-export function getMaterial(materialId: string): THREE.Material {
+export function getMaterial(materialId: string): THREE.MeshPhysicalMaterial {
   switch (materialId) {
     case 'mat_muscle': return MedicalMaterials.MUSCLE;
     case 'mat_nerve': return MedicalMaterials.NERVE;

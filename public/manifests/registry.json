@@ -1,55 +1,616 @@
 {
+  "version": "3.0",
+  "source": {
+    "dataset": "BodyParts3D",
+    "version": "4.0",
+    "attribution": "BodyParts3D, © The Database Center for Life Science licensed under CC Attribution 4.0 International",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "mappingUrl": "https://dbarchive.biosciencedbc.jp/data/bodyparts3d/LATEST/isa_element_parts.txt",
+    "mappingSha256": "a3de74423f943b0d724ae8f59b3a817f87c423a544f8db98113b1980817cbeaf"
+  },
+  "validationScope": "Structural integrity and archive FMA-to-file consistency only; no medical or ontology certification.",
   "meshes": {
-    "mesh_median_nerve_01": {
-      "graphNodeId": "NERVE_MEDIAN",
-      "name": "Median Nerve",
-      "category": "Nerve",
-      "system": "Nervous System",
-      "region": "Hand",
-      "layer": "Nerve",
-      "sourceDataset": "BodyParts3D",
-      "sourceVersion": "4.0",
-      "confidenceScore": 0.99
-    },
-    "mesh_scaphoid_01": {
-      "graphNodeId": "BONE_SCAPHOID",
-      "name": "Scaphoid Bone",
+    "mesh_right_radius_01": {
+      "graphNodeId": "BONE_RIGHT_RADIUS",
+      "name": "Right Radius",
       "category": "Bone",
-      "system": "Skeletal System",
+      "system": "Skeletal",
       "region": "Hand",
       "layer": "Bone",
       "sourceDataset": "BodyParts3D",
       "sourceVersion": "4.0",
-      "confidenceScore": 0.99
+      "sourceFile": "FJ3349.obj",
+      "sourceName": "right radius",
+      "mappingStatus": "archive-row-matched",
+      "ontologyValidated": false,
+      "lod": {
+        "high": "/models/mesh_right_radius_01.glb",
+        "medium": "/models/mesh_right_radius_01_med.glb",
+        "low": "/models/mesh_right_radius_01_low.glb"
+      }
+    },
+    "mesh_right_ulna_01": {
+      "graphNodeId": "BONE_RIGHT_ULNA",
+      "name": "Right Ulna",
+      "category": "Bone",
+      "system": "Skeletal",
+      "region": "Hand",
+      "layer": "Bone",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "sourceFile": "FJ3391.obj",
+      "sourceName": "right ulna",
+      "mappingStatus": "archive-row-matched",
+      "ontologyValidated": false,
+      "lod": {
+        "high": "/models/mesh_right_ulna_01.glb",
+        "medium": "/models/mesh_right_ulna_01_med.glb",
+        "low": "/models/mesh_right_ulna_01_low.glb"
+      }
+    },
+    "mesh_scaphoid_01": {
+      "graphNodeId": "BONE_SCAPHOID",
+      "name": "Scaphoid",
+      "category": "Bone",
+      "system": "Skeletal",
+      "region": "Hand",
+      "layer": "Bone",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "sourceFile": "FJ3383.obj",
+      "sourceName": "scaphoid",
+      "mappingStatus": "archive-row-matched",
+      "ontologyValidated": false,
+      "lod": {
+        "high": "/models/mesh_scaphoid_01.glb",
+        "medium": "/models/mesh_scaphoid_01_med.glb",
+        "low": "/models/mesh_scaphoid_01_low.glb"
+      }
+    },
+    "mesh_lunate_01": {
+      "graphNodeId": "BONE_LUNATE",
+      "name": "Lunate",
+      "category": "Bone",
+      "system": "Skeletal",
+      "region": "Hand",
+      "layer": "Bone",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "sourceFile": "FJ3374.obj",
+      "sourceName": "lunate",
+      "mappingStatus": "archive-row-matched",
+      "ontologyValidated": false,
+      "lod": {
+        "high": "/models/mesh_lunate_01.glb",
+        "medium": "/models/mesh_lunate_01_med.glb",
+        "low": "/models/mesh_lunate_01_low.glb"
+      }
+    },
+    "mesh_triquetral_01": {
+      "graphNodeId": "BONE_TRIQUETRAL",
+      "name": "Triquetral",
+      "category": "Bone",
+      "system": "Skeletal",
+      "region": "Hand",
+      "layer": "Bone",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "sourceFile": "FJ3390.obj",
+      "sourceName": "triquetral",
+      "mappingStatus": "archive-row-matched",
+      "ontologyValidated": false,
+      "lod": {
+        "high": "/models/mesh_triquetral_01.glb",
+        "medium": "/models/mesh_triquetral_01_med.glb",
+        "low": "/models/mesh_triquetral_01_low.glb"
+      }
+    },
+    "mesh_pisiform_01": {
+      "graphNodeId": "BONE_PISIFORM",
+      "name": "Pisiform",
+      "category": "Bone",
+      "system": "Skeletal",
+      "region": "Hand",
+      "layer": "Bone",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "sourceFile": "FJ3382.obj",
+      "sourceName": "pisiform",
+      "mappingStatus": "archive-row-matched",
+      "ontologyValidated": false,
+      "lod": {
+        "high": "/models/mesh_pisiform_01.glb",
+        "medium": "/models/mesh_pisiform_01_med.glb",
+        "low": "/models/mesh_pisiform_01_low.glb"
+      }
+    },
+    "mesh_trapezium_01": {
+      "graphNodeId": "BONE_TRAPEZIUM",
+      "name": "Trapezium",
+      "category": "Bone",
+      "system": "Skeletal",
+      "region": "Hand",
+      "layer": "Bone",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "sourceFile": "FJ3388.obj",
+      "sourceName": "trapezium",
+      "mappingStatus": "archive-row-matched",
+      "ontologyValidated": false,
+      "lod": {
+        "high": "/models/mesh_trapezium_01.glb",
+        "medium": "/models/mesh_trapezium_01_med.glb",
+        "low": "/models/mesh_trapezium_01_low.glb"
+      }
+    },
+    "mesh_trapezoid_01": {
+      "graphNodeId": "BONE_TRAPEZOID",
+      "name": "Trapezoid",
+      "category": "Bone",
+      "system": "Skeletal",
+      "region": "Hand",
+      "layer": "Bone",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "sourceFile": "FJ3389.obj",
+      "sourceName": "trapezoid",
+      "mappingStatus": "archive-row-matched",
+      "ontologyValidated": false,
+      "lod": {
+        "high": "/models/mesh_trapezoid_01.glb",
+        "medium": "/models/mesh_trapezoid_01_med.glb",
+        "low": "/models/mesh_trapezoid_01_low.glb"
+      }
+    },
+    "mesh_capitate_01": {
+      "graphNodeId": "BONE_CAPITATE",
+      "name": "Capitate",
+      "category": "Bone",
+      "system": "Skeletal",
+      "region": "Hand",
+      "layer": "Bone",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "sourceFile": "FJ3361.obj",
+      "sourceName": "capitate",
+      "mappingStatus": "archive-row-matched",
+      "ontologyValidated": false,
+      "lod": {
+        "high": "/models/mesh_capitate_01.glb",
+        "medium": "/models/mesh_capitate_01_med.glb",
+        "low": "/models/mesh_capitate_01_low.glb"
+      }
+    },
+    "mesh_hamate_01": {
+      "graphNodeId": "BONE_HAMATE",
+      "name": "Hamate",
+      "category": "Bone",
+      "system": "Skeletal",
+      "region": "Hand",
+      "layer": "Bone",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "sourceFile": "FJ3367.obj",
+      "sourceName": "hamate",
+      "mappingStatus": "archive-row-matched",
+      "ontologyValidated": false,
+      "lod": {
+        "high": "/models/mesh_hamate_01.glb",
+        "medium": "/models/mesh_hamate_01_med.glb",
+        "low": "/models/mesh_hamate_01_low.glb"
+      }
+    },
+    "mesh_first_metacarpal_01": {
+      "graphNodeId": "BONE_FIRST_METACARPAL",
+      "name": "First Metacarpal",
+      "category": "Bone",
+      "system": "Skeletal",
+      "region": "Hand",
+      "layer": "Bone",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "sourceFile": "FJ3350.obj",
+      "sourceName": "right first metacarpal bone",
+      "mappingStatus": "archive-row-matched",
+      "ontologyValidated": false,
+      "lod": {
+        "high": "/models/mesh_first_metacarpal_01.glb",
+        "medium": "/models/mesh_first_metacarpal_01_med.glb",
+        "low": "/models/mesh_first_metacarpal_01_low.glb"
+      }
+    },
+    "mesh_second_metacarpal_01": {
+      "graphNodeId": "BONE_SECOND_METACARPAL",
+      "name": "Second Metacarpal",
+      "category": "Bone",
+      "system": "Skeletal",
+      "region": "Hand",
+      "layer": "Bone",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "sourceFile": "FJ3352.obj",
+      "sourceName": "right second metacarpal bone",
+      "mappingStatus": "archive-row-matched",
+      "ontologyValidated": false,
+      "lod": {
+        "high": "/models/mesh_second_metacarpal_01.glb",
+        "medium": "/models/mesh_second_metacarpal_01_med.glb",
+        "low": "/models/mesh_second_metacarpal_01_low.glb"
+      }
+    },
+    "mesh_third_metacarpal_01": {
+      "graphNodeId": "BONE_THIRD_METACARPAL",
+      "name": "Third Metacarpal",
+      "category": "Bone",
+      "system": "Skeletal",
+      "region": "Hand",
+      "layer": "Bone",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "sourceFile": "FJ3354.obj",
+      "sourceName": "right third metacarpal bone",
+      "mappingStatus": "archive-row-matched",
+      "ontologyValidated": false,
+      "lod": {
+        "high": "/models/mesh_third_metacarpal_01.glb",
+        "medium": "/models/mesh_third_metacarpal_01_med.glb",
+        "low": "/models/mesh_third_metacarpal_01_low.glb"
+      }
+    },
+    "mesh_fourth_metacarpal_01": {
+      "graphNodeId": "BONE_FOURTH_METACARPAL",
+      "name": "Fourth Metacarpal",
+      "category": "Bone",
+      "system": "Skeletal",
+      "region": "Hand",
+      "layer": "Bone",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "sourceFile": "FJ3356.obj",
+      "sourceName": "right fourth metacarpal bone",
+      "mappingStatus": "archive-row-matched",
+      "ontologyValidated": false,
+      "lod": {
+        "high": "/models/mesh_fourth_metacarpal_01.glb",
+        "medium": "/models/mesh_fourth_metacarpal_01_med.glb",
+        "low": "/models/mesh_fourth_metacarpal_01_low.glb"
+      }
+    },
+    "mesh_fifth_metacarpal_01": {
+      "graphNodeId": "BONE_FIFTH_METACARPAL",
+      "name": "Fifth Metacarpal",
+      "category": "Bone",
+      "system": "Skeletal",
+      "region": "Hand",
+      "layer": "Bone",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "sourceFile": "FJ3358.obj",
+      "sourceName": "right fifth metacarpal bone",
+      "mappingStatus": "archive-row-matched",
+      "ontologyValidated": false,
+      "lod": {
+        "high": "/models/mesh_fifth_metacarpal_01.glb",
+        "medium": "/models/mesh_fifth_metacarpal_01_med.glb",
+        "low": "/models/mesh_fifth_metacarpal_01_low.glb"
+      }
+    },
+    "mesh_proximal_phalanx_of_thumb_01": {
+      "graphNodeId": "BONE_PROXIMAL_PHALANX_OF_THUMB",
+      "name": "Proximal Phalanx of Thumb",
+      "category": "Bone",
+      "system": "Skeletal",
+      "region": "Hand",
+      "layer": "Bone",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "sourceFile": "FJ3327.obj",
+      "sourceName": "proximal phalanx of right thumb",
+      "mappingStatus": "archive-row-matched",
+      "ontologyValidated": false,
+      "lod": {
+        "high": "/models/mesh_proximal_phalanx_of_thumb_01.glb",
+        "medium": "/models/mesh_proximal_phalanx_of_thumb_01_med.glb",
+        "low": "/models/mesh_proximal_phalanx_of_thumb_01_low.glb"
+      }
+    },
+    "mesh_proximal_phalanx_of_index_finger_01": {
+      "graphNodeId": "BONE_PROXIMAL_PHALANX_OF_INDEX_FINGER",
+      "name": "Proximal Phalanx of Index Finger",
+      "category": "Bone",
+      "system": "Skeletal",
+      "region": "Hand",
+      "layer": "Bone",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "sourceFile": "FJ3322.obj",
+      "sourceName": "proximal phalanx of right index finger",
+      "mappingStatus": "archive-row-matched",
+      "ontologyValidated": false,
+      "lod": {
+        "high": "/models/mesh_proximal_phalanx_of_index_finger_01.glb",
+        "medium": "/models/mesh_proximal_phalanx_of_index_finger_01_med.glb",
+        "low": "/models/mesh_proximal_phalanx_of_index_finger_01_low.glb"
+      }
+    },
+    "mesh_proximal_phalanx_of_middle_finger_01": {
+      "graphNodeId": "BONE_PROXIMAL_PHALANX_OF_MIDDLE_FINGER",
+      "name": "Proximal Phalanx of Middle Finger",
+      "category": "Bone",
+      "system": "Skeletal",
+      "region": "Hand",
+      "layer": "Bone",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "sourceFile": "FJ3325.obj",
+      "sourceName": "proximal phalanx of right middle finger",
+      "mappingStatus": "archive-row-matched",
+      "ontologyValidated": false,
+      "lod": {
+        "high": "/models/mesh_proximal_phalanx_of_middle_finger_01.glb",
+        "medium": "/models/mesh_proximal_phalanx_of_middle_finger_01_med.glb",
+        "low": "/models/mesh_proximal_phalanx_of_middle_finger_01_low.glb"
+      }
+    },
+    "mesh_proximal_phalanx_of_ring_finger_01": {
+      "graphNodeId": "BONE_PROXIMAL_PHALANX_OF_RING_FINGER",
+      "name": "Proximal Phalanx of Ring Finger",
+      "category": "Bone",
+      "system": "Skeletal",
+      "region": "Hand",
+      "layer": "Bone",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "sourceFile": "FJ3326.obj",
+      "sourceName": "proximal phalanx of right ring finger",
+      "mappingStatus": "archive-row-matched",
+      "ontologyValidated": false,
+      "lod": {
+        "high": "/models/mesh_proximal_phalanx_of_ring_finger_01.glb",
+        "medium": "/models/mesh_proximal_phalanx_of_ring_finger_01_med.glb",
+        "low": "/models/mesh_proximal_phalanx_of_ring_finger_01_low.glb"
+      }
+    },
+    "mesh_proximal_phalanx_of_little_finger_01": {
+      "graphNodeId": "BONE_PROXIMAL_PHALANX_OF_LITTLE_FINGER",
+      "name": "Proximal Phalanx of Little Finger",
+      "category": "Bone",
+      "system": "Skeletal",
+      "region": "Hand",
+      "layer": "Bone",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "sourceFile": "FJ3323.obj",
+      "sourceName": "proximal phalanx of right little finger",
+      "mappingStatus": "archive-row-matched",
+      "ontologyValidated": false,
+      "lod": {
+        "high": "/models/mesh_proximal_phalanx_of_little_finger_01.glb",
+        "medium": "/models/mesh_proximal_phalanx_of_little_finger_01_med.glb",
+        "low": "/models/mesh_proximal_phalanx_of_little_finger_01_low.glb"
+      }
+    },
+    "mesh_middle_phalanx_of_index_finger_01": {
+      "graphNodeId": "BONE_MIDDLE_PHALANX_OF_INDEX_FINGER",
+      "name": "Middle Phalanx of Index Finger",
+      "category": "Bone",
+      "system": "Skeletal",
+      "region": "Hand",
+      "layer": "Bone",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "sourceFile": "FJ3303.obj",
+      "sourceName": "middle phalanx of right index finger",
+      "mappingStatus": "archive-row-matched",
+      "ontologyValidated": false,
+      "lod": {
+        "high": "/models/mesh_middle_phalanx_of_index_finger_01.glb",
+        "medium": "/models/mesh_middle_phalanx_of_index_finger_01_med.glb",
+        "low": "/models/mesh_middle_phalanx_of_index_finger_01_low.glb"
+      }
+    },
+    "mesh_middle_phalanx_of_middle_finger_01": {
+      "graphNodeId": "BONE_MIDDLE_PHALANX_OF_MIDDLE_FINGER",
+      "name": "Middle Phalanx of Middle Finger",
+      "category": "Bone",
+      "system": "Skeletal",
+      "region": "Hand",
+      "layer": "Bone",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "sourceFile": "FJ3306.obj",
+      "sourceName": "middle phalanx of right middle finger",
+      "mappingStatus": "archive-row-matched",
+      "ontologyValidated": false,
+      "lod": {
+        "high": "/models/mesh_middle_phalanx_of_middle_finger_01.glb",
+        "medium": "/models/mesh_middle_phalanx_of_middle_finger_01_med.glb",
+        "low": "/models/mesh_middle_phalanx_of_middle_finger_01_low.glb"
+      }
+    },
+    "mesh_middle_phalanx_of_ring_finger_01": {
+      "graphNodeId": "BONE_MIDDLE_PHALANX_OF_RING_FINGER",
+      "name": "Middle Phalanx of Ring Finger",
+      "category": "Bone",
+      "system": "Skeletal",
+      "region": "Hand",
+      "layer": "Bone",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "sourceFile": "FJ3292.obj",
+      "sourceName": "middle phalanx of right ring finger",
+      "mappingStatus": "archive-row-matched",
+      "ontologyValidated": false,
+      "lod": {
+        "high": "/models/mesh_middle_phalanx_of_ring_finger_01.glb",
+        "medium": "/models/mesh_middle_phalanx_of_ring_finger_01_med.glb",
+        "low": "/models/mesh_middle_phalanx_of_ring_finger_01_low.glb"
+      }
+    },
+    "mesh_middle_phalanx_of_little_finger_01": {
+      "graphNodeId": "BONE_MIDDLE_PHALANX_OF_LITTLE_FINGER",
+      "name": "Middle Phalanx of Little Finger",
+      "category": "Bone",
+      "system": "Skeletal",
+      "region": "Hand",
+      "layer": "Bone",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "sourceFile": "FJ3304.obj",
+      "sourceName": "middle phalanx of right little finger",
+      "mappingStatus": "archive-row-matched",
+      "ontologyValidated": false,
+      "lod": {
+        "high": "/models/mesh_middle_phalanx_of_little_finger_01.glb",
+        "medium": "/models/mesh_middle_phalanx_of_little_finger_01_med.glb",
+        "low": "/models/mesh_middle_phalanx_of_little_finger_01_low.glb"
+      }
+    },
+    "mesh_distal_phalanx_of_thumb_01": {
+      "graphNodeId": "BONE_DISTAL_PHALANX_OF_THUMB",
+      "name": "Distal Phalanx of Thumb",
+      "category": "Bone",
+      "system": "Skeletal",
+      "region": "Hand",
+      "layer": "Bone",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "sourceFile": "FJ3198.obj",
+      "sourceName": "distal phalanx of right thumb",
+      "mappingStatus": "archive-row-matched",
+      "ontologyValidated": false,
+      "lod": {
+        "high": "/models/mesh_distal_phalanx_of_thumb_01.glb",
+        "medium": "/models/mesh_distal_phalanx_of_thumb_01_med.glb",
+        "low": "/models/mesh_distal_phalanx_of_thumb_01_low.glb"
+      }
+    },
+    "mesh_distal_phalanx_of_index_finger_01": {
+      "graphNodeId": "BONE_DISTAL_PHALANX_OF_INDEX_FINGER",
+      "name": "Distal Phalanx of Index Finger",
+      "category": "Bone",
+      "system": "Skeletal",
+      "region": "Hand",
+      "layer": "Bone",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "sourceFile": "FJ3193.obj",
+      "sourceName": "distal phalanx of right index finger",
+      "mappingStatus": "archive-row-matched",
+      "ontologyValidated": false,
+      "lod": {
+        "high": "/models/mesh_distal_phalanx_of_index_finger_01.glb",
+        "medium": "/models/mesh_distal_phalanx_of_index_finger_01_med.glb",
+        "low": "/models/mesh_distal_phalanx_of_index_finger_01_low.glb"
+      }
+    },
+    "mesh_distal_phalanx_of_middle_finger_01": {
+      "graphNodeId": "BONE_DISTAL_PHALANX_OF_MIDDLE_FINGER",
+      "name": "Distal Phalanx of Middle Finger",
+      "category": "Bone",
+      "system": "Skeletal",
+      "region": "Hand",
+      "layer": "Bone",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "sourceFile": "FJ3196.obj",
+      "sourceName": "distal phalanx of right middle finger",
+      "mappingStatus": "archive-row-matched",
+      "ontologyValidated": false,
+      "lod": {
+        "high": "/models/mesh_distal_phalanx_of_middle_finger_01.glb",
+        "medium": "/models/mesh_distal_phalanx_of_middle_finger_01_med.glb",
+        "low": "/models/mesh_distal_phalanx_of_middle_finger_01_low.glb"
+      }
+    },
+    "mesh_distal_phalanx_of_ring_finger_01": {
+      "graphNodeId": "BONE_DISTAL_PHALANX_OF_RING_FINGER",
+      "name": "Distal Phalanx of Ring Finger",
+      "category": "Bone",
+      "system": "Skeletal",
+      "region": "Hand",
+      "layer": "Bone",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "sourceFile": "FJ3197.obj",
+      "sourceName": "distal phalanx of right ring finger",
+      "mappingStatus": "archive-row-matched",
+      "ontologyValidated": false,
+      "lod": {
+        "high": "/models/mesh_distal_phalanx_of_ring_finger_01.glb",
+        "medium": "/models/mesh_distal_phalanx_of_ring_finger_01_med.glb",
+        "low": "/models/mesh_distal_phalanx_of_ring_finger_01_low.glb"
+      }
+    },
+    "mesh_distal_phalanx_of_little_finger_01": {
+      "graphNodeId": "BONE_DISTAL_PHALANX_OF_LITTLE_FINGER",
+      "name": "Distal Phalanx of Little Finger",
+      "category": "Bone",
+      "system": "Skeletal",
+      "region": "Hand",
+      "layer": "Bone",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "sourceFile": "FJ3194.obj",
+      "sourceName": "distal phalanx of right little finger",
+      "mappingStatus": "archive-row-matched",
+      "ontologyValidated": false,
+      "lod": {
+        "high": "/models/mesh_distal_phalanx_of_little_finger_01.glb",
+        "medium": "/models/mesh_distal_phalanx_of_little_finger_01_med.glb",
+        "low": "/models/mesh_distal_phalanx_of_little_finger_01_low.glb"
+      }
+    },
+    "mesh_radial_artery_01": {
+      "graphNodeId": "ARTERY_RADIAL_ARTERY",
+      "name": "Radial Artery",
+      "category": "Artery",
+      "system": "Cardiovascular",
+      "region": "Hand",
+      "layer": "Artery",
+      "sourceDataset": "BodyParts3D",
+      "sourceVersion": "4.0",
+      "sourceFile": "FJ2294.obj",
+      "sourceName": "radial artery",
+      "mappingStatus": "archive-row-matched",
+      "ontologyValidated": false,
+      "lod": {
+        "high": "/models/mesh_radial_artery_01.glb",
+        "medium": "/models/mesh_radial_artery_01_med.glb",
+        "low": "/models/mesh_radial_artery_01_low.glb"
+      }
     },
     "mesh_abductor_pollicis_brevis_01": {
       "graphNodeId": "MUSCLE_ABDUCTOR_POLLICIS_BREVIS",
       "name": "Abductor Pollicis Brevis",
       "category": "Muscle",
-      "system": "Muscular System",
+      "system": "Muscular",
       "region": "Hand",
       "layer": "Muscle",
       "sourceDataset": "BodyParts3D",
       "sourceVersion": "4.0",
-      "confidenceScore": 0.99
-    },
-    "mesh_radial_artery_01": {
-      "graphNodeId": "ARTERY_RADIAL",
-      "name": "Radial Artery",
-      "category": "Artery",
-      "system": "Cardiovascular System",
-      "region": "Hand",
-      "layer": "Artery",
-      "sourceDataset": "BodyParts3D",
-      "sourceVersion": "4.0",
-      "confidenceScore": 0.99
+      "sourceFile": "FJ1483.obj",
+      "sourceName": "abductor pollicis brevis",
+      "mappingStatus": "archive-row-matched",
+      "ontologyValidated": false,
+      "lod": {
+        "high": "/models/mesh_abductor_pollicis_brevis_01.glb",
+        "medium": "/models/mesh_abductor_pollicis_brevis_01_med.glb",
+        "low": "/models/mesh_abductor_pollicis_brevis_01_low.glb"
+      }
     }
   },
   "graphNodes": {
-    "NERVE_MEDIAN": {
-      "fmaId": "FMA59762",
+    "BONE_RIGHT_RADIUS": {
+      "fmaId": "FMA23464",
       "meshIds": [
-        "mesh_median_nerve_01"
+        "mesh_right_radius_01"
+      ]
+    },
+    "BONE_RIGHT_ULNA": {
+      "fmaId": "FMA23467",
+      "meshIds": [
+        "mesh_right_ulna_01"
       ]
     },
     "BONE_SCAPHOID": {
@@ -58,23 +619,210 @@
         "mesh_scaphoid_01"
       ]
     },
-    "MUSCLE_ABDUCTOR_POLLICIS_BREVIS": {
-      "fmaId": "FMA37947",
+    "BONE_LUNATE": {
+      "fmaId": "FMA23712",
       "meshIds": [
-        "mesh_abductor_pollicis_brevis_01"
+        "mesh_lunate_01"
       ]
     },
-    "ARTERY_RADIAL": {
+    "BONE_TRIQUETRAL": {
+      "fmaId": "FMA23715",
+      "meshIds": [
+        "mesh_triquetral_01"
+      ]
+    },
+    "BONE_PISIFORM": {
+      "fmaId": "FMA23718",
+      "meshIds": [
+        "mesh_pisiform_01"
+      ]
+    },
+    "BONE_TRAPEZIUM": {
+      "fmaId": "FMA23721",
+      "meshIds": [
+        "mesh_trapezium_01"
+      ]
+    },
+    "BONE_TRAPEZOID": {
+      "fmaId": "FMA23724",
+      "meshIds": [
+        "mesh_trapezoid_01"
+      ]
+    },
+    "BONE_CAPITATE": {
+      "fmaId": "FMA23727",
+      "meshIds": [
+        "mesh_capitate_01"
+      ]
+    },
+    "BONE_HAMATE": {
+      "fmaId": "FMA23730",
+      "meshIds": [
+        "mesh_hamate_01"
+      ]
+    },
+    "BONE_FIRST_METACARPAL": {
+      "fmaId": "FMA24464",
+      "meshIds": [
+        "mesh_first_metacarpal_01"
+      ]
+    },
+    "BONE_SECOND_METACARPAL": {
+      "fmaId": "FMA24466",
+      "meshIds": [
+        "mesh_second_metacarpal_01"
+      ]
+    },
+    "BONE_THIRD_METACARPAL": {
+      "fmaId": "FMA24468",
+      "meshIds": [
+        "mesh_third_metacarpal_01"
+      ]
+    },
+    "BONE_FOURTH_METACARPAL": {
+      "fmaId": "FMA24470",
+      "meshIds": [
+        "mesh_fourth_metacarpal_01"
+      ]
+    },
+    "BONE_FIFTH_METACARPAL": {
+      "fmaId": "FMA24472",
+      "meshIds": [
+        "mesh_fifth_metacarpal_01"
+      ]
+    },
+    "BONE_PROXIMAL_PHALANX_OF_THUMB": {
+      "fmaId": "FMA24450",
+      "meshIds": [
+        "mesh_proximal_phalanx_of_thumb_01"
+      ]
+    },
+    "BONE_PROXIMAL_PHALANX_OF_INDEX_FINGER": {
+      "fmaId": "FMA24451",
+      "meshIds": [
+        "mesh_proximal_phalanx_of_index_finger_01"
+      ]
+    },
+    "BONE_PROXIMAL_PHALANX_OF_MIDDLE_FINGER": {
+      "fmaId": "FMA24452",
+      "meshIds": [
+        "mesh_proximal_phalanx_of_middle_finger_01"
+      ]
+    },
+    "BONE_PROXIMAL_PHALANX_OF_RING_FINGER": {
+      "fmaId": "FMA24453",
+      "meshIds": [
+        "mesh_proximal_phalanx_of_ring_finger_01"
+      ]
+    },
+    "BONE_PROXIMAL_PHALANX_OF_LITTLE_FINGER": {
+      "fmaId": "FMA24454",
+      "meshIds": [
+        "mesh_proximal_phalanx_of_little_finger_01"
+      ]
+    },
+    "BONE_MIDDLE_PHALANX_OF_INDEX_FINGER": {
+      "fmaId": "FMA24455",
+      "meshIds": [
+        "mesh_middle_phalanx_of_index_finger_01"
+      ]
+    },
+    "BONE_MIDDLE_PHALANX_OF_MIDDLE_FINGER": {
+      "fmaId": "FMA24456",
+      "meshIds": [
+        "mesh_middle_phalanx_of_middle_finger_01"
+      ]
+    },
+    "BONE_MIDDLE_PHALANX_OF_RING_FINGER": {
+      "fmaId": "FMA24457",
+      "meshIds": [
+        "mesh_middle_phalanx_of_ring_finger_01"
+      ]
+    },
+    "BONE_MIDDLE_PHALANX_OF_LITTLE_FINGER": {
+      "fmaId": "FMA24458",
+      "meshIds": [
+        "mesh_middle_phalanx_of_little_finger_01"
+      ]
+    },
+    "BONE_DISTAL_PHALANX_OF_THUMB": {
+      "fmaId": "FMA24459",
+      "meshIds": [
+        "mesh_distal_phalanx_of_thumb_01"
+      ]
+    },
+    "BONE_DISTAL_PHALANX_OF_INDEX_FINGER": {
+      "fmaId": "FMA24460",
+      "meshIds": [
+        "mesh_distal_phalanx_of_index_finger_01"
+      ]
+    },
+    "BONE_DISTAL_PHALANX_OF_MIDDLE_FINGER": {
+      "fmaId": "FMA24461",
+      "meshIds": [
+        "mesh_distal_phalanx_of_middle_finger_01"
+      ]
+    },
+    "BONE_DISTAL_PHALANX_OF_RING_FINGER": {
+      "fmaId": "FMA24462",
+      "meshIds": [
+        "mesh_distal_phalanx_of_ring_finger_01"
+      ]
+    },
+    "BONE_DISTAL_PHALANX_OF_LITTLE_FINGER": {
+      "fmaId": "FMA24463",
+      "meshIds": [
+        "mesh_distal_phalanx_of_little_finger_01"
+      ]
+    },
+    "ARTERY_RADIAL_ARTERY": {
       "fmaId": "FMA22730",
       "meshIds": [
         "mesh_radial_artery_01"
       ]
+    },
+    "MUSCLE_ABDUCTOR_POLLICIS_BREVIS": {
+      "fmaId": "FMA37373",
+      "meshIds": [
+        "mesh_abductor_pollicis_brevis_01"
+      ]
+    },
+    "NERVE_MEDIAN_NERVE": {
+      "fmaId": null,
+      "meshIds": []
     }
   },
   "ontologies": {
-    "FMA59762": "http://purl.org/sig/ont/fma/fma59762",
+    "FMA23464": "http://purl.org/sig/ont/fma/fma23464",
+    "FMA23467": "http://purl.org/sig/ont/fma/fma23467",
     "FMA23709": "http://purl.org/sig/ont/fma/fma23709",
-    "FMA37947": "http://purl.org/sig/ont/fma/fma37947",
-    "FMA22730": "http://purl.org/sig/ont/fma/fma22730"
+    "FMA23712": "http://purl.org/sig/ont/fma/fma23712",
+    "FMA23715": "http://purl.org/sig/ont/fma/fma23715",
+    "FMA23718": "http://purl.org/sig/ont/fma/fma23718",
+    "FMA23721": "http://purl.org/sig/ont/fma/fma23721",
+    "FMA23724": "http://purl.org/sig/ont/fma/fma23724",
+    "FMA23727": "http://purl.org/sig/ont/fma/fma23727",
+    "FMA23730": "http://purl.org/sig/ont/fma/fma23730",
+    "FMA24464": "http://purl.org/sig/ont/fma/fma24464",
+    "FMA24466": "http://purl.org/sig/ont/fma/fma24466",
+    "FMA24468": "http://purl.org/sig/ont/fma/fma24468",
+    "FMA24470": "http://purl.org/sig/ont/fma/fma24470",
+    "FMA24472": "http://purl.org/sig/ont/fma/fma24472",
+    "FMA24450": "http://purl.org/sig/ont/fma/fma24450",
+    "FMA24451": "http://purl.org/sig/ont/fma/fma24451",
+    "FMA24452": "http://purl.org/sig/ont/fma/fma24452",
+    "FMA24453": "http://purl.org/sig/ont/fma/fma24453",
+    "FMA24454": "http://purl.org/sig/ont/fma/fma24454",
+    "FMA24455": "http://purl.org/sig/ont/fma/fma24455",
+    "FMA24456": "http://purl.org/sig/ont/fma/fma24456",
+    "FMA24457": "http://purl.org/sig/ont/fma/fma24457",
+    "FMA24458": "http://purl.org/sig/ont/fma/fma24458",
+    "FMA24459": "http://purl.org/sig/ont/fma/fma24459",
+    "FMA24460": "http://purl.org/sig/ont/fma/fma24460",
+    "FMA24461": "http://purl.org/sig/ont/fma/fma24461",
+    "FMA24462": "http://purl.org/sig/ont/fma/fma24462",
+    "FMA24463": "http://purl.org/sig/ont/fma/fma24463",
+    "FMA22730": "http://purl.org/sig/ont/fma/fma22730",
+    "FMA37373": "http://purl.org/sig/ont/fma/fma37373"
   }
 }

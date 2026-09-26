@@ -1,0 +1,261 @@
+{
+  "dataset": "BodyParts3D",
+  "version": "4.0",
+  "retrievedAt": "2026-09-26",
+  "sourceUrl": "https://dbarchive.biosciencedbc.jp/data/bodyparts3d/LATEST/isa_element_parts.txt",
+  "sourceSha256": "a3de74423f943b0d724ae8f59b3a817f87c423a544f8db98113b1980817cbeaf",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+  "licenseEvidenceUrl": "https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html",
+  "attribution": "BodyParts3D, © The Database Center for Life Science licensed under CC Attribution 4.0 International",
+  "scope": "Exact FMA-to-element-file rows extracted from the source table. Confirms archive mapping, not clinical correctness or ontology certification. Existing GLB source names are preserved lineage, not a byte-for-byte source OBJ audit.",
+  "mappings": [
+    {
+      "meshId": "mesh_right_radius_01",
+      "graphNodeId": "BONE_RIGHT_RADIUS",
+      "fmaId": "FMA23464",
+      "sourceName": "right radius",
+      "sourceFile": "FJ3349.obj",
+      "sourceRow": "FMA23464\tright radius\tFJ3349"
+    },
+    {
+      "meshId": "mesh_right_ulna_01",
+      "graphNodeId": "BONE_RIGHT_ULNA",
+      "fmaId": "FMA23467",
+      "sourceName": "right ulna",
+      "sourceFile": "FJ3391.obj",
+      "sourceRow": "FMA23467\tright ulna\tFJ3391"
+    },
+    {
+      "meshId": "mesh_scaphoid_01",
+      "graphNodeId": "BONE_SCAPHOID",
+      "fmaId": "FMA23709",
+      "sourceName": "scaphoid",
+      "sourceFile": "FJ3383.obj",
+      "sourceRow": "FMA23709\tscaphoid\tFJ3383"
+    },
+    {
+      "meshId": "mesh_lunate_01",
+      "graphNodeId": "BONE_LUNATE",
+      "fmaId": "FMA23712",
+      "sourceName": "lunate",
+      "sourceFile": "FJ3374.obj",
+      "sourceRow": "FMA23712\tlunate\tFJ3374"
+    },
+    {
+      "meshId": "mesh_triquetral_01",
+      "graphNodeId": "BONE_TRIQUETRAL",
+      "fmaId": "FMA23715",
+      "sourceName": "triquetral",
+      "sourceFile": "FJ3390.obj",
+      "sourceRow": "FMA23715\ttriquetral\tFJ3390"
+    },
+    {
+      "meshId": "mesh_pisiform_01",
+      "graphNodeId": "BONE_PISIFORM",
+      "fmaId": "FMA23718",
+      "sourceName": "pisiform",
+      "sourceFile": "FJ3382.obj",
+      "sourceRow": "FMA23718\tpisiform\tFJ3382"
+    },
+    {
+      "meshId": "mesh_trapezium_01",
+      "graphNodeId": "BONE_TRAPEZIUM",
+      "fmaId": "FMA23721",
+      "sourceName": "trapezium",
+      "sourceFile": "FJ3388.obj",
+      "sourceRow": "FMA23721\ttrapezium\tFJ3388"
+    },
+    {
+      "meshId": "mesh_trapezoid_01",
+      "graphNodeId": "BONE_TRAPEZOID",
+      "fmaId": "FMA23724",
+      "sourceName": "trapezoid",
+      "sourceFile": "FJ3389.obj",
+      "sourceRow": "FMA23724\ttrapezoid\tFJ3389"
+    },
+    {
+      "meshId": "mesh_capitate_01",
+      "graphNodeId": "BONE_CAPITATE",
+      "fmaId": "FMA23727",
+      "sourceName": "capitate",
+      "sourceFile": "FJ3361.obj",
+      "sourceRow": "FMA23727\tcapitate\tFJ3361"
+    },
+    {
+      "meshId": "mesh_hamate_01",
+      "graphNodeId": "BONE_HAMATE",
+      "fmaId": "FMA23730",
+      "sourceName": "hamate",
+      "sourceFile": "FJ3367.obj",
+      "sourceRow": "FMA23730\thamate\tFJ3367"
+    },
+    {
+      "meshId": "mesh_first_metacarpal_01",
+      "graphNodeId": "BONE_FIRST_METACARPAL",
+      "fmaId": "FMA24464",
+      "sourceName": "right first metacarpal bone",
+      "sourceFile": "FJ3350.obj",
+      "sourceRow": "FMA24464\tright first metacarpal bone\tFJ3350"
+    },
+    {
+      "meshId": "mesh_second_metacarpal_01",
+      "graphNodeId": "BONE_SECOND_METACARPAL",
+      "fmaId": "FMA24466",
+      "sourceName": "right second metacarpal bone",
+      "sourceFile": "FJ3352.obj",
+      "sourceRow": "FMA24466\tright second metacarpal bone\tFJ3352"
+    },
+    {
+      "meshId": "mesh_third_metacarpal_01",
+      "graphNodeId": "BONE_THIRD_METACARPAL",
+      "fmaId": "FMA24468",
+      "sourceName": "right third metacarpal bone",
+      "sourceFile": "FJ3354.obj",
+      "sourceRow": "FMA24468\tright third metacarpal bone\tFJ3354"
+    },
+    {
+      "meshId": "mesh_fourth_metacarpal_01",
+      "graphNodeId": "BONE_FOURTH_METACARPAL",
+      "fmaId": "FMA24470",
+      "sourceName": "right fourth metacarpal bone",
+      "sourceFile": "FJ3356.obj",
+      "sourceRow": "FMA24470\tright fourth metacarpal bone\tFJ3356"
+    },
+    {
+      "meshId": "mesh_fifth_metacarpal_01",
+      "graphNodeId": "BONE_FIFTH_METACARPAL",
+      "fmaId": "FMA24472",
+      "sourceName": "right fifth metacarpal bone",
+      "sourceFile": "FJ3358.obj",
+      "sourceRow": "FMA24472\tright fifth metacarpal bone\tFJ3358"
+    },
+    {
+      "meshId": "mesh_proximal_phalanx_of_thumb_01",
+      "graphNodeId": "BONE_PROXIMAL_PHALANX_OF_THUMB",
+      "fmaId": "FMA24450",
+      "sourceName": "proximal phalanx of right thumb",
+      "sourceFile": "FJ3327.obj",
+      "sourceRow": "FMA24450\tproximal phalanx of right thumb\tFJ3327"
+    },
+    {
+      "meshId": "mesh_proximal_phalanx_of_index_finger_01",
+      "graphNodeId": "BONE_PROXIMAL_PHALANX_OF_INDEX_FINGER",
+      "fmaId": "FMA24451",
+      "sourceName": "proximal phalanx of right index finger",
+      "sourceFile": "FJ3322.obj",
+      "sourceRow": "FMA24451\tproximal phalanx of right index finger\tFJ3322"
+    },
+    {
+      "meshId": "mesh_proximal_phalanx_of_middle_finger_01",
+      "graphNodeId": "BONE_PROXIMAL_PHALANX_OF_MIDDLE_FINGER",
+      "fmaId": "FMA24452",
+      "sourceName": "proximal phalanx of right middle finger",
+      "sourceFile": "FJ3325.obj",
+      "sourceRow": "FMA24452\tproximal phalanx of right middle finger\tFJ3325"
+    },
+    {
+      "meshId": "mesh_proximal_phalanx_of_ring_finger_01",
+      "graphNodeId": "BONE_PROXIMAL_PHALANX_OF_RING_FINGER",
+      "fmaId": "FMA24453",
+      "sourceName": "proximal phalanx of right ring finger",
+      "sourceFile": "FJ3326.obj",
+      "sourceRow": "FMA24453\tproximal phalanx of right ring finger\tFJ3326"
+    },
+    {
+      "meshId": "mesh_proximal_phalanx_of_little_finger_01",
+      "graphNodeId": "BONE_PROXIMAL_PHALANX_OF_LITTLE_FINGER",
+      "fmaId": "FMA24454",
+      "sourceName": "proximal phalanx of right little finger",
+      "sourceFile": "FJ3323.obj",
+      "sourceRow": "FMA24454\tproximal phalanx of right little finger\tFJ3323"
+    },
+    {
+      "meshId": "mesh_middle_phalanx_of_index_finger_01",
+      "graphNodeId": "BONE_MIDDLE_PHALANX_OF_INDEX_FINGER",
+      "fmaId": "FMA24455",
+      "sourceName": "middle phalanx of right index finger",
+      "sourceFile": "FJ3303.obj",
+      "sourceRow": "FMA24455\tmiddle phalanx of right index finger\tFJ3303"
+    },
+    {
+      "meshId": "mesh_middle_phalanx_of_middle_finger_01",
+      "graphNodeId": "BONE_MIDDLE_PHALANX_OF_MIDDLE_FINGER",
+      "fmaId": "FMA24456",
+      "sourceName": "middle phalanx of right middle finger",
+      "sourceFile": "FJ3306.obj",
+      "sourceRow": "FMA24456\tmiddle phalanx of right middle finger\tFJ3306"
+    },
+    {
+      "meshId": "mesh_middle_phalanx_of_ring_finger_01",
+      "graphNodeId": "BONE_MIDDLE_PHALANX_OF_RING_FINGER",
+      "fmaId": "FMA24457",
+      "sourceName": "middle phalanx of right ring finger",
+      "sourceFile": "FJ3292.obj",
+      "sourceRow": "FMA24457\tmiddle phalanx of right ring finger\tFJ3292"
+    },
+    {
+      "meshId": "mesh_middle_phalanx_of_little_finger_01",
+      "graphNodeId": "BONE_MIDDLE_PHALANX_OF_LITTLE_FINGER",
+      "fmaId": "FMA24458",
+      "sourceName": "middle phalanx of right little finger",
+      "sourceFile": "FJ3304.obj",
+      "sourceRow": "FMA24458\tmiddle phalanx of right little finger\tFJ3304"
+    },
+    {
+      "meshId": "mesh_distal_phalanx_of_thumb_01",
+      "graphNodeId": "BONE_DISTAL_PHALANX_OF_THUMB",
+      "fmaId": "FMA24459",
+      "sourceName": "distal phalanx of right thumb",
+      "sourceFile": "FJ3198.obj",
+      "sourceRow": "FMA24459\tdistal phalanx of right thumb\tFJ3198"
+    },
+    {
+      "meshId": "mesh_distal_phalanx_of_index_finger_01",
+      "graphNodeId": "BONE_DISTAL_PHALANX_OF_INDEX_FINGER",
+      "fmaId": "FMA24460",
+      "sourceName": "distal phalanx of right index finger",
+      "sourceFile": "FJ3193.obj",
+      "sourceRow": "FMA24460\tdistal phalanx of right index finger\tFJ3193"
+    },
+    {
+      "meshId": "mesh_distal_phalanx_of_middle_finger_01",
+      "graphNodeId": "BONE_DISTAL_PHALANX_OF_MIDDLE_FINGER",
+      "fmaId": "FMA24461",
+      "sourceName": "distal phalanx of right middle finger",
+      "sourceFile": "FJ3196.obj",
+      "sourceRow": "FMA24461\tdistal phalanx of right middle finger\tFJ3196"
+    },
+    {
+      "meshId": "mesh_distal_phalanx_of_ring_finger_01",
+      "graphNodeId": "BONE_DISTAL_PHALANX_OF_RING_FINGER",
+      "fmaId": "FMA24462",
+      "sourceName": "distal phalanx of right ring finger",
+      "sourceFile": "FJ3197.obj",
+      "sourceRow": "FMA24462\tdistal phalanx of right ring finger\tFJ3197"
+    },
+    {
+      "meshId": "mesh_distal_phalanx_of_little_finger_01",
+      "graphNodeId": "BONE_DISTAL_PHALANX_OF_LITTLE_FINGER",
+      "fmaId": "FMA24463",
+      "sourceName": "distal phalanx of right little finger",
+      "sourceFile": "FJ3194.obj",
+      "sourceRow": "FMA24463\tdistal phalanx of right little finger\tFJ3194"
+    },
+    {
+      "meshId": "mesh_radial_artery_01",
+      "graphNodeId": "ARTERY_RADIAL_ARTERY",
+      "fmaId": "FMA22730",
+      "sourceName": "radial artery",
+      "sourceFile": "FJ2294.obj",
+      "sourceRow": "FMA22730\tradial artery\tFJ2294"
+    },
+    {
+      "meshId": "mesh_abductor_pollicis_brevis_01",
+      "graphNodeId": "MUSCLE_ABDUCTOR_POLLICIS_BREVIS",
+      "fmaId": "FMA37373",
+      "sourceName": "abductor pollicis brevis",
+      "sourceFile": "FJ1483.obj",
+      "sourceRow": "FMA37373\tabductor pollicis brevis\tFJ1483"
+    }
+  ]
+}

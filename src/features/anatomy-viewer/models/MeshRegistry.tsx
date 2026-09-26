@@ -1,128 +1,101 @@
-import React, { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import * as THREE from 'three';
+import { ThreeEvent, useThree } from '@react-three/fiber';
+import { useGLTF } from '@react-three/drei';
 import { useAppStore } from '@/store/useAppStore';
 import { getMaterial } from '../materials/MaterialRegistry';
 import { AnatomySceneNode, HighlightState } from '@/types/anatomy';
-import { Outlines, useGLTF } from '@react-three/drei';
 
-function MissingAssetProxy({ node }: { node: AnatomySceneNode }) {
-  // Use the bounding box from manifest if available, otherwise default size
-  let boxArgs: [number, number, number] = [1, 1, 1];
-  let proxyPosition: [number, number, number] = node.position || [0, 0, 0];
-  
-  if (node.boundingBox && node.boundingBox.length === 6) {
-    const [minX, minY, minZ, maxX, maxY, maxZ] = node.boundingBox;
-    boxArgs = [Math.max(0.1, maxX - minX), Math.max(0.1, maxY - minY), Math.max(0.1, maxZ - minZ)];
-    // If no position field, derive from bounding box center
-    if (!node.position) {
-      proxyPosition = [(minX + maxX) / 2, (minY + maxY) / 2, (minZ + maxZ) / 2];
-    }
+export function getExplosionOffset(node: AnatomySceneNode, amount: number): [number, number, number] {
+  const direction = new THREE.Vector3(...node.explosionDirection);
+  // Older manifests have zero vectors. Spread those meshes from the palm origin.
+  if (direction.lengthSq() === 0) {
+    const box = node.boundingBox;
+    direction.set((box[0] + box[3]) / 2, (box[1] + box[4]) / 2, (box[2] + box[5]) / 2);
+    if (direction.lengthSq() === 0) direction.set(1, 0, 0);
+    direction.normalize();
   }
+  return direction.multiplyScalar(amount).toArray();
+}
 
-  return (
-    <group position={proxyPosition}>
-      <mesh>
-        <boxGeometry args={boxArgs} />
-        <meshBasicMaterial color="#ef4444" wireframe={true} />
-      </mesh>
-    </group>
-  );
+export function getNodeBounds(node: AnatomySceneNode, amount = 0): AnatomySceneNode['boundingBox'] {
+  const [x, y, z] = getExplosionOffset(node, amount);
+  const [a, b, c, d, e, f] = node.boundingBox;
+  return [a + x, b + y, c + z, d + x, e + y, f + z];
 }
 
 export function MeshInstance({ node }: { node: AnatomySceneNode }) {
-  const currentState = useAppStore(state => state.meshHighlightStates[node.meshId] || HighlightState.None);
-  const activeLayers = useAppStore(state => state.activeLayers);
-  const selectAnatomy = useAppStore(state => state.selectAnatomy);
-  const activeMeshNode = useAppStore(state => state.activeMeshNode);
-  const isolationMode = useAppStore(state => state.isolationMode);
-  const explosionAmount = useAppStore(state => state.explosionAmount);
-  const setMeshHighlight = useAppStore(state => state.setMeshHighlight);
-  const clearHighlights = useAppStore(state => state.clearHighlights);
+  const currentState = useAppStore((state) => state.selectedMeshId === node.meshId
+    ? HighlightState.Selected : state.hoveredMeshId === node.meshId
+      ? HighlightState.Hovered : state.meshHighlightStates[node.meshId] || HighlightState.None);
+  const visible = useAppStore((state) => state.activeLayers.includes(node.layer)
+    && (!state.isolationMode || state.selectedMeshId === node.meshId));
+  const explosionAmount = useAppStore((state) => state.explosionAmount);
+  const selectAnatomy = useAppStore((state) => state.selectAnatomy);
+  const setHoveredMeshId = useAppStore((state) => state.setHoveredMeshId);
+  const { gl } = useThree();
+  const { scene } = useGLTF(node.lod.high, '/draco/');
 
-  // Layer string matching
-  const isVisible = activeLayers.includes(node.layer);
-
-  // Pre-load the gltf scene unconditionally so React hooks rules are not broken
-  // In a future advanced LOD system, this would dynamically switch between low/med/high
-  // based on camera distance or PerformanceMonitor feedback.
-  const { scene } = useGLTF(node.lod.high, true); // true enables DRACO loader using CDN
-
-  if (!isVisible) return null;
-
-  console.groupCollapsed(`Loading ${node.meshId}`);
-  console.log("Path", node.lod.high);
-  console.log("Layer", node.layer);
-  console.log("Material", node.materialId);
-  if (node.position) console.log("Position", node.position);
-  console.groupEnd();
-
-  const isHighlighted = currentState !== HighlightState.None;
-  const isSelected = currentState === HighlightState.Selected;
-  const material = getMaterial(node.materialId) as THREE.MeshPhysicalMaterial;
-
-  // Handle Isolation Mode logic
-  const shouldIsolate = isolationMode && activeMeshNode && activeMeshNode.meshId !== node.meshId;
-  
-  // Single clone pass: apply materials and count meshes
-  const clonedScene = scene.clone();
-  let meshCount = 0;
-  clonedScene.traverse((child) => {
-    if ((child as any).isMesh) {
-      meshCount++;
-      const matClone = material.clone();
-      if (shouldIsolate) {
-        matClone.transparent = true;
-        matClone.opacity = 0.15;
-        matClone.depthWrite = false; // Prevent ghosting overlap issues
+  const instance = useMemo(() => {
+    const object = scene.clone(true);
+    const materials: THREE.MeshPhysicalMaterial[] = [];
+    object.traverse((child) => {
+      if (child instanceof THREE.Mesh) {
+        const material = getMaterial(node.materialId).clone();
+        materials.push(material);
+        child.material = material;
       }
-      (child as any).material = matClone;
-    }
-  });
+    });
+    if (materials.length === 0) throw new Error(`The model for ${node.name} contains no anatomy geometry.`);
+    return { object, materials };
+  }, [scene, node.materialId, node.name]);
 
-  if (meshCount === 0) {
-    console.warn(`[WARN] Loaded GLB for ${node.meshId} contains no meshes. Ensure Blender export includes mesh data.`);
-    return <MissingAssetProxy node={node} />;
+  useEffect(() => () => { instance.materials.forEach((material) => material.dispose()); }, [instance]);
+
+  useEffect(() => {
+    const selected = currentState === HighlightState.Selected;
+    const highlighted = currentState !== HighlightState.None;
+    instance.materials.forEach((material) => {
+      material.emissive.set(selected ? '#21b8aa' : '#94bfff');
+      material.emissiveIntensity = highlighted ? (selected ? 0.55 : 0.25) : 0;
+    });
+  }, [currentState, instance]);
+
+  const offset = getExplosionOffset(node, explosionAmount);
+  const position = (node.position || [0, 0, 0]).map((value, index) => value + offset[index]) as [number, number, number];
+
+  function isClipped(event: ThreeEvent<PointerEvent | MouseEvent>) {
+    return gl.clippingPlanes.some((plane) => plane.distanceToPoint(event.point) < 0);
   }
 
-  // Base position from manifest (world-space origin for centered meshes)
-  const basePosition: [number, number, number] = node.position || [0, 0, 0];
+  function hover(event: ThreeEvent<PointerEvent>) {
+    if (isClipped(event)) {
+      if (useAppStore.getState().hoveredMeshId === node.meshId) setHoveredMeshId(null);
+      return;
+    }
+    event.stopPropagation();
+    setHoveredMeshId(node.meshId);
+  }
 
-  // Calculate System-Grouped Explosion offset
-  const finalPosition: [number, number, number] = [
-    basePosition[0] + node.explosionDirection[0] * explosionAmount,
-    basePosition[1] + node.explosionDirection[1] * explosionAmount,
-    basePosition[2] + node.explosionDirection[2] * explosionAmount
-  ];
+  // Three.js raycasts invisible meshes, so detach hidden structures from the scene.
+  if (!visible) return null;
 
   return (
-    <primitive 
-      object={clonedScene}
-      position={finalPosition}
-      onClick={(e: any) => {
-        e.stopPropagation();
-        selectAnatomy(node);
-      }}
-      onPointerOver={(e: any) => {
-        e.stopPropagation();
-        if (currentState !== HighlightState.Selected) {
-          setMeshHighlight(node.meshId, HighlightState.Hovered);
-        }
-        document.body.style.cursor = 'pointer';
-      }}
-      onPointerOut={(e: any) => {
-        if (currentState === HighlightState.Hovered) {
-          clearHighlights(HighlightState.Hovered);
-        }
-        document.body.style.cursor = 'auto';
-      }}
-    >
-      {/* High-performance Drei Outlines instead of Postprocessing context */}
-      {isHighlighted && (
-        <Outlines 
-          thickness={isSelected ? 0.05 : 0.02} 
-          color={isSelected ? "#4ade80" : "#ffffff"} 
-        />
-      )}
-    </primitive>
+    <group position={position} rotation={node.rotation}>
+      <primitive
+        object={instance.object}
+        dispose={null}
+        onClick={(event: ThreeEvent<MouseEvent>) => {
+          if (isClipped(event)) return;
+          event.stopPropagation();
+          selectAnatomy(node);
+        }}
+        onPointerOver={hover}
+        onPointerMove={hover}
+        onPointerOut={() => {
+          if (useAppStore.getState().hoveredMeshId === node.meshId) setHoveredMeshId(null);
+        }}
+      />
+    </group>
   );
 }

@@ -1,42 +1,23 @@
-// scripts/evaluate_rag.ts
-// Test script for GraphRAG Foundation Phase 1
-async function testRetrieval(query: string) {
-  console.log(`\n======================================================`);
-  console.log(`Testing Query: "${query}"`);
-  console.log(`======================================================`);
-  try {
-    const response = await fetch('http://localhost:3000/api/retrieval', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query })
-    });
-
-    if (!response.ok) {
-      console.error("Error:", await response.text());
-      return;
-    }
-
-    const data = await response.json();
-    console.log(`Intent Detected: ${data.intent}`);
-    console.log(`Extracted Terms: ${data.extractedTerms}`);
-    console.log(`Evidence Count:  ${data.metadata.totalEvidences}`);
-    
-    if (data.evidence.length > 0) {
-      console.log(`\nTop Evidence Sample:`);
-      console.log(JSON.stringify(data.evidence[0], null, 2));
-    } else {
-      console.log(`\nNo evidence retrieved.`);
-    }
-
-  } catch (err) {
-    console.error("Fetch failed:", err);
+import assert from 'node:assert/strict';
+import type { RetrievalResponse } from '../src/lib/anatomy-types';
+const base = process.env.TEST_BASE_URL || 'http://127.0.0.1:3000';
+async function run() {
+  for (const [query, status, relation] of [
+    ['What muscles are innervated by the median nerve?', 'ok', 'INNERVATES'],
+    ['What structures are affected in carpal tunnel syndrome?', 'ok', 'AFFECTED_BY'],
+    ['What articulates with the scaphoid?', 'ok', 'ARTICULATES_WITH'],
+    ['What is near the scaphoid?', 'unsupported', null],
+    ['What is the anatomy of an unknown structure zzzz?', 'no_results', null],
+  ] as const) {
+    const response = await fetch(`${base}/api/retrieval`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ query }), signal: AbortSignal.timeout(20000) });
+    assert.equal(response.status, 200, query);
+    const result: RetrievalResponse = await response.json();
+    assert.equal(result.status, status, query);
+    if (relation) {
+      assert.ok(result.evidence.length > 0, query);
+      assert.ok(result.evidence.every((edge) => edge.relationship === relation && edge.citation.title && edge.citation.url.startsWith('https://') && edge.sourceNode.graphNodeId && edge.targetNode.graphNodeId), query);
+    } else assert.equal(result.evidence.length, 0, query);
+    console.log(`PASS ${query} (${result.evidence.length} evidence connections)`);
   }
 }
-
-async function runBenchmarks() {
-  await testRetrieval("What muscles are innervated by the median nerve?");
-  await testRetrieval("What structures are affected in carpal tunnel syndrome?");
-  await testRetrieval("Show me structures near the scaphoid.");
-}
-
-runBenchmarks();
+run().catch((error: unknown) => { console.error(error instanceof Error ? error.message : error); process.exitCode = 1; });

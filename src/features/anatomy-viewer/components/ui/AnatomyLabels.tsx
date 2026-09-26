@@ -1,71 +1,35 @@
-import React, { useMemo } from 'react';
 import { Html } from '@react-three/drei';
 import { useAppStore } from '@/store/useAppStore';
-import { useRegionManager } from '@/hooks/useRegionManager';
-import { HighlightState } from '@/types/anatomy';
-import * as THREE from 'three';
+import { AnatomySceneNode } from '@/types/anatomy';
+import { getNodeBounds } from '../../models/MeshRegistry';
 
-export function AnatomyLabels() {
-  const { meshes } = useRegionManager();
-  const meshHighlightStates = useAppStore(state => state.meshHighlightStates);
+export function AnatomyLabels({ meshes }: { meshes: AnatomySceneNode[] }) {
+  const selectedId = useAppStore((state) => state.selectedMeshId);
+  const hoveredId = useAppStore((state) => state.hoveredMeshId);
+  const activeLayers = useAppStore((state) => state.activeLayers);
+  const isolationMode = useAppStore((state) => state.isolationMode);
+  const explosionAmount = useAppStore((state) => state.explosionAmount);
+  const clipping = useAppStore((state) => state.clippingState);
 
-  // Optimization: Only process nodes that are Hovered or Selected
-  const activeLabels = useMemo(() => {
-    const labels: Array<{ id: string, name: string, position: THREE.Vector3, state: HighlightState }> = [];
-    
-    Object.entries(meshHighlightStates).forEach(([meshId, state]) => {
-      if (state === HighlightState.Hovered || state === HighlightState.Selected) {
-        const node = meshes.find(m => m.meshId === meshId);
-        if (node && node.boundingBox) {
-          // Calculate center of bounding box for label placement
-          const [minX, minY, minZ, maxX, maxY, maxZ] = node.boundingBox;
-          const centerX = (minX + maxX) / 2;
-          const centerY = (minY + maxY) / 2;
-          const centerZ = (minZ + maxZ) / 2;
-          
-          labels.push({
-            id: meshId,
-            name: node.name,
-            position: new THREE.Vector3(centerX, centerY, centerZ),
-            state
-          });
-        }
-      }
-    });
-    
-    return labels;
-  }, [meshHighlightStates, meshes]);
+  const nodes = meshes.filter((node) => (node.meshId === selectedId || node.meshId === hoveredId)
+    && activeLayers.includes(node.layer) && (!isolationMode || node.meshId === selectedId));
 
-  if (activeLabels.length === 0) return null;
-
-  return (
-    <>
-      {activeLabels.map(label => (
-        <Html 
-          key={label.id} 
-          position={label.position} 
-          center 
-          distanceFactor={10}
-          zIndexRange={[100, 0]}
-          className="pointer-events-none"
-        >
-          <div className={`
-            px-3 py-1.5 rounded-md backdrop-blur-md border shadow-lg text-sm font-bold whitespace-nowrap transition-all
-            ${label.state === HighlightState.Selected 
-              ? 'bg-blue-900/80 border-blue-400 text-white scale-110' 
-              : 'bg-gray-900/80 border-gray-600 text-gray-200'
-            }
-          `}>
-            {label.name}
-            {label.state === HighlightState.Hovered && (
-              <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-gray-600 rotate-45 border-r border-b border-gray-600"></div>
-            )}
-            {label.state === HighlightState.Selected && (
-              <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-blue-900 rotate-45 border-r border-b border-blue-400"></div>
-            )}
-          </div>
-        </Html>
-      ))}
-    </>
-  );
+  return <>{nodes.map((node) => {
+    const bounds = getNodeBounds(node, explosionAmount);
+    const position: [number, number, number] = [
+      (bounds[0] + bounds[3]) / 2,
+      (bounds[1] + bounds[4]) / 2,
+      (bounds[2] + bounds[5]) / 2,
+    ];
+    const axis = clipping.plane === 'axial' ? 2 : clipping.plane === 'sagittal' ? 0 : 1;
+    if (clipping.enabled && position[axis] > clipping.position) return null;
+    const selected = node.meshId === selectedId;
+    return (
+      <Html key={node.meshId} position={position} center zIndexRange={[20, 0]} style={{ pointerEvents: 'none' }}>
+        <div className={`-translate-y-8 whitespace-nowrap rounded-md border px-3 py-1.5 text-xs font-semibold shadow-lg ${selected ? 'border-teal-400 bg-teal-950/95 text-teal-50' : 'border-slate-500 bg-slate-900/95 text-slate-200'}`}>
+          {node.name}
+        </div>
+      </Html>
+    );
+  })}</>;
 }

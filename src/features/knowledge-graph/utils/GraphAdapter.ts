@@ -1,60 +1,10 @@
-import { GraphData, GraphNode, GraphLink } from '@/types/graph';
-
-export function transformNeo4jToGraph(structures: any[]): GraphData {
-  const nodes: GraphNode[] = [];
-  const links: GraphLink[] = [];
-
-  structures.forEach((struct) => {
-    nodes.push({
-      id: struct.graphNodeId,
-      name: struct.name,
-      system: struct.system?.name?.toUpperCase() || 'UNKNOWN',
-      val: 20,
-      color: getSystemColor(struct.system?.name),
-      visualBinding: struct.asset ? { meshId: struct.asset.meshId } : { meshId: 'missing' },
-    });
-
-    // Add innervates links
-    if (struct.innervates && struct.innervates.length > 0) {
-      struct.innervates.forEach((target: any) => {
-        links.push({
-          source: struct.graphNodeId,
-          target: target.graphNodeId,
-          type: 'INNERVATES',
-        });
-      });
-    }
-
-    // Add supplies links
-    if (struct.supplies && struct.supplies.length > 0) {
-      struct.supplies.forEach((target: any) => {
-        links.push({
-          source: struct.graphNodeId,
-          target: target.graphNodeId,
-          type: 'SUPPLIES',
-        });
-      });
-    }
-    
-    // We can also add structural (BELONGS_TO) links if we want a hierarchical graph
-  });
-
-  return { nodes, links };
-}
-
-function getSystemColor(systemName?: string): string {
-  switch (systemName) {
-    case 'Nervous':
-      return '#facc15'; // yellow-400
-    case 'Muscular':
-      return '#f87171'; // red-400
-    case 'Cardiovascular':
-      return '#3b82f6'; // blue-500
-    case 'Skeletal':
-      return '#f3f4f6'; // gray-100
-    case 'Integumentary':
-      return '#fdba74'; // orange-300
-    default:
-      return '#9ca3af'; // gray-400
-  }
+import type { AnatomyDataset } from '@/lib/anatomy-types';
+import type { GraphData } from '@/types/graph';
+const colors: Record<string, string> = { Bone: '#e4d9c2', Muscle: '#df8383', Artery: '#ff6868', Nerve: '#f2cf65' };
+export function toGraphData(data: AnatomyDataset): GraphData {
+  return {
+    nodes: [...data.structures.map((node) => ({ id: node.graphNodeId, name: node.name, system: node.system.name, color: colors[node.category] ?? '#87a6ba', val: 3, visualBinding: { meshId: node.asset?.meshId } })),
+      ...data.clinicalConditions.map((node) => ({ id: node.id, name: node.name, system: 'Clinical', color: '#c79cde', val: 4, visualBinding: {} }))],
+    links: data.relationships.map((relation) => ({ id: relation.id, source: relation.source, target: relation.target, type: relation.type, color: '#697a92' })),
+  };
 }

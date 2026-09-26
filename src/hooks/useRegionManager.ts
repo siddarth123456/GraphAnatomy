@@ -1,84 +1,127 @@
-import { useState, useEffect } from 'react';
+import { useCallback, useEffect, useMemo, useSyncExternalStore } from 'react';
 import { useAppStore } from '@/store/useAppStore';
-import { AnatomySceneNode, RegionManifest } from '@/types/anatomy';
+import { AnatomyLayer, AnatomySceneNode, RegionManifest } from '@/types/anatomy';
 
-// Maps regionId -> URL
 interface GlobalManifest {
   regions: string[];
   manifests: Record<string, string>;
 }
 
-export function useRegionManager() {
-  const activeRegionIds = useAppStore(state => state.activeRegionIds);
-  const [globalManifest, setGlobalManifest] = useState<GlobalManifest | null>(null);
-  const [regionCache, setRegionCache] = useState<Record<string, RegionManifest>>({});
-  const [activeMeshes, setActiveMeshes] = useState<AnatomySceneNode[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+interface ManifestCache {
+  global: GlobalManifest | null;
+  regions: Record<string, RegionManifest>;
+  errors: Record<string, string>;
+}
 
-  // 1. Load Global Manifest once
-  useEffect(() => {
-    fetch('/manifests/global_manifest.json')
-      .then(res => res.json())
-      .then(data => {
-        setGlobalManifest(data);
-      })
-      .catch(err => console.error('Failed to load global manifest', err));
-  }, []);
+const initialCache: ManifestCache = { global: null, regions: {}, errors: {} };
+let cache = initialCache;
+const listeners = new Set<() => void>();
+const requests = new Map<string, Promise<void>>();
+const GLOBAL = '__global__';
 
-  // 2. Load missing active regions
-  useEffect(() => {
-    if (!globalManifest) return;
+function publish(next: ManifestCache) {
+  cache = next;
+  listeners.forEach((listener) => listener());
+}
 
-    let mounted = true;
-    const fetchPromises: Promise<void>[] = [];
-    const newCache = { ...regionCache };
+function subscribe(listener: () => void) {
+  listeners.add(listener);
+  return () => { listeners.delete(listener); };
+}
 
-    activeRegionIds.forEach(regionId => {
-      if (!newCache[regionId] && globalManifest.manifests[regionId]) {
-        const url = globalManifest.manifests[regionId];
-        const p = fetch(url)
-          .then(res => res.json())
-          .then(data => {
-            newCache[regionId] = data;
-          })
-          .catch(err => console.error(`Failed to load region ${regionId}`, err));
-        fetchPromises.push(p);
-      }
-    });
+async function fetchJSON(url: string): Promise<unknown> {
+  const response = await fetch(url, { signal: AbortSignal.timeout(20000) });
+  if (!response.ok) throw new Error(`Could not load anatomy data (HTTP ${response.status}).`);
+  return response.json();
+}
 
-    if (fetchPromises.length > 0) {
-      setIsLoading(true);
-      Promise.all(fetchPromises).then(() => {
-        if (mounted) {
-          setRegionCache(newCache);
-          setIsLoading(false);
-        }
-      });
-    } else {
-      setIsLoading(false);
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return !!value && typeof value === 'object' && !Array.isArray(value);
+}
+
+function isVector(value: unknown, length: number) {
+  return Array.isArray(value) && value.length === length && value.every((part) => typeof part === 'number' && Number.isFinite(part));
+}
+
+function validateRegion(value: unknown, regionId: string): RegionManifest {
+  if (!isRecord(value) || value.regionId !== regionId || !Array.isArray(value.meshes) || value.meshes.length === 0) {
+    throw new Error(`The ${regionId} anatomy manifest is invalid or empty.`);
+  }
+  const ids = new Set<string>();
+  for (const node of value.meshes) {
+    if (!isRecord(node) || typeof node.meshId !== 'string' || ids.has(node.meshId)
+      || typeof node.name !== 'string' || typeof node.graphNodeId !== 'string'
+      || !Object.values(AnatomyLayer).includes(node.layer as AnatomyLayer)
+      || !isRecord(node.lod) || typeof node.lod.high !== 'string' || !node.lod.high.startsWith('/models/')
+      || !isVector(node.boundingBox, 6) || !isVector(node.explosionDirection, 3)
+      || (node.position !== undefined && !isVector(node.position, 3))) {
+      throw new Error(`The ${regionId} anatomy manifest contains an invalid structure.`);
     }
+    ids.add(node.meshId);
+  }
+  return value as unknown as RegionManifest;
+}
 
-    return () => {
-      mounted = false;
-    };
-  }, [activeRegionIds, globalManifest, regionCache]);
+function request(key: string, load: () => Promise<void>) {
+  if (requests.has(key)) return requests.get(key)!;
+  if (cache.errors[key]) return Promise.resolve();
+  const promise = load().catch((error: unknown) => {
+    publish({ ...cache, errors: { ...cache.errors, [key]: error instanceof Error ? error.message : 'Anatomy data could not be loaded.' } });
+  }).finally(() => { requests.delete(key); });
+  requests.set(key, promise);
+  return promise;
+}
 
-  // 3. Combine meshes from active regions
-  useEffect(() => {
-    if (isLoading) return;
-
-    const meshes: AnatomySceneNode[] = [];
-    activeRegionIds.forEach(regionId => {
-      if (regionCache[regionId]) {
-        meshes.push(...regionCache[regionId].meshes);
+async function loadRegions(regionIds: string[]) {
+  if (!cache.global) {
+    await request(GLOBAL, async () => {
+      const value = await fetchJSON('/manifests/global_manifest.json');
+      if (!isRecord(value) || !Array.isArray(value.regions) || !isRecord(value.manifests)
+        || !value.regions.every((id) => typeof id === 'string' && typeof (value.manifests as Record<string, unknown>)[id] === 'string')) {
+        throw new Error('The anatomy region index is invalid.');
       }
+      publish({ ...cache, global: value as unknown as GlobalManifest });
     });
+  }
+  const global = cache.global;
+  if (!global) return;
+  await Promise.all(regionIds.map((id) => {
+    if (cache.regions[id]) return Promise.resolve();
+    return request(id, async () => {
+      const url = global.manifests[id];
+      if (!url) throw new Error(`The ${id} region is not available.`);
+      const region = validateRegion(await fetchJSON(url), id);
+      publish({ ...cache, regions: { ...cache.regions, [id]: region } });
+    });
+  }));
+}
 
-    setActiveMeshes(meshes);
-  }, [activeRegionIds, regionCache, isLoading]);
+/** All viewer panels share one cache and one request per manifest. */
+export function useRegionManager() {
+  const activeRegionIds = useAppStore((state) => state.activeRegionIds);
+  const snapshot = useSyncExternalStore(subscribe, () => cache, () => initialCache);
 
+  useEffect(() => { void loadRegions(activeRegionIds); }, [activeRegionIds]);
+
+  const meshes = useMemo<AnatomySceneNode[]>(() => {
+    const nodes = new Map<string, AnatomySceneNode>();
+    activeRegionIds.forEach((id) => snapshot.regions[id]?.meshes.forEach((node) => nodes.set(node.meshId, node)));
+    return [...nodes.values()];
+  }, [activeRegionIds, snapshot.regions]);
+
+  const retry = useCallback(() => {
+    const errors = { ...cache.errors };
+    delete errors[GLOBAL];
+    activeRegionIds.forEach((id) => { delete errors[id]; });
+    publish({ ...cache, errors });
+    void loadRegions(activeRegionIds);
+  }, [activeRegionIds]);
+
+  const error = snapshot.errors[GLOBAL] || activeRegionIds.map((id) => snapshot.errors[id]).find(Boolean) || null;
   return {
-    meshes: activeMeshes,
-    isLoading
+    meshes,
+    isLoading: !error && (!snapshot.global || activeRegionIds.some((id) => !snapshot.regions[id])),
+    error,
+    retry,
   };
 }

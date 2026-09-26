@@ -1,28 +1,18 @@
-const fs = require('fs');
-const neo4j = require('neo4j-driver');
-const path = require('path');
+/* eslint-disable @typescript-eslint/no-require-imports -- Node CLI loads shared TypeScript through tsx. */
+/* Local CLI: all connection settings come from environment variables or .env.local. */
+require('@next/env').loadEnvConfig(process.cwd());
+require('tsx/cjs');
+const { seedAnatomy } = require('./src/lib/seed.ts');
+const { closeNeo4jDriver, AnatomyDataError } = require('./src/lib/neo4j.ts');
 
-const uri = 'neo4j+s://431de9c6.databases.neo4j.io';
-const user = '431de9c6';
-const pass = 'eEuduzc8kIXDytnwPVYcJtXBVtDSk44tlm8tVOq-wEE';
-const database = '431de9c6';
-
-async function seed() {
-  const driver = neo4j.driver(uri, neo4j.auth.basic(user, pass));
-  const session = driver.session({ database });
-
-  const filePath = path.join(__dirname, '..', 'backend', 'cypher', '05_hand_expansion.cypher');
-  const cypher = fs.readFileSync(filePath, 'utf8');
-
+(async () => {
   try {
-    const result = await session.run(cypher);
-    console.log('Seed successful:', result.records.map(r => r.get(0)));
+    const counts = await seedAnatomy();
+    console.log('Canonical hand dataset seeded:', counts);
   } catch (error) {
-    console.error('Seed failed:', error);
+    console.error(error instanceof AnatomyDataError ? error.message : 'Neo4j seed failed. Check connection settings, database access and Neo4j logs.');
+    process.exitCode = 1;
   } finally {
-    await session.close();
-    await driver.close();
+    await closeNeo4jDriver();
   }
-}
-
-seed();
+})();
