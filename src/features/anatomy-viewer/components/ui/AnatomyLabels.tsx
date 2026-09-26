@@ -1,71 +1,53 @@
-import React, { useMemo } from 'react';
 import { Html } from '@react-three/drei';
 import { useAppStore } from '@/store/useAppStore';
-import { useRegionManager } from '@/hooks/useRegionManager';
-import { HighlightState } from '@/types/anatomy';
-import * as THREE from 'three';
+import { AnatomySceneNode } from '@/types/anatomy';
+import { getNodeBounds } from '../../models/MeshRegistry';
 
-export function AnatomyLabels() {
-  const { meshes } = useRegionManager();
-  const meshHighlightStates = useAppStore(state => state.meshHighlightStates);
+const overviewLimit = 12;
 
-  // Optimization: Only process nodes that are Hovered or Selected
-  const activeLabels = useMemo(() => {
-    const labels: Array<{ id: string, name: string, position: THREE.Vector3, state: HighlightState }> = [];
-    
-    Object.entries(meshHighlightStates).forEach(([meshId, state]) => {
-      if (state === HighlightState.Hovered || state === HighlightState.Selected) {
-        const node = meshes.find(m => m.meshId === meshId);
-        if (node && node.boundingBox) {
-          // Calculate center of bounding box for label placement
-          const [minX, minY, minZ, maxX, maxY, maxZ] = node.boundingBox;
-          const centerX = (minX + maxX) / 2;
-          const centerY = (minY + maxY) / 2;
-          const centerZ = (minZ + maxZ) / 2;
-          
-          labels.push({
-            id: meshId,
-            name: node.name,
-            position: new THREE.Vector3(centerX, centerY, centerZ),
-            state
-          });
-        }
+export function AnatomyLabels({ meshes }: { meshes: AnatomySceneNode[] }) {
+  const selectedId = useAppStore((state) => state.selectedMeshId);
+  const hoveredId = useAppStore((state) => state.hoveredMeshId);
+  const activeLayers = useAppStore((state) => state.activeLayers);
+  const isolationMode = useAppStore((state) => state.isolationMode);
+  const explosionAmount = useAppStore((state) => state.explosionAmount);
+  const clipping = useAppStore((state) => state.clippingState);
+  const learningMode = useAppStore((state) => state.learningMode);
+
+  const axis = clipping.plane === 'axial' ? 2 : clipping.plane === 'sagittal' ? 0 : 1;
+  const visible = meshes.filter((node) => {
+    if (!activeLayers.includes(node.layer) || (isolationMode && node.meshId !== selectedId)) return false;
+    const bounds = getNodeBounds(node, explosionAmount);
+    return !clipping.enabled || (bounds[axis] + bounds[axis + 3]) / 2 <= clipping.position;
+  });
+  const focused = visible.filter((node) => node.meshId === selectedId || node.meshId === hoveredId);
+  const nodes = [...focused];
+  if (learningMode === 'ADVANCED') {
+    // Round-robin through layers so a large bone group cannot occupy every label.
+    const groups = [...new Set(visible.map((node) => node.layer))].map((layer) =>
+      visible.filter((node) => node.layer === layer && !focused.includes(node)));
+    for (let index = 0; nodes.length < focused.length + overviewLimit && groups.some((group) => group[index]); index++) {
+      for (const group of groups) {
+        if (group[index] && nodes.length < focused.length + overviewLimit) nodes.push(group[index]);
       }
-    });
-    
-    return labels;
-  }, [meshHighlightStates, meshes]);
+    }
+  }
 
-  if (activeLabels.length === 0) return null;
-
-  return (
-    <>
-      {activeLabels.map(label => (
-        <Html 
-          key={label.id} 
-          position={label.position} 
-          center 
-          distanceFactor={10}
-          zIndexRange={[100, 0]}
-          className="pointer-events-none"
-        >
-          <div className={`
-            px-3 py-1.5 rounded-md backdrop-blur-md border shadow-lg text-sm font-bold whitespace-nowrap transition-all
-            ${label.state === HighlightState.Selected 
-              ? 'bg-blue-900/80 border-blue-400 text-white scale-110' 
-              : 'bg-gray-900/80 border-gray-600 text-gray-200'
-            }
-          `}>
-            {label.name}
-            {label.state === HighlightState.Hovered && (
-              <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-gray-600 rotate-45 border-r border-b border-gray-600"></div>
-            )}
-            {label.state === HighlightState.Selected && (
-              <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-blue-900 rotate-45 border-r border-b border-blue-400"></div>
-            )}
-          </div>
-        </Html>
-      ))}
-    </>
-  );
+  return <>{nodes.map((node) => {
+    const bounds = getNodeBounds(node, explosionAmount);
+    const position: [number, number, number] = [
+      (bounds[0] + bounds[3]) / 2,
+      (bounds[1] + bounds[4]) / 2,
+      (bounds[2] + bounds[5]) / 2,
+    ];
+    const selected = node.meshId === selectedId;
+    const isFocused = selected || node.meshId === hoveredId;
+    return (
+      <Html key={node.meshId} position={position} center zIndexRange={isFocused ? [20, 10] : [9, 0]} style={{ pointerEvents: 'none' }}>
+        <div className={`anatomy-label -translate-y-8 rounded-md border px-3 py-1.5 text-xs font-semibold text-white shadow-lg ${selected ? 'border-teal-400 bg-teal-950/95' : 'border-slate-500 bg-slate-900/95'}`}>
+          {node.name}
+        </div>
+      </Html>
+    );
+  })}</>;
 }

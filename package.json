@@ -1,27 +1,32 @@
 {
-  "name": "anatomy-viewer",
+  "name": "graphanatomy",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test tests/*.test.ts",
+    "test:e2e": "playwright test",
+    "validate": "tsx scripts/validate_assets.ts",
+    "seed": "node seed_db.js",
+    "db:indexes": "node scripts/01_create_indexes.js",
+    "check": "npm run lint && npm run typecheck && npm test && npm run validate && npm run build",
+    "test:neo4j": "tsx scripts/verify_neo4j.ts",
+    "test:retrieval": "tsx scripts/evaluate_rag.ts",
+    "assets:import": "tsx scripts/import_bodyparts.ts",
+    "assets:registry": "tsx scripts/generate_registry.ts"
   },
   "dependencies": {
-    "@apollo/client": "^3.11.8",
-    "@apollo/server": "^5.5.1",
-    "@as-integrations/next": "^4.1.0",
-    "@neo4j/graphql": "^7.5.3",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.6.1",
-    "@react-three/postprocessing": "^3.0.4",
     "@types/three": "^0.184.1",
-    "framer-motion": "^12.40.0",
     "graphql": "^16.14.2",
     "lucide-react": "^1.17.0",
     "neo4j-driver": "^6.1.0",
-    "next": "16.2.9",
+    "next": "^16.3.6",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-force-graph-3d": "^1.29.1",
@@ -29,16 +34,26 @@
     "zustand": "^5.0.14"
   },
   "devDependencies": {
+    "@gltf-transform/core": "^4.5.0",
+    "@gltf-transform/extensions": "^4.5.0",
+    "@gltf-transform/functions": "^4.5.0",
+    "@playwright/test": "^1.63.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "draco3dgltf": "^1.5.7",
     "eslint": "^9",
-    "eslint-config-next": "16.2.9",
+    "eslint-config-next": "^16.3.6",
+    "meshoptimizer": "^1.3.0",
     "tailwindcss": "^4",
+    "tsx": "^4.23.15",
     "typescript": "6.0.3"
   },
   "overrides": {
     "graphql": "^16.14.2"
+  },
+  "engines": {
+    "node": ">=22.0.0"
   }
 }

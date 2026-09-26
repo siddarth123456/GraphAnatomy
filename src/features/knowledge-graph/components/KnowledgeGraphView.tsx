@@ -1,194 +1,33 @@
 'use client';
-
-
-import React, { useState, useEffect } from 'react';
+import { Component, type ReactNode, useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useAppStore } from '@/store/useAppStore';
-import { GraphData } from '@/types/graph';
-import { HighlightState, RegionManifest } from '@/types/anatomy';
-import { gql, useApolloClient } from '@apollo/client';
-import { transformNeo4jToGraph } from '../utils/GraphAdapter';
+import { useAnatomyData, useSelectStructure } from '@/providers/AnatomyDataProvider';
+import { toGraphData } from '../utils/GraphAdapter';
+const Renderer = dynamic(() => import('./ForceGraphRenderer'), { ssr: false, loading: () => <div role="status" className="graph-loading">Loading knowledge graph…</div> });
 
-const ForceGraphRenderer = dynamic(
-  () => import('./ForceGraphRenderer'),
-  { ssr: false, loading: () => <div className="text-gray-400">Loading Engine...</div> }
-);
-
-interface KnowledgeGraphViewProps {
-  data: GraphData; // Used as fallback
-  engine?: 'force-graph' | 'cytoscape' | 'webgpu';
+class GraphRenderBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
+  state = { failed: false };
+  static getDerivedStateFromError() { return { failed: true }; }
+  render() {
+    if (this.state.failed) return <p role="status" className="panel-content hint">The interactive graph could not be rendered. Use the node directory below to explore the same relationships.</p>;
+    return this.props.children;
+  }
 }
-
-const GET_NODE_ASSET = gql`
-  query GetNodeAsset($graphNodeId: ID!) {
-    anatomicalStructures(where: { graphNodeId: { eq: $graphNodeId } }) {
-      asset {
-        meshId
-      }
-    }
-  }
-`;
-
-const HEALTH_CHECK = gql`
-  query HealthCheck {
-    anatomicalStructures(limit: 1) {
-      name
-    }
-  }
-`;
-
-const GET_FULL_GRAPH = gql`
-  query GetFullGraph {
-    anatomicalStructures {
-      graphNodeId
-      name
-      system {
-        name
-      }
-      asset {
-        meshId
-      }
-      innervates {
-        graphNodeId
-      }
-      supplies {
-        graphNodeId
-      }
-    }
-  }
-`;
-
-export function KnowledgeGraphView({ data: fallbackData, engine = 'force-graph' }: KnowledgeGraphViewProps) {
-  const selectAnatomy = useAppStore(state => state.selectAnatomy);
-  const activeGraphNodeId = useAppStore(state => state.activeGraphNodeId);
-  const [manifest, setManifest] = useState<RegionManifest | null>(null);
-  const client = useApolloClient();
-
-  const [graphData, setGraphData] = useState<GraphData | null>(null);
-  const [highlightedNodes, setHighlightedNodes] = useState<Set<string>>(new Set());
-  const [graphStatus, setGraphStatus] = useState<'LOADING' | 'READY' | 'ERROR'>('LOADING');
-  const [usingFallback, setUsingFallback] = useState(false);
-
-  const USE_REMOTE_GRAPH = process.env.NEXT_PUBLIC_USE_REMOTE_GRAPH === 'true';
-
-  useEffect(() => {
-    fetch('/manifests/hand_region.json')
-      .then(res => res.json())
-      .then(data => setManifest(data));
-  }, []);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    async function initializeGraph() {
-      if (!USE_REMOTE_GRAPH) {
-        if (isMounted) {
-          setGraphData(fallbackData);
-          setUsingFallback(true);
-          setGraphStatus('READY');
-        }
-        return;
-      }
-
-      try {
-        // 1. Health Check
-        const { data: healthData, error: healthError } = await client.query({
-          query: HEALTH_CHECK,
-          fetchPolicy: 'network-only'
-        });
-
-        if (healthError || !healthData?.anatomicalStructures?.length) {
-          throw new Error('Neo4j Database unreachable or empty');
-        }
-
-        // 2. Fetch Full Graph
-        const { data: fullData } = await client.query({
-          query: GET_FULL_GRAPH,
-          fetchPolicy: 'network-only'
-        });
-
-        console.log("Neo4j Full Graph Data Response:", fullData);
-
-        // 3. Transform
-        const transformedGraph = transformNeo4jToGraph(fullData.anatomicalStructures);
-        console.log("Transformed Graph Adapter output:", transformedGraph);
-        if (isMounted) {
-          setGraphData(transformedGraph);
-          setGraphStatus('READY');
-        }
-      } catch (err) {
-        console.error("⚠️ Failed to load Neo4j Graph. Falling back to Mock Data.", err);
-        if (isMounted) {
-          setGraphData(fallbackData);
-          setUsingFallback(true);
-          setGraphStatus('READY');
-        }
-      }
-    }
-
-    initializeGraph();
-    return () => { isMounted = false; };
-  }, [client, fallbackData, USE_REMOTE_GRAPH]);
-
-  const handleNodeClick = React.useCallback(async (nodeId: string, fallbackMeshId?: string) => {
-    let targetMeshId = fallbackMeshId;
-
-    if (USE_REMOTE_GRAPH) {
-      try {
-        const { data } = await client.query({
-          query: GET_NODE_ASSET,
-          variables: { graphNodeId: nodeId },
-          fetchPolicy: 'network-only'
-        });
-
-        const resolvedMeshId = data?.anatomicalStructures?.[0]?.asset?.meshId;
-        if (resolvedMeshId) {
-          console.log("✅ Neo4j Resolves:", resolvedMeshId);
-          targetMeshId = resolvedMeshId;
-        }
-      } catch (err) {
-        console.warn("⚠️ Asset Resolution Failed over Neo4j", err);
-      }
-    }
-
-    if (targetMeshId && manifest) {
-      const targetNode = manifest.meshes.find(m => m.meshId === targetMeshId);
-      if (targetNode) {
-        selectAnatomy(targetNode);
-      }
-    }
-  }, [client, USE_REMOTE_GRAPH, manifest, selectAnatomy]);
-
-  useEffect(() => {
-    if (activeGraphNodeId) {
-      setHighlightedNodes(new Set([activeGraphNodeId]));
-    } else {
-      setHighlightedNodes(prev => prev.size === 0 ? prev : new Set());
-    }
-  }, [activeGraphNodeId]);
-
-  if (graphStatus === 'LOADING' || !graphData) {
-    return (
-      <div className="w-full h-full flex items-center justify-center">
-        <div className="text-gray-400">Loading Medical Knowledge Graph...</div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="w-full h-full relative overflow-hidden">
-      {usingFallback && (
-        <div className="absolute top-4 right-4 z-10 bg-yellow-500/20 text-yellow-500 px-3 py-1 rounded-md text-sm border border-yellow-500/50">
-          ⚠️ Using Fallback Graph
-        </div>
-      )}
-      {engine === 'force-graph' && (
-        <ForceGraphRenderer
-          data={graphData}
-          onNodeClick={handleNodeClick}
-          highlightedNodes={highlightedNodes}
-        />
-      )}
+export function KnowledgeGraphView() {
+  const { data, error, retry } = useAnatomyData();
+  const select = useSelectStructure();
+  const activeId = useAppStore((state) => state.activeGraphNodeId);
+  const [filter, setFilter] = useState('');
+  const graph = useMemo(() => data ? toGraphData(data) : null, [data]);
+  const highlightedNodes = useMemo(() => new Set(activeId ? [activeId] : []), [activeId]);
+  if (error) return <div className="panel-content" role="alert"><p>{error}</p><button onClick={retry}>Retry graph</button></div>;
+  if (!graph) return <div role="status" className="panel-content">Loading knowledge graph…</div>;
+  return <div className="knowledge-panel">
+    <div className="panel-content graph-intro"><p className="eyebrow">Anatomical relationships</p><h2>See the connections.</h2><p>{graph.nodes.length} nodes · {graph.links.length} cited connections. Select a node to explore its anatomy.</p></div>
+    <GraphRenderBoundary><Renderer data={graph} onNodeClick={select} highlightedNodes={highlightedNodes} /></GraphRenderBoundary>
+    <div className="panel-content graph-directory"><label htmlFor="graph-filter">Find a graph node</label><input id="graph-filter" value={filter} onChange={(event) => setFilter(event.target.value)} placeholder="Filter nodes…" />
+      <div className="graph-node-list">{graph.nodes.filter((node) => node.name.toLowerCase().includes(filter.toLowerCase())).map((node) => <button aria-pressed={node.id === activeId} key={node.id} onClick={() => select(node.id)}><span className="layer-dot" style={{ background: node.color }} />{node.name}<small>{node.visualBinding.meshId ? '3D' : 'Graph'}</small></button>)}</div>
     </div>
-  );
+  </div>;
 }

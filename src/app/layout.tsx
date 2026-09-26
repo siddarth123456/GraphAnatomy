@@ -1,27 +1,6 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import { ApolloProvider } from "@/providers/ApolloProvider";
-
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "Interactive Anatomy (V2)",
-  description: "Medical Visualization and Intelligence Platform",
-};
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="en">
-      <body className={`${inter.className} dark`}>
-        <ApolloProvider>
-          {children}
-        </ApolloProvider>
-      </body>
-    </html>
-  );
+import type { Metadata } from 'next';
+import './globals.css';
+export const metadata: Metadata = { title: 'GraphAnatomy — Anatomy in context', description: 'Explore hand anatomy in 3D, follow anatomical relationships, and retrieve source-backed evidence.' };
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  return <html lang="en"><body>{children}</body></html>;
 }

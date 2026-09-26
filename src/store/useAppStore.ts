@@ -7,164 +7,146 @@ export interface ClippingState {
   position: number;
 }
 
-export type ViewPreset = 'SKELETON' | 'MUSCULOSKELETAL' | 'NEUROVASCULAR' | 'CLINICAL' | 'SURGICAL' | 'EDUCATIONAL' | 'CUSTOM';
+export type ViewPreset = 'SKELETON' | 'MUSCULOSKELETAL' | 'NEUROVASCULAR' | 'CLINICAL' | 'SURGICAL' | 'EDUCATIONAL' | 'COMPLETE' | 'SURFACE' | 'CUSTOM';
+export const DEFAULT_ANATOMY_LAYERS = Object.values(AnatomyLayer).filter(layer => ![AnatomyLayer.Skin, AnatomyLayer.Fat, AnatomyLayer.Fascia].includes(layer));
 export type LearningMode = 'BEGINNER' | 'INTERMEDIATE' | 'ADVANCED';
 export type GraphPanelMode = 'HIDDEN' | 'DRAWER' | 'FULLSCREEN';
 
 interface AppState {
-  // Global View State
   activeView: 'EXPLORE' | 'LEARN' | 'CLINICAL';
   setActiveView: (view: 'EXPLORE' | 'LEARN' | 'CLINICAL') => void;
-
-  // New ViewerState
   selectedMeshId: string | null;
   hoveredMeshId: string | null;
   activePreset: ViewPreset;
   graphPanelMode: GraphPanelMode;
   learningMode: LearningMode;
-
   setHoveredMeshId: (id: string | null) => void;
   setActivePreset: (preset: ViewPreset) => void;
   setGraphPanelMode: (mode: GraphPanelMode) => void;
   setLearningMode: (mode: LearningMode) => void;
-
-  // Highlight State Map (allows multiple overlapping highlights)
   meshHighlightStates: Record<string, HighlightState>;
-  
-  // Selection Context (for metadata panel)
   activeMeshNode: AnatomySceneNode | null;
   activeGraphNodeId: string | null;
-
-  // Camera Bus
-  cameraTargetBox: [number, number, number, number, number, number] | null;
-
-  // Region Management
+  cameraTargetBox: AnatomySceneNode['boundingBox'] | null;
+  viewResetKey: number;
+  resetView: () => void;
   activeRegionIds: string[];
   setActiveRegions: (regions: string[]) => void;
-
-  // Visual Modes
   isolationMode: boolean;
   setIsolationMode: (enabled: boolean) => void;
   explosionAmount: number;
   setExplosionAmount: (amount: number) => void;
-
-  // Clipping Management
   clippingState: ClippingState;
   setClippingState: (state: Partial<ClippingState>) => void;
-
-  // Layer Management
   activeLayers: AnatomyLayer[];
-
-  // Actions
   setMeshHighlight: (meshId: string, state: HighlightState) => void;
   clearHighlights: (stateType?: HighlightState) => void;
-  
   selectAnatomy: (node: AnatomySceneNode) => void;
+  selectGraphNode: (id: string) => void;
   clearSelection: () => void;
-  
   toggleLayer: (layer: AnatomyLayer) => void;
   setLayers: (layers: AnatomyLayer[]) => void;
 }
 
+function clearSelectionState(state: AppState) {
+  return {
+    activeMeshNode: null,
+    activeGraphNodeId: null,
+    selectedMeshId: null,
+    hoveredMeshId: null,
+    cameraTargetBox: null,
+    isolationMode: false,
+    meshHighlightStates: Object.fromEntries(
+      Object.entries(state.meshHighlightStates).filter(([, value]) =>
+        value !== HighlightState.Selected && value !== HighlightState.Hovered),
+    ),
+  };
+}
+
 export const useAppStore = create<AppState>((set) => ({
   activeView: 'EXPLORE',
-  setActiveView: (view) => set({ activeView: view }),
-
-  // New ViewerState
+  setActiveView: (activeView) => set({ activeView }),
   selectedMeshId: null,
   hoveredMeshId: null,
   activePreset: 'EDUCATIONAL',
   graphPanelMode: 'HIDDEN',
   learningMode: 'BEGINNER',
-
-  setHoveredMeshId: (id) => set({ hoveredMeshId: id }),
-  setActivePreset: (preset) => set({ activePreset: preset }),
-  setGraphPanelMode: (mode) => set({ graphPanelMode: mode }),
-  setLearningMode: (mode) => set({ learningMode: mode }),
-
+  setHoveredMeshId: (hoveredMeshId) => set({ hoveredMeshId }),
+  setActivePreset: (activePreset) => set({ activePreset }),
+  setGraphPanelMode: (graphPanelMode) => set({ graphPanelMode }),
+  setLearningMode: (learningMode) => set({ learningMode }),
   meshHighlightStates: {},
-  
   activeMeshNode: null,
   activeGraphNodeId: null,
-
   cameraTargetBox: null,
-
-  activeRegionIds: ['Hand'], // Default region
-  setActiveRegions: (regions) => set({ activeRegionIds: regions }),
-
+  viewResetKey: 0,
+  resetView: () => set((state) => ({
+    ...clearSelectionState(state),
+    meshHighlightStates: {},
+    activeLayers: [...DEFAULT_ANATOMY_LAYERS],
+    activePreset: 'EDUCATIONAL',
+    explosionAmount: 0,
+    clippingState: { enabled: false, plane: 'axial', position: 0 },
+    viewResetKey: state.viewResetKey + 1,
+  })),
+  activeRegionIds: ['Hand'],
+  setActiveRegions: (regions) => set((state) => ({
+    ...clearSelectionState(state),
+    activeRegionIds: [...new Set(regions)],
+    viewResetKey: state.viewResetKey + 1,
+  })),
   isolationMode: false,
-  setIsolationMode: (enabled) => set({ isolationMode: enabled }),
+  setIsolationMode: (enabled) => set((state) => ({ isolationMode: enabled && !!state.selectedMeshId })),
   explosionAmount: 0,
-  setExplosionAmount: (amount) => set({ explosionAmount: amount }),
-
-  activeLayers: [AnatomyLayer.Skin, AnatomyLayer.Bone, AnatomyLayer.Nerve, AnatomyLayer.Muscle, AnatomyLayer.Artery],
-
-  clippingState: {
-    enabled: false,
-    plane: 'axial',
-    position: 0
-  },
-  setClippingState: (state) => set((prev) => ({ 
-    clippingState: { ...prev.clippingState, ...state } 
+  setExplosionAmount: (amount) => set({ explosionAmount: Number.isFinite(amount) ? Math.max(0, Math.min(2, amount)) : 0 }),
+  activeLayers: [...DEFAULT_ANATOMY_LAYERS],
+  clippingState: { enabled: false, plane: 'axial', position: 0 },
+  setClippingState: (state) => set((prev) => ({
+    hoveredMeshId: null,
+    clippingState: {
+      ...prev.clippingState,
+      ...state,
+      position: state.position === undefined || !Number.isFinite(state.position)
+        ? prev.clippingState.position : state.position,
+    },
   })),
-
   setMeshHighlight: (meshId, state) => set((prev) => ({
+    meshHighlightStates: { ...prev.meshHighlightStates, [meshId]: state },
+  })),
+  clearHighlights: (stateType) => set((prev) => ({
+    meshHighlightStates: stateType
+      ? Object.fromEntries(Object.entries(prev.meshHighlightStates).filter(([, value]) => value !== stateType))
+      : {},
+    ...(!stateType || stateType === HighlightState.Hovered ? { hoveredMeshId: null } : {}),
+  })),
+  selectAnatomy: (node) => set((prev) => ({
+    activeMeshNode: node,
+    activeGraphNodeId: node.graphNodeId,
+    selectedMeshId: node.meshId,
+    hoveredMeshId: null,
     meshHighlightStates: {
-      ...prev.meshHighlightStates,
-      [meshId]: state
-    }
+      ...Object.fromEntries(Object.entries(prev.meshHighlightStates).filter(([, value]) => value !== HighlightState.Selected)),
+      [node.meshId]: HighlightState.Selected,
+    },
+    activeLayers: prev.activeLayers.includes(node.layer) ? prev.activeLayers : [...prev.activeLayers, node.layer],
+    activePreset: prev.activeLayers.includes(node.layer) ? prev.activePreset : 'CUSTOM',
+    cameraTargetBox: [...node.boundingBox],
   })),
-
-  clearHighlights: (stateType) => set((prev) => {
-    if (!stateType) return { meshHighlightStates: {} };
-    
-    // Clear only specific state (e.g. clear all hover states, keep selected)
-    const newState = { ...prev.meshHighlightStates };
-    Object.keys(newState).forEach(key => {
-      if (newState[key] === stateType) delete newState[key];
-    });
-    return { meshHighlightStates: newState };
-  }),
-
-  selectAnatomy: (node) => set((prev) => {
-    // Clear previous SELECTED highlights
-    const newHighlights = { ...prev.meshHighlightStates };
-    Object.keys(newHighlights).forEach(key => {
-      if (newHighlights[key] === HighlightState.Selected) delete newHighlights[key];
-    });
-
-    // Set new selected highlight
-    newHighlights[node.meshId] = HighlightState.Selected;
-
-    return { 
-      activeMeshNode: node,
-      activeGraphNodeId: node.graphNodeId,
-      selectedMeshId: node.meshId,
-      meshHighlightStates: newHighlights,
-      cameraTargetBox: node.boundingBox
+  selectGraphNode: (id) => set((state) => ({ ...clearSelectionState(state), activeGraphNodeId: id })),
+  clearSelection: () => set(clearSelectionState),
+  toggleLayer: (layer) => set((state) => {
+    const activeLayers = state.activeLayers.includes(layer)
+      ? state.activeLayers.filter((item) => item !== layer) : [...state.activeLayers, layer];
+    return {
+      ...(state.activeMeshNode && !activeLayers.includes(state.activeMeshNode.layer) ? clearSelectionState(state) : {}),
+      hoveredMeshId: null,
+      activeLayers,
+      activePreset: 'CUSTOM',
     };
   }),
-
-  clearSelection: () => set((prev) => {
-    const newHighlights = { ...prev.meshHighlightStates };
-    Object.keys(newHighlights).forEach(key => {
-      if (newHighlights[key] === HighlightState.Selected) delete newHighlights[key];
-    });
-    
-    return { 
-      activeMeshNode: null, 
-      activeGraphNodeId: null,
-      selectedMeshId: null,
-      cameraTargetBox: null,
-      meshHighlightStates: newHighlights
-    };
-  }),
-
-  toggleLayer: (layer) => set((state) => ({
-    activeLayers: state.activeLayers.includes(layer)
-      ? state.activeLayers.filter((l) => l !== layer)
-      : [...state.activeLayers, layer].sort()
+  setLayers: (layers) => set((state) => ({
+    ...(state.activeMeshNode && !layers.includes(state.activeMeshNode.layer) ? clearSelectionState(state) : {}),
+    hoveredMeshId: null,
+    activeLayers: [...new Set(layers)],
   })),
-
-  setLayers: (layers) => set({ activeLayers: [...layers].sort() })
 }));

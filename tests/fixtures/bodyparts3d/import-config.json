@@ -1,0 +1,27 @@
+{
+  "dataset": "BodyParts3D",
+  "sourceVersion": "4.0",
+  "sourceUrl": "https://dbarchive.biosciencedbc.jp/data/bodyparts3d/LATEST/isa_BP3D_4.0_obj_99.zip",
+  "regionId": "Hand",
+  "regionName": "Right Hand Anatomy",
+  "regionCentroid": [
+    -261.34,
+    -140.69,
+    756.46
+  ],
+  "coordinateScale": 0.01,
+  "meshes": [
+    {
+      "meshId": "mesh_scaphoid_01",
+      "graphNodeId": "BONE_SCAPHOID",
+      "fmaId": "FMA23709",
+      "name": "Scaphoid",
+      "category": "Bone",
+      "system": "Skeletal",
+      "layer": "Bone",
+      "materialId": "mat_bone",
+      "sourceFile": "FJ3383.obj",
+      "sha256": "e96e60d6c03b0581caa5733e3ab65aca6dc3671a476d78f123dcd48ecbee0050"
+    }
+  ]
+}

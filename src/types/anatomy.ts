@@ -23,7 +23,7 @@ export enum HighlightState {
 export interface AnatomySceneNode {
   meshId: string;
   graphNodeId: string;
-  fmaId?: string;
+  fmaId?: string | null;
   snomedId?: string | null;
   name: string;
   category: string;

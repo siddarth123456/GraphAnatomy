@@ -12,6 +12,11 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    "public/draco/**",
+    "output/**",
+    "test-results/**",
+    "playwright-report/**",
+    "artifacts/**",
   ]),
 ]);
 
