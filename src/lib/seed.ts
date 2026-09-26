@@ -1,5 +1,6 @@
 import { DATASET_ID, getBundledDataset } from './anatomy-data';
 import { withNeo4jSession } from './neo4j';
+import { ANATOMY_RELATIONSHIP_TYPES } from './anatomy-types';
 
 export async function createIndexes() {
   return withNeo4jSession(async (session) => {
@@ -51,7 +52,7 @@ export async function seedAnatomy() {
       MATCH (a:AnatomyAsset {meshId: row.meshId}) MERGE (s)-[:HAS_ASSET]->(a)`, {
       rows: dataset.structures.flatMap((node) => node.asset ? [{ id: node.graphNodeId, meshId: node.asset.meshId }] : []),
     });
-    const allowed = new Set(['ARTICULATES_WITH', 'INNERVATES', 'SUPPLIES', 'ORIGINATES_ON', 'INSERTS_ON', 'AFFECTED_BY']);
+    const allowed = new Set<string>(ANATOMY_RELATIONSHIP_TYPES);
     for (const [sortOrder, edge] of dataset.relationships.entries()) {
       if (!allowed.has(edge.type)) throw new Error('Unsupported relationship type in canonical data.');
       await tx.run(`MATCH (source:AnatomicalStructure {graphNodeId: $source})

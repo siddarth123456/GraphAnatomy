@@ -52,14 +52,15 @@ class RemoteZip(io.RawIOBase):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', required=True, type=Path, help='Directory for OBJs and import-config.json')
-    parser.add_argument('--mesh-id', action='append', help='Fetch only this manifest mesh (repeatable); default all')
+    parser.add_argument('--mesh-id', action='append', help='Fetch only this BodyParts3D mesh (repeatable); default all BodyParts3D meshes')
     parser.add_argument('--archive', type=Path, help='Use an already downloaded official ZIP instead of HTTP ranges')
     args = parser.parse_args()
     manifest = json.loads((ROOT / 'public/manifests/hand_region.json').read_text())
     mappings = json.loads((ROOT / 'scripts/assets/bodyparts3d-mapping.json').read_text())['mappings']
-    selected = [mesh for mesh in manifest['meshes'] if not args.mesh_id or mesh['meshId'] in args.mesh_id]
+    selected = [mesh for mesh in manifest['meshes'] if mesh['sourceDataset'] == 'BodyParts3D'
+                and (not args.mesh_id or mesh['meshId'] in args.mesh_id)]
     if not selected or (args.mesh_id and len(selected) != len(set(args.mesh_id))):
-        parser.error('Unknown or empty mesh selection')
+        parser.error('Unknown, non-BodyParts3D, or empty mesh selection')
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=True)
     config = {'dataset': 'BodyParts3D', 'sourceVersion': '4.0', 'sourceUrl': ARCHIVE_URL,
@@ -69,18 +70,25 @@ def main():
         names = archive.namelist()
         for mesh in selected:
             row = next(item for item in mappings if item['meshId'] == mesh['meshId'])
-            source_name = row['sourceFile']
-            members = [name for name in names if Path(name).name == source_name]
-            if len(members) != 1:
-                raise RuntimeError(f'Expected exactly one archive member: {source_name}')
-            data = archive.read(members[0])  # zipfile verifies the member CRC.
-            destination = output / source_name
-            if destination.exists() and destination.read_bytes() != data:
-                raise RuntimeError(f'Refusing to replace different source bytes: {destination}')
-            destination.write_bytes(data)
-            config['meshes'].append({**{key: mesh[key] for key in ['meshId', 'graphNodeId', 'fmaId', 'name', 'category', 'system', 'layer', 'materialId']},
-                                     'sourceFile': source_name, 'sha256': hashlib.sha256(data).hexdigest()})
-            print(f'{source_name}: {len(data):,} bytes', flush=True)
+            parts = []
+            for source in [row, *row.get('sourceParts', [])]:
+                source_name = source['sourceFile']
+                members = [name for name in names if Path(name).name == source_name]
+                if len(members) != 1:
+                    raise RuntimeError(f'Expected exactly one archive member: {source_name}')
+                data = archive.read(members[0])  # zipfile verifies the member CRC.
+                destination = output / source_name
+                if destination.exists() and destination.read_bytes() != data:
+                    raise RuntimeError(f'Refusing to replace different source bytes: {destination}')
+                destination.write_bytes(data)
+                parts.append({'sourceFile': source_name, 'sha256': hashlib.sha256(data).hexdigest()})
+                print(f'{source_name}: {len(data):,} bytes', flush=True)
+            record = {**{key: mesh[key] for key in ['meshId', 'graphNodeId', 'fmaId', 'name', 'category', 'system', 'layer', 'materialId']}, **parts[0]}
+            if len(parts) > 1:
+                record['sourceParts'] = parts[1:]
+            if 'sourceCrop' in mesh:
+                record['sourceCrop'] = mesh['sourceCrop']
+            config['meshes'].append(record)
     (output / 'import-config.json').write_text(json.dumps(config, indent=2) + '\n')
     print(f'Import configuration: {output / "import-config.json"}')
 

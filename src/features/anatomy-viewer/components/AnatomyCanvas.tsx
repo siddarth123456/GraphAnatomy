@@ -56,7 +56,7 @@ export function AnatomyCanvas() {
   return (
     <div className="relative h-full w-full bg-[#111827]" aria-label="Interactive 3D hand anatomy">
       <ViewerErrorBoundary onRetry={() => {
-        meshes.forEach((node) => useGLTF.clear(node.lod.high));
+        meshes.forEach((node) => Object.values(node.lod).forEach((path) => useGLTF.clear(path)));
         setLoadAttempt((attempt) => attempt + 1);
       }}>
         <Canvas
@@ -75,7 +75,7 @@ export function AnatomyCanvas() {
           <Suspense fallback={<Html center><div role="status" className="whitespace-nowrap rounded-lg bg-slate-900 px-4 py-3 text-sm text-slate-200">Loading 3D models…</div></Html>}>
             <CameraController meshes={meshes} />
             <HighlightManager>
-              {meshes.map((node) => <MeshInstance key={node.meshId} node={node} />)}
+              {meshes.map((node) => <MeshInstance key={node.meshId} node={node} overviewLod={visibleCount > 64 ? 'medium' : 'high'} />)}
               <AnatomyLabels meshes={meshes} />
             </HighlightManager>
           </Suspense>

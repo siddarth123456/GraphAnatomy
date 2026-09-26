@@ -1,7 +1,25 @@
 import * as THREE from 'three';
 
-// Neutral, scientifically accurate material palettes using Physical Materials for realism
+// Consistent teaching colors distinguish tissue layers without replacing source geometry.
 export const MedicalMaterials = {
+  SKIN: new THREE.MeshPhysicalMaterial({
+    color: '#c69c85', roughness: 0.85, metalness: 0, side: THREE.DoubleSide, clipShadows: true
+  }),
+  NAIL: new THREE.MeshPhysicalMaterial({
+    color: '#e7d8cc', roughness: 0.35, metalness: 0, clearcoat: 0.35, side: THREE.DoubleSide, clipShadows: true
+  }),
+  FAT: new THREE.MeshPhysicalMaterial({
+    color: '#e6c378', roughness: 0.8, metalness: 0, side: THREE.DoubleSide, clipShadows: true
+  }),
+  FASCIA: new THREE.MeshPhysicalMaterial({
+    color: '#b9b8cb', roughness: 0.7, metalness: 0, side: THREE.DoubleSide, clipShadows: true
+  }),
+  TENDON: new THREE.MeshPhysicalMaterial({
+    color: '#c6d6dc', roughness: 0.6, metalness: 0, clearcoat: 0.15, side: THREE.DoubleSide, clipShadows: true
+  }),
+  LIGAMENT: new THREE.MeshPhysicalMaterial({
+    color: '#95bcb5', roughness: 0.7, metalness: 0, side: THREE.DoubleSide, clipShadows: true
+  }),
   BONE: new THREE.MeshPhysicalMaterial({
     color: '#e2dcca',
     roughness: 0.65,
@@ -66,6 +84,12 @@ Object.values(MedicalMaterials).forEach(mat => {
 
 export function getMaterial(materialId: string): THREE.MeshPhysicalMaterial {
   switch (materialId) {
+    case 'mat_skin': return MedicalMaterials.SKIN;
+    case 'mat_nail': return MedicalMaterials.NAIL;
+    case 'mat_fat': return MedicalMaterials.FAT;
+    case 'mat_fascia': return MedicalMaterials.FASCIA;
+    case 'mat_tendon': return MedicalMaterials.TENDON;
+    case 'mat_ligament': return MedicalMaterials.LIGAMENT;
     case 'mat_muscle': return MedicalMaterials.MUSCLE;
     case 'mat_nerve': return MedicalMaterials.NERVE;
     case 'mat_bone': return MedicalMaterials.BONE;

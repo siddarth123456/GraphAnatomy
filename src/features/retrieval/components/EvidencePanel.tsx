@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, Search } from 'lucide-react';
 import type { RetrievalResponse } from '@/lib/anatomy-types';
 import { useSelectStructure } from '@/providers/AnatomyDataProvider';
-const examples = ['What muscles are innervated by the median nerve?', 'What structures are affected in carpal tunnel syndrome?', 'What articulates with the scaphoid?'];
+const examples = ['What innervates abductor pollicis brevis?', 'What structures are affected in carpal tunnel syndrome?', 'What articulates with the scaphoid?'];
 export function EvidencePanel() {
   const [query, setQuery] = useState('');
   const [result, setResult] = useState<RetrievalResponse | null>(null);

@@ -1,8 +1,10 @@
 import manifest from '../../public/manifests/hand_region.json';
 import type { AnatomicalStructure, AnatomyDataset, AnatomyRelationship, Citation } from './anatomy-types';
+import type { AssetManifest } from '../../scripts/assets/registry';
+import { handStructures, handRelationships, HAND_COVERAGE_SCOPE, supersededHandRelationshipIds } from './hand-expansion';
 
 export const DATASET_ID = 'hand-anatomy-mvp';
-export const DATASET_VERSION = '1.0.0';
+export const DATASET_VERSION = '2.0.0';
 export const sources = {
   bones: { title: 'OpenStax Anatomy and Physiology 2e — Bones of the Upper Limb', url: 'https://openstax.org/books/anatomy-and-physiology-2e/pages/8-2-bones-of-the-upper-limb' },
   muscle: { title: 'Kenhub — Abductor pollicis brevis: origin, insertion and function', url: 'https://www.kenhub.com/en/library/anatomy/abductor-pollicis-brevis-muscle' },
@@ -16,7 +18,8 @@ const descriptions: Record<string, string> = {
   BONE_RIGHT_ULNA: 'The medial forearm bone. It articulates with the radius; a fibrocartilage disc separates it from the carpal bones.',
 };
 
-const structures: AnatomicalStructure[] = manifest.meshes.map((mesh) => ({
+const expandedMetadata = new Map(handStructures.map(node => [node.graphNodeId, node]));
+const structures: AnatomicalStructure[] = (manifest as AssetManifest).meshes.map((mesh) => ({
   graphNodeId: mesh.graphNodeId,
   name: mesh.name,
   fmaId: mesh.fmaId || null,
@@ -24,19 +27,19 @@ const structures: AnatomicalStructure[] = manifest.meshes.map((mesh) => ({
   ontologyValidated: false,
   category: mesh.category,
   system: { id: `SYSTEM_${mesh.system.toUpperCase()}`, name: mesh.system },
-  asset: { meshId: mesh.meshId, glbPath: mesh.lod.high, manifestPath: '/manifests/hand_region.json', sourceDataset: mesh.sourceDataset, sourceVersion: mesh.sourceVersion },
-  searchableTerms: [...new Set([...mesh.searchableTerms, mesh.name.replace(/^Right /, ''), ...(mesh.graphNodeId === 'MUSCLE_ABDUCTOR_POLLICIS_BREVIS' ? ['APB'] : []), ...(mesh.graphNodeId === 'BONE_TRIQUETRAL' ? ['Triquetrum'] : [])])],
-  description: descriptions[mesh.graphNodeId] ?? `${mesh.name} is a bone in the right hand asset set. The graph contains selected, cited relationships rather than a complete anatomical atlas.`,
-  citation: mesh.category === 'Bone' ? sources.bones : sources.muscle,
+  asset: { meshId: mesh.meshId, glbPath: mesh.lod.high, manifestPath: '/manifests/hand_region.json', sourceDataset: mesh.sourceDataset, sourceVersion: mesh.sourceVersion,
+    sourceUrl: mesh.sourceUrl ?? 'https://dbarchive.biosciencedbc.jp/en/bodyparts3d/download.html',
+    licenseUrl: mesh.licenseUrl ?? 'https://creativecommons.org/licenses/by/4.0/',
+    attribution: mesh.attribution ?? 'BodyParts3D, © The Database Center for Life Science',
+    ...(mesh.geometryRepresentation ? { geometryRepresentation: mesh.geometryRepresentation } : {}),
+  },
+  searchableTerms: [...new Set([...mesh.searchableTerms, ...(expandedMetadata.get(mesh.graphNodeId)?.searchableTerms ?? []), mesh.name.replace(/^Right /, ''), ...(mesh.graphNodeId === 'MUSCLE_ABDUCTOR_POLLICIS_BREVIS' ? ['APB'] : []), ...(mesh.graphNodeId === 'BONE_TRIQUETRAL' ? ['Triquetrum'] : [])])],
+  description: expandedMetadata.get(mesh.graphNodeId)?.description ?? descriptions[mesh.graphNodeId] ?? `${mesh.name} is a ${mesh.category.toLowerCase()} structure in the right hand atlas.`,
+  citation: expandedMetadata.get(mesh.graphNodeId)?.citation ?? (mesh.category === 'Bone' ? sources.bones : sources.muscle),
 }));
 
-structures.push({
-  graphNodeId: 'NERVE_MEDIAN_NERVE', name: 'Median Nerve', fmaId: null, snomedId: null,
-  ontologyValidated: false, category: 'Nerve', system: { id: 'SYSTEM_NERVOUS', name: 'Nervous' },
-  asset: null, searchableTerms: ['median nerve', 'recurrent branch of median nerve'],
-  description: 'The median nerve passes through the carpal tunnel; its recurrent branch supplies abductor pollicis brevis. This is a graph-only structure: no anatomical median nerve mesh is supplied.',
-  citation: sources.carpalTunnel,
-});
+const renderedIds = new Set(structures.map(node => node.graphNodeId));
+structures.push(...handStructures.filter(node => !renderedIds.has(node.graphNodeId)));
 
 const relationships: AnatomyRelationship[] = [];
 function relate(source: string, type: AnatomyRelationship['type'], target: string, description: string, citation: Citation) {
@@ -82,12 +85,13 @@ const dataset: AnatomyDataset = {
     description: 'Signs and symptoms caused by compression of the median nerve within the carpal tunnel. This educational graph is not a diagnostic tool.',
     citation: sources.carpalTunnel,
   }],
-  relationships,
+  relationships: [...relationships.filter(edge => !supersededHandRelationshipIds.includes(edge.id)), ...handRelationships],
   metadata: {
     datasetId: DATASET_ID, version: DATASET_VERSION, structureCount: structures.length,
-    renderableCount: structures.filter((item) => item.asset).length, relationshipCount: relationships.length,
+    renderableCount: structures.filter((item) => item.asset).length,
+    relationshipCount: relationships.filter(edge => !supersededHandRelationshipIds.includes(edge.id)).length + handRelationships.length,
     ontologyStatus: 'Unverified: FMA identifiers are inherited from the supplied manifest, not checked against an authoritative ontology. No SNOMED CT mappings are asserted.',
-    scope: 'Right hand and forearm assets with selected sourced relationships; 31 renderable structures and one graph-only median nerve. Educational MVP, not a complete atlas or clinical decision tool.',
+    scope: HAND_COVERAGE_SCOPE,
   },
 };
 

@@ -1,0 +1,1288 @@
+{
+  "id": "z-anatomy-to-bodyparts3d-right-hand-2026-09-26-v1",
+  "method": "Orientation-preserving similarity fit from 29 corresponding right bone bounding-box centers; independently checked by a deterministic held-out split and bidirectional vertex-to-triangle surface distances.",
+  "matrixConvention": "column-major; maps Three.js FBXLoader world coordinates to BodyParts3D source millimeters",
+  "matrix": [
+    9.682293637180836,
+    0.0017050478404580737,
+    -0.00047934732799235797,
+    0.0,
+    0.00048059243441610195,
+    -0.0070711516018417105,
+    9.682291205153895,
+    0.0,
+    0.0017046973077600401,
+    -9.682291066952148,
+    -0.007071236115663522,
+    0.0,
+    -0.04919232411663188,
+    -100.97532622709483,
+    -23.390284463596345,
+    1.0
+  ],
+  "matrixRowMajor": [
+    [
+      9.682293637180836,
+      0.00048059243441610195,
+      0.0017046973077600401,
+      -0.04919232411663188
+    ],
+    [
+      0.0017050478404580737,
+      -0.0070711516018417105,
+      -9.682291066952148,
+      -100.97532622709483
+    ],
+    [
+      -0.00047934732799235797,
+      9.682291205153895,
+      -0.007071236115663522,
+      -23.390284463596345
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "rmseMm": 0.17519477849648094,
+  "maxResidualMm": 0.6339770757177712,
+  "landmarks": [
+    {
+      "graphNodeId": "BONE_RIGHT_RADIUS",
+      "sourceObject": "Radius.r",
+      "sourceCenter": [
+        -25.77719497680664,
+        97.4827651977539,
+        -0.7605230808258057
+      ],
+      "targetCenter": [
+        -249.688,
+        -94.0085,
+        920.4445000000001
+      ],
+      "residualMm": 0.3538126384691724,
+      "predictedCenter": [
+        -249.58601021462974,
+        -94.34498715731253,
+        920.4839697325096
+      ]
+    },
+    {
+      "graphNodeId": "BONE_RIGHT_ULNA",
+      "sourceObject": "Ulna.r",
+      "sourceCenter": [
+        -22.943370819091797,
+        98.33001327514648,
+        -1.876828908920288
+      ],
+      "targetCenter": [
+        -222.034,
+        -84.1495,
+        928.8135
+      ],
+      "residualMm": 0.6339770757177712,
+      "predictedCenter": [
+        -222.1495883860217,
+        -83.53774842380597,
+        928.6938076168811
+      ]
+    },
+    {
+      "graphNodeId": "BONE_SCAPHOID",
+      "sourceObject": "Scaphoid bone.r",
+      "sourceCenter": [
+        -26.980856895446777,
+        85.46037292480469,
+        1.8069867491722107
+      ],
+      "targetCenter": [
+        -261.2,
+        -119.1215,
+        804.0740000000001
+      ],
+      "residualMm": 0.04329055833844278,
+      "predictedCenter": [
+        -261.2416193944711,
+        -119.12140479139033,
+        804.0620882671105
+      ]
+    },
+    {
+      "graphNodeId": "BONE_LUNATE",
+      "sourceObject": "Lunate bone.r",
+      "sourceCenter": [
+        -25.25050640106201,
+        85.4151611328125,
+        1.7812767624855042
+      ],
+      "targetCenter": [
+        -244.46699999999998,
+        -118.7825,
+        803.6425
+      ],
+      "residualMm": 0.09115461038794659,
+      "predictedCenter": [
+        -244.48792336878705,
+        -118.86920318715312,
+        803.6236868936359
+      ]
+    },
+    {
+      "graphNodeId": "BONE_TRIQUETRAL",
+      "sourceObject": "Triquetrum bone.r",
+      "sourceCenter": [
+        -24.52420711517334,
+        84.60137939453125,
+        2.139762580394745
+      ],
+      "targetCenter": [
+        -237.46549999999996,
+        -122.1865,
+        795.6815
+      ],
+      "residualMm": 0.1588018875231754,
+      "predictedCenter": [
+        -237.45546040187622,
+        -122.33317447045367,
+        795.7415320386758
+      ]
+    },
+    {
+      "graphNodeId": "BONE_PISIFORM",
+      "sourceObject": "Pisiform bone.r",
+      "sourceCenter": [
+        -24.385457038879395,
+        84.58223342895508,
+        3.2089006900787354
+      ],
+      "targetCenter": [
+        -236.09199999999998,
+        -132.4565,
+        795.5020000000001
+      ],
+      "residualMm": 0.2334206952794253,
+      "predictedCenter": [
+        -236.11022806556602,
+        -132.68450887964198,
+        795.5485285870715
+      ]
+    },
+    {
+      "graphNodeId": "BONE_TRAPEZIUM",
+      "sourceObject": "Trapezium bone.r",
+      "sourceCenter": [
+        -28.222331047058105,
+        84.6077880859375,
+        2.5440136194229126
+      ],
+      "targetCenter": [
+        -273.33399999999995,
+        -126.156,
+        795.7710000000001
+      ],
+      "residualMm": 0.1258331328970522,
+      "predictedCenter": [
+        -273.26109001144374,
+        -126.25360148949454,
+        795.8024969863935
+      ]
+    },
+    {
+      "graphNodeId": "BONE_TRAPEZOID",
+      "sourceObject": "Trapezoid bone.r",
+      "sourceCenter": [
+        -27.651458740234375,
+        83.91239547729492,
+        2.0049740076065063
+      ],
+      "targetCenter": [
+        -267.7045,
+        -120.9605,
+        789.09
+      ],
+      "residualMm": 0.07649241238098904,
+      "predictedCenter": [
+        -267.7349898072433,
+        -121.02857248011875,
+        789.0730412778604
+      ]
+    },
+    {
+      "graphNodeId": "BONE_CAPITATE",
+      "sourceObject": "Capitate bone.r",
+      "sourceCenter": [
+        -26.48545742034912,
+        84.35848236083984,
+        1.7957972288131714
+      ],
+      "targetCenter": [
+        -256.4455,
+        -119.01599999999999,
+        793.3960000000001
+      ],
+      "residualMm": 0.011928626828521903,
+      "predictedCenter": [
+        -256.4455648438842,
+        -119.00442828334292,
+        793.3931046059175
+      ]
+    },
+    {
+      "graphNodeId": "BONE_HAMATE",
+      "sourceObject": "Hamate bone.r",
+      "sourceCenter": [
+        -25.22841453552246,
+        84.10411071777344,
+        2.1756088733673096
+      ],
+      "targetCenter": [
+        -244.26799999999997,
+        -122.6715,
+        790.975
+      ],
+      "residualMm": 0.04887979100272239,
+      "predictedCenter": [
+        -244.27398130366285,
+        -122.67793315782639,
+        790.926915985449
+      ]
+    },
+    {
+      "graphNodeId": "BONE_FIRST_METACARPAL",
+      "sourceObject": "First metacarpal bone.r",
+      "sourceCenter": [
+        -30.051209449768066,
+        82.85562133789062,
+        3.830042004585266
+      ],
+      "targetCenter": [
+        -290.91049999999996,
+        -138.74699999999999,
+        778.7615000000001
+      ],
+      "residualMm": 0.10217585010759946,
+      "predictedCenter": [
+        -290.9674775221369,
+        -138.69603112346275,
+        778.8292911494289
+      ]
+    },
+    {
+      "graphNodeId": "BONE_SECOND_METACARPAL",
+      "sourceObject": "Second metacarpal bone.r",
+      "sourceCenter": [
+        -28.630643844604492,
+        80.18122863769531,
+        2.9282469153404236
+      ],
+      "targetCenter": [
+        -277.2575,
+        -129.925,
+        752.8720000000001
+      ],
+      "residualMm": 0.08236014553896624,
+      "predictedCenter": [
+        -277.2159667826229,
+        -129.94325541810284,
+        752.940738090877
+      ]
+    },
+    {
+      "graphNodeId": "BONE_THIRD_METACARPAL",
+      "sourceObject": "Third metacarpal bone.r",
+      "sourceCenter": [
+        -27.101764678955078,
+        80.19311904907227,
+        2.686329185962677
+      ],
+      "targetCenter": [
+        -262.41999999999996,
+        -127.5325,
+        753.053
+      ],
+      "residualMm": 0.06636411704994694,
+      "predictedCenter": [
+        -262.41331644709743,
+        -127.59841481479307,
+        753.0568423096196
+      ]
+    },
+    {
+      "graphNodeId": "BONE_FOURTH_METACARPAL",
+      "sourceObject": "Fourth metacarpal bone.r",
+      "sourceCenter": [
+        -25.57277774810791,
+        80.41580581665039,
+        2.8314110040664673
+      ],
+      "targetCenter": [
+        -247.58749999999998,
+        -128.947,
+        755.2205
+      ],
+      "residualMm": 0.05982931774687213,
+      "predictedCenter": [
+        -247.60886167306276,
+        -129.00210686222533,
+        755.2112016172539
+      ]
+    },
+    {
+      "graphNodeId": "BONE_FIFTH_METACARPAL",
+      "sourceObject": "Fifth metacarpal bone.r",
+      "sourceCenter": [
+        -24.297553062438965,
+        80.86060333251953,
+        3.1692358255386353
+      ],
+      "targetCenter": [
+        -235.26199999999997,
+        -132.301,
+        759.4695
+      ],
+      "residualMm": 0.05280012519609962,
+      "predictedCenter": [
+        -235.26097215764977,
+        -132.27399602493043,
+        759.5148605786038
+      ]
+    },
+    {
+      "graphNodeId": "BONE_PROXIMAL_PHALANX_OF_THUMB",
+      "sourceObject": "Proximal phalanx of first finger of hand.r",
+      "sourceCenter": [
+        -31.882463455200195,
+        80.02090072631836,
+        5.385409593582153
+      ],
+      "targetCenter": [
+        -308.73299999999995,
+        -153.771,
+        751.4045
+      ],
+      "residualMm": 0.058033553770341195,
+      "predictedCenter": [
+        -308.69692744133243,
+        -153.7386304727282,
+        751.3725801381802
+      ]
+    },
+    {
+      "graphNodeId": "BONE_PROXIMAL_PHALANX_OF_INDEX_FINGER",
+      "sourceObject": "Proximal phalanx of second finger of hand.r",
+      "sourceCenter": [
+        -30.134702682495117,
+        75.18409729003906,
+        4.532130241394043
+      ],
+      "targetCenter": [
+        -291.86249999999995,
+        -145.42849999999999,
+        704.51
+      ],
+      "residualMm": 0.09236584413606938,
+      "predictedCenter": [
+        -291.7783735466084,
+        -145.43974963732518,
+        704.5464367213506
+      ]
+    },
+    {
+      "graphNodeId": "BONE_PROXIMAL_PHALANX_OF_MIDDLE_FINGER",
+      "sourceObject": "Proximal phalanx of third finger of hand.r",
+      "sourceCenter": [
+        -27.713311195373535,
+        75.19227600097656,
+        4.966784119606018
+      ],
+      "targetCenter": [
+        -268.315,
+        -149.6595,
+        704.5730000000001
+      ],
+      "residualMm": 0.053873069299759116,
+      "predictedCenter": [
+        -268.33300527380476,
+        -149.644124244132,
+        704.6213911545893
+      ]
+    },
+    {
+      "graphNodeId": "BONE_PROXIMAL_PHALANX_OF_RING_FINGER",
+      "sourceObject": "Proximal phalanx of fourth finger of hand.r",
+      "sourceCenter": [
+        -25.519514083862305,
+        75.69054412841797,
+        4.8737486600875854
+      ],
+      "targetCenter": [
+        -247.21149999999997,
+        -148.8205,
+        709.452
+      ],
+      "residualMm": 0.14257775770454176,
+      "predictedCenter": [
+        -247.09193659315883,
+        -148.74311064596702,
+        709.4453745476417
+      ]
+    },
+    {
+      "graphNodeId": "BONE_PROXIMAL_PHALANX_OF_LITTLE_FINGER",
+      "sourceObject": "Proximal phalanx of fifth finger of hand.r",
+      "sourceCenter": [
+        -23.679556846618652,
+        76.74413681030273,
+        4.902848482131958
+      ],
+      "targetCenter": [
+        -229.24449999999996,
+        -149.125,
+        719.658
+      ],
+      "residualMm": 0.10175914191120301,
+      "predictedCenter": [
+        -229.27637438724963,
+        -149.02917649146343,
+        719.6454779549712
+      ]
+    },
+    {
+      "graphNodeId": "BONE_MIDDLE_PHALANX_OF_INDEX_FINGER",
+      "sourceObject": "Middle phalanx of second finger of hand.r",
+      "sourceCenter": [
+        -31.16106128692627,
+        72.77250289916992,
+        6.203755140304565
+      ],
+      "targetCenter": [
+        -301.70399999999995,
+        -161.699,
+        681.243
+      ],
+      "residualMm": 0.10685864225939432,
+      "predictedCenter": [
+        -301.71418831131234,
+        -161.60960570432334,
+        681.1853490881374
+      ]
+    },
+    {
+      "graphNodeId": "BONE_MIDDLE_PHALANX_OF_MIDDLE_FINGER",
+      "sourceObject": "Middle phalanx of third finger of hand.r",
+      "sourceCenter": [
+        -28.2368221282959,
+        72.13812255859375,
+        6.9926886558532715
+      ],
+      "targetCenter": [
+        -273.399,
+        -169.3695,
+        675.134
+      ],
+      "residualMm": 0.16327966610074962,
+      "predictedCenter": [
+        -273.39980609766275,
+        -169.23881786711587,
+        675.0361134344591
+      ]
+    },
+    {
+      "graphNodeId": "BONE_MIDDLE_PHALANX_OF_RING_FINGER",
+      "sourceObject": "Middle phalanx of fourth finger of hand.r",
+      "sourceCenter": [
+        -25.67914867401123,
+        72.82793426513672,
+        6.916395664215088
+      ],
+      "targetCenter": [
+        -248.53199999999998,
+        -168.5545,
+        681.6560000000001
+      ],
+      "residualMm": 0.13043421965706797,
+      "predictedCenter": [
+        -248.6354592234261,
+        -168.5006437232603,
+        681.7143847257539
+      ]
+    },
+    {
+      "graphNodeId": "BONE_MIDDLE_PHALANX_OF_LITTLE_FINGER",
+      "sourceObject": "Middle phalanx of fifth finger of hand.r",
+      "sourceCenter": [
+        -23.21015167236328,
+        74.44210815429688,
+        6.357098340988159
+      ],
+      "targetCenter": [
+        -224.74399999999997,
+        -163.13400000000001,
+        697.3645
+      ],
+      "residualMm": 0.04743800285192819,
+      "predictedCenter": [
+        -224.73008293703379,
+        -163.0925685570862,
+        697.3460577926741
+      ]
+    },
+    {
+      "graphNodeId": "BONE_DISTAL_PHALANX_OF_THUMB",
+      "sourceObject": "Distal phalanx of first finger of hand.r",
+      "sourceCenter": [
+        -32.76187515258789,
+        77.89204788208008,
+        6.575500726699829
+      ],
+      "targetCenter": [
+        -317.0925,
+        -165.2495,
+        730.6545
+      ],
+      "residualMm": 0.15345229726647733,
+      "predictedCenter": [
+        -317.210644088832,
+        -165.2478852175883,
+        730.7524130955908
+      ]
+    },
+    {
+      "graphNodeId": "BONE_DISTAL_PHALANX_OF_INDEX_FINGER",
+      "sourceObject": "Distal phalanx of second finger of hand.r",
+      "sourceCenter": [
+        -31.63559627532959,
+        71.49407958984375,
+        7.910762071609497
+      ],
+      "targetCenter": [
+        -306.40049999999997,
+        -178.1915,
+        668.7695
+      ],
+      "residualMm": 0.11577900876316226,
+      "predictedCenter": [
+        -306.30647988059985,
+        -178.1291128463481,
+        668.7954391418012
+      ]
+    },
+    {
+      "graphNodeId": "BONE_DISTAL_PHALANX_OF_MIDDLE_FINGER",
+      "sourceObject": "Distal phalanx of third finger of hand.r",
+      "sourceCenter": [
+        -28.51802158355713,
+        70.56402969360352,
+        8.808049440383911
+      ],
+      "targetCenter": [
+        -276.1425,
+        -186.8195,
+        659.801
+      ],
+      "residualMm": 0.03239604702530111,
+      "predictedCenter": [
+        -276.12012365059724,
+        -186.80501818371235,
+        659.7825858791336
+      ]
+    },
+    {
+      "graphNodeId": "BONE_DISTAL_PHALANX_OF_RING_FINGER",
+      "sourceObject": "Distal phalanx of fourth finger of hand.r",
+      "sourceCenter": [
+        -25.764216423034668,
+        71.55636596679688,
+        8.775975942611694
+      ],
+      "targetCenter": [
+        -249.45149999999998,
+        -186.5515,
+        669.4405
+      ],
+      "residualMm": 0.07490575424577428,
+      "predictedCenter": [
+        -249.4565512331349,
+        -186.49679483343226,
+        669.3895814197592
+      ]
+    },
+    {
+      "graphNodeId": "BONE_DISTAL_PHALANX_OF_LITTLE_FINGER",
+      "sourceObject": "Distal phalanx of fifth finger of hand.r",
+      "sourceCenter": [
+        -23.0376558303833,
+        72.95172119140625,
+        7.616475820541382
+      ],
+      "targetCenter": [
+        -223.05299999999997,
+        -175.025,
+        683.015
+      ],
+      "residualMm": 0.27286403653050595,
+      "predictedCenter": [
+        -223.05849695509073,
+        -175.2753950114622,
+        682.9067091686646
+      ]
+    }
+  ],
+  "heldOut": {
+    "trainingCount": 15,
+    "testCount": 14,
+    "trainingGraphNodeIds": [
+      "BONE_RIGHT_RADIUS",
+      "BONE_SCAPHOID",
+      "BONE_TRIQUETRAL",
+      "BONE_TRAPEZIUM",
+      "BONE_CAPITATE",
+      "BONE_FIRST_METACARPAL",
+      "BONE_THIRD_METACARPAL",
+      "BONE_FIFTH_METACARPAL",
+      "BONE_PROXIMAL_PHALANX_OF_INDEX_FINGER",
+      "BONE_PROXIMAL_PHALANX_OF_RING_FINGER",
+      "BONE_MIDDLE_PHALANX_OF_INDEX_FINGER",
+      "BONE_MIDDLE_PHALANX_OF_RING_FINGER",
+      "BONE_DISTAL_PHALANX_OF_THUMB",
+      "BONE_DISTAL_PHALANX_OF_MIDDLE_FINGER",
+      "BONE_DISTAL_PHALANX_OF_LITTLE_FINGER"
+    ],
+    "matrixRowMajor": [
+      [
+        9.681337430247186,
+        0.001512265309031514,
+        0.01581080815181147,
+        -0.22227863291482208
+      ],
+      [
+        0.015810649222647487,
+        0.0010181229228536427,
+        -9.681337495083147,
+        -101.20095433634684
+      ],
+      [
+        -0.0015139260010626969,
+        9.681350287195746,
+        0.0010156518666642233,
+        -23.3928994880971
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "rmsMm": 0.2608887696464908,
+    "meanMm": 0.15441177758343905,
+    "p95Mm": 0.42387013968996345,
+    "maxMm": 0.9012582528142037,
+    "landmarks": [
+      {
+        "graphNodeId": "BONE_RIGHT_ULNA",
+        "sourceObject": "Ulna.r",
+        "sourceCenter": [
+          -22.943370819091797,
+          98.33001327514648,
+          -1.876828908920288
+        ],
+        "targetCenter": [
+          -222.034,
+          -84.1495,
+          928.8135
+        ],
+        "residualMm": 0.6339770757177712,
+        "predictedCenter": [
+          -222.1495883860217,
+          -83.53774842380597,
+          928.6938076168811
+        ],
+        "heldOutResidualMm": 0.9012582528142037
+      },
+      {
+        "graphNodeId": "BONE_LUNATE",
+        "sourceObject": "Lunate bone.r",
+        "sourceCenter": [
+          -25.25050640106201,
+          85.4151611328125,
+          1.7812767624855042
+        ],
+        "targetCenter": [
+          -244.46699999999998,
+          -118.7825,
+          803.6425
+        ],
+        "residualMm": 0.09115461038794659,
+        "predictedCenter": [
+          -244.48792336878705,
+          -118.86920318715312,
+          803.6236868936359
+        ],
+        "heldOutResidualMm": 0.08684524601999544
+      },
+      {
+        "graphNodeId": "BONE_PISIFORM",
+        "sourceObject": "Pisiform bone.r",
+        "sourceCenter": [
+          -24.385457038879395,
+          84.58223342895508,
+          3.2089006900787354
+        ],
+        "targetCenter": [
+          -236.09199999999998,
+          -132.4565,
+          795.5020000000001
+        ],
+        "residualMm": 0.2334206952794253,
+        "predictedCenter": [
+          -236.11022806556602,
+          -132.68450887964198,
+          795.5485285870715
+        ],
+        "heldOutResidualMm": 0.1169336771833507
+      },
+      {
+        "graphNodeId": "BONE_TRAPEZOID",
+        "sourceObject": "Trapezoid bone.r",
+        "sourceCenter": [
+          -27.651458740234375,
+          83.91239547729492,
+          2.0049740076065063
+        ],
+        "targetCenter": [
+          -267.7045,
+          -120.9605,
+          789.09
+        ],
+        "residualMm": 0.07649241238098904,
+        "predictedCenter": [
+          -267.7349898072433,
+          -121.02857248011875,
+          789.0730412778604
+        ],
+        "heldOutResidualMm": 0.0822972490631507
+      },
+      {
+        "graphNodeId": "BONE_HAMATE",
+        "sourceObject": "Hamate bone.r",
+        "sourceCenter": [
+          -25.22841453552246,
+          84.10411071777344,
+          2.1756088733673096
+        ],
+        "targetCenter": [
+          -244.26799999999997,
+          -122.6715,
+          790.975
+        ],
+        "residualMm": 0.04887979100272239,
+        "predictedCenter": [
+          -244.27398130366285,
+          -122.67793315782639,
+          790.926915985449
+        ],
+        "heldOutResidualMm": 0.13324454259503002
+      },
+      {
+        "graphNodeId": "BONE_SECOND_METACARPAL",
+        "sourceObject": "Second metacarpal bone.r",
+        "sourceCenter": [
+          -28.630643844604492,
+          80.18122863769531,
+          2.9282469153404236
+        ],
+        "targetCenter": [
+          -277.2575,
+          -129.925,
+          752.8720000000001
+        ],
+        "residualMm": 0.08236014553896624,
+        "predictedCenter": [
+          -277.2159667826229,
+          -129.94325541810284,
+          752.940738090877
+        ],
+        "heldOutResidualMm": 0.04839145044708008
+      },
+      {
+        "graphNodeId": "BONE_FOURTH_METACARPAL",
+        "sourceObject": "Fourth metacarpal bone.r",
+        "sourceCenter": [
+          -25.57277774810791,
+          80.41580581665039,
+          2.8314110040664673
+        ],
+        "targetCenter": [
+          -247.58749999999998,
+          -128.947,
+          755.2205
+        ],
+        "residualMm": 0.05982931774687213,
+        "predictedCenter": [
+          -247.60886167306276,
+          -129.00210686222533,
+          755.2112016172539
+        ],
+        "heldOutResidualMm": 0.06178032720580604
+      },
+      {
+        "graphNodeId": "BONE_PROXIMAL_PHALANX_OF_THUMB",
+        "sourceObject": "Proximal phalanx of first finger of hand.r",
+        "sourceCenter": [
+          -31.882463455200195,
+          80.02090072631836,
+          5.385409593582153
+        ],
+        "targetCenter": [
+          -308.73299999999995,
+          -153.771,
+          751.4045
+        ],
+        "residualMm": 0.058033553770341195,
+        "predictedCenter": [
+          -308.69692744133243,
+          -153.7386304727282,
+          751.3725801381802
+        ],
+        "heldOutResidualMm": 0.06246158388324419
+      },
+      {
+        "graphNodeId": "BONE_PROXIMAL_PHALANX_OF_MIDDLE_FINGER",
+        "sourceObject": "Proximal phalanx of third finger of hand.r",
+        "sourceCenter": [
+          -27.713311195373535,
+          75.19227600097656,
+          4.966784119606018
+        ],
+        "targetCenter": [
+          -268.315,
+          -149.6595,
+          704.5730000000001
+        ],
+        "residualMm": 0.053873069299759116,
+        "predictedCenter": [
+          -268.33300527380476,
+          -149.644124244132,
+          704.6213911545893
+        ],
+        "heldOutResidualMm": 0.048490184276623695
+      },
+      {
+        "graphNodeId": "BONE_PROXIMAL_PHALANX_OF_LITTLE_FINGER",
+        "sourceObject": "Proximal phalanx of fifth finger of hand.r",
+        "sourceCenter": [
+          -23.679556846618652,
+          76.74413681030273,
+          4.902848482131958
+        ],
+        "targetCenter": [
+          -229.24449999999996,
+          -149.125,
+          719.658
+        ],
+        "residualMm": 0.10175914191120301,
+        "predictedCenter": [
+          -229.27637438724963,
+          -149.02917649146343,
+          719.6454779549712
+        ],
+        "heldOutResidualMm": 0.16681500185383447
+      },
+      {
+        "graphNodeId": "BONE_MIDDLE_PHALANX_OF_MIDDLE_FINGER",
+        "sourceObject": "Middle phalanx of third finger of hand.r",
+        "sourceCenter": [
+          -28.2368221282959,
+          72.13812255859375,
+          6.9926886558532715
+        ],
+        "targetCenter": [
+          -273.399,
+          -169.3695,
+          675.134
+        ],
+        "residualMm": 0.16327966610074962,
+        "predictedCenter": [
+          -273.39980609766275,
+          -169.23881786711587,
+          675.0361134344591
+        ],
+        "heldOutResidualMm": 0.13005123182908784
+      },
+      {
+        "graphNodeId": "BONE_MIDDLE_PHALANX_OF_LITTLE_FINGER",
+        "sourceObject": "Middle phalanx of fifth finger of hand.r",
+        "sourceCenter": [
+          -23.21015167236328,
+          74.44210815429688,
+          6.357098340988159
+        ],
+        "targetCenter": [
+          -224.74399999999997,
+          -163.13400000000001,
+          697.3645
+        ],
+        "residualMm": 0.04743800285192819,
+        "predictedCenter": [
+          -224.73008293703379,
+          -163.0925685570862,
+          697.3460577926741
+        ],
+        "heldOutResidualMm": 0.10226503302284462
+      },
+      {
+        "graphNodeId": "BONE_DISTAL_PHALANX_OF_INDEX_FINGER",
+        "sourceObject": "Distal phalanx of second finger of hand.r",
+        "sourceCenter": [
+          -31.63559627532959,
+          71.49407958984375,
+          7.910762071609497
+        ],
+        "targetCenter": [
+          -306.40049999999997,
+          -178.1915,
+          668.7695
+        ],
+        "residualMm": 0.11577900876316226,
+        "predictedCenter": [
+          -306.30647988059985,
+          -178.1291128463481,
+          668.7954391418012
+        ],
+        "heldOutResidualMm": 0.14826149401341185
+      },
+      {
+        "graphNodeId": "BONE_DISTAL_PHALANX_OF_RING_FINGER",
+        "sourceObject": "Distal phalanx of fourth finger of hand.r",
+        "sourceCenter": [
+          -25.764216423034668,
+          71.55636596679688,
+          8.775975942611694
+        ],
+        "targetCenter": [
+          -249.45149999999998,
+          -186.5515,
+          669.4405
+        ],
+        "residualMm": 0.07490575424577428,
+        "predictedCenter": [
+          -249.4565512331349,
+          -186.49679483343226,
+          669.3895814197592
+        ],
+        "heldOutResidualMm": 0.0726696119604835
+      }
+    ]
+  },
+  "surfaceVerification": {
+    "method": "Bidirectional distance from every decoded high-LOD target bone vertex to donor triangles and every donor vertex to target triangles; geometry is independent of the fitted bounding-box centers.",
+    "aggregate": {
+      "rmsMm": 0.20124599920896458,
+      "meanMm": 0.10970709782770709,
+      "p95Mm": 0.3447935879230499,
+      "maxMm": 3.6145761013031006
+    },
+    "bones": [
+      {
+        "graphNodeId": "BONE_RIGHT_RADIUS",
+        "sourceObject": "Radius.r",
+        "donorVertices": 2352,
+        "targetVertices": 388,
+        "rmsMm": 0.4215623377927756,
+        "meanMm": 0.2360547205766297,
+        "p95Mm": 0.6482846140861511,
+        "maxMm": 3.6145761013031006
+      },
+      {
+        "graphNodeId": "BONE_RIGHT_ULNA",
+        "sourceObject": "Ulna.r",
+        "donorVertices": 2712,
+        "targetVertices": 500,
+        "rmsMm": 0.5671386278034686,
+        "meanMm": 0.4359819364699762,
+        "p95Mm": 1.1157760620117188,
+        "maxMm": 2.0991294384002686
+      },
+      {
+        "graphNodeId": "BONE_SCAPHOID",
+        "sourceObject": "Scaphoid bone.r",
+        "donorVertices": 1170,
+        "targetVertices": 195,
+        "rmsMm": 0.13085640468937565,
+        "meanMm": 0.10423888762527565,
+        "p95Mm": 0.286215424537658,
+        "maxMm": 0.3697313070297241
+      },
+      {
+        "graphNodeId": "BONE_LUNATE",
+        "sourceObject": "Lunate bone.r",
+        "donorVertices": 6264,
+        "targetVertices": 196,
+        "rmsMm": 0.0797412806633981,
+        "meanMm": 0.05694937155171674,
+        "p95Mm": 0.17288680374622345,
+        "maxMm": 0.45412886142730713
+      },
+      {
+        "graphNodeId": "BONE_TRIQUETRAL",
+        "sourceObject": "Triquetrum bone.r",
+        "donorVertices": 528,
+        "targetVertices": 139,
+        "rmsMm": 0.1741241562243702,
+        "meanMm": 0.13048514621888185,
+        "p95Mm": 0.37096458673477173,
+        "maxMm": 0.49734970927238464
+      },
+      {
+        "graphNodeId": "BONE_PISIFORM",
+        "sourceObject": "Pisiform bone.r",
+        "donorVertices": 5004,
+        "targetVertices": 110,
+        "rmsMm": 0.07413203703048986,
+        "meanMm": 0.05655339142893604,
+        "p95Mm": 0.12833856046199799,
+        "maxMm": 0.6532343029975891
+      },
+      {
+        "graphNodeId": "BONE_TRAPEZIUM",
+        "sourceObject": "Trapezium bone.r",
+        "donorVertices": 1500,
+        "targetVertices": 277,
+        "rmsMm": 0.10993020315697832,
+        "meanMm": 0.08192573224016024,
+        "p95Mm": 0.25046131014823914,
+        "maxMm": 0.4323941767215729
+      },
+      {
+        "graphNodeId": "BONE_TRAPEZOID",
+        "sourceObject": "Trapezoid bone.r",
+        "donorVertices": 1092,
+        "targetVertices": 271,
+        "rmsMm": 0.09850392680789952,
+        "meanMm": 0.06848939493459873,
+        "p95Mm": 0.2243409901857376,
+        "maxMm": 0.3273322880268097
+      },
+      {
+        "graphNodeId": "BONE_CAPITATE",
+        "sourceObject": "Capitate bone.r",
+        "donorVertices": 1416,
+        "targetVertices": 256,
+        "rmsMm": 0.12786647367333057,
+        "meanMm": 0.09852072985981912,
+        "p95Mm": 0.23937655985355377,
+        "maxMm": 0.42719149589538574
+      },
+      {
+        "graphNodeId": "BONE_HAMATE",
+        "sourceObject": "Hamate bone.r",
+        "donorVertices": 1608,
+        "targetVertices": 335,
+        "rmsMm": 0.09339808444526969,
+        "meanMm": 0.06633719745438643,
+        "p95Mm": 0.21245940625667462,
+        "maxMm": 0.35380813479423523
+      },
+      {
+        "graphNodeId": "BONE_FIRST_METACARPAL",
+        "sourceObject": "First metacarpal bone.r",
+        "donorVertices": 2046,
+        "targetVertices": 307,
+        "rmsMm": 0.10597575215555564,
+        "meanMm": 0.07678206660363932,
+        "p95Mm": 0.21805953681468965,
+        "maxMm": 0.7523911595344543
+      },
+      {
+        "graphNodeId": "BONE_SECOND_METACARPAL",
+        "sourceObject": "Second metacarpal bone.r",
+        "donorVertices": 2292,
+        "targetVertices": 418,
+        "rmsMm": 0.11635778254169318,
+        "meanMm": 0.08670098671164714,
+        "p95Mm": 0.22372395172715168,
+        "maxMm": 0.6402961015701294
+      },
+      {
+        "graphNodeId": "BONE_THIRD_METACARPAL",
+        "sourceObject": "Third metacarpal bone.r",
+        "donorVertices": 2124,
+        "targetVertices": 404,
+        "rmsMm": 0.13369222386842758,
+        "meanMm": 0.09370427597453192,
+        "p95Mm": 0.24412788450717926,
+        "maxMm": 0.888411283493042
+      },
+      {
+        "graphNodeId": "BONE_FOURTH_METACARPAL",
+        "sourceObject": "Fourth metacarpal bone.r",
+        "donorVertices": 1926,
+        "targetVertices": 340,
+        "rmsMm": 0.11697412824301938,
+        "meanMm": 0.0805581966207365,
+        "p95Mm": 0.23778820037841797,
+        "maxMm": 0.9597440958023071
+      },
+      {
+        "graphNodeId": "BONE_FIFTH_METACARPAL",
+        "sourceObject": "Fifth metacarpal bone.r",
+        "donorVertices": 1536,
+        "targetVertices": 279,
+        "rmsMm": 0.12760377969490028,
+        "meanMm": 0.09623815919592182,
+        "p95Mm": 0.24695293605327606,
+        "maxMm": 0.5613785982131958
+      },
+      {
+        "graphNodeId": "BONE_PROXIMAL_PHALANX_OF_THUMB",
+        "sourceObject": "Proximal phalanx of first finger of hand.r",
+        "donorVertices": 984,
+        "targetVertices": 197,
+        "rmsMm": 0.11257527643331919,
+        "meanMm": 0.08387014372175214,
+        "p95Mm": 0.21762971580028534,
+        "maxMm": 0.5024703145027161
+      },
+      {
+        "graphNodeId": "BONE_PROXIMAL_PHALANX_OF_INDEX_FINGER",
+        "sourceObject": "Proximal phalanx of second finger of hand.r",
+        "donorVertices": 1242,
+        "targetVertices": 226,
+        "rmsMm": 0.12093064473455306,
+        "meanMm": 0.0901582008338134,
+        "p95Mm": 0.22597984969615936,
+        "maxMm": 1.1588363647460938
+      },
+      {
+        "graphNodeId": "BONE_PROXIMAL_PHALANX_OF_MIDDLE_FINGER",
+        "sourceObject": "Proximal phalanx of third finger of hand.r",
+        "donorVertices": 1320,
+        "targetVertices": 271,
+        "rmsMm": 0.10294924911892352,
+        "meanMm": 0.08164333848671124,
+        "p95Mm": 0.19549797475337982,
+        "maxMm": 0.37703442573547363
+      },
+      {
+        "graphNodeId": "BONE_PROXIMAL_PHALANX_OF_RING_FINGER",
+        "sourceObject": "Proximal phalanx of fourth finger of hand.r",
+        "donorVertices": 1104,
+        "targetVertices": 209,
+        "rmsMm": 0.11957804712256503,
+        "meanMm": 0.0941268969859304,
+        "p95Mm": 0.24220190942287445,
+        "maxMm": 0.37968575954437256
+      },
+      {
+        "graphNodeId": "BONE_PROXIMAL_PHALANX_OF_LITTLE_FINGER",
+        "sourceObject": "Proximal phalanx of fifth finger of hand.r",
+        "donorVertices": 1680,
+        "targetVertices": 187,
+        "rmsMm": 0.10369662500945649,
+        "meanMm": 0.08146267541071019,
+        "p95Mm": 0.2093181014060974,
+        "maxMm": 0.3157181143760681
+      },
+      {
+        "graphNodeId": "BONE_MIDDLE_PHALANX_OF_INDEX_FINGER",
+        "sourceObject": "Middle phalanx of second finger of hand.r",
+        "donorVertices": 942,
+        "targetVertices": 190,
+        "rmsMm": 0.10779377191659402,
+        "meanMm": 0.07315389893833028,
+        "p95Mm": 0.2146960347890854,
+        "maxMm": 0.8708751797676086
+      },
+      {
+        "graphNodeId": "BONE_MIDDLE_PHALANX_OF_MIDDLE_FINGER",
+        "sourceObject": "Middle phalanx of third finger of hand.r",
+        "donorVertices": 1080,
+        "targetVertices": 227,
+        "rmsMm": 0.10894036537834496,
+        "meanMm": 0.08013233858695967,
+        "p95Mm": 0.2286151796579361,
+        "maxMm": 0.5561323165893555
+      },
+      {
+        "graphNodeId": "BONE_MIDDLE_PHALANX_OF_RING_FINGER",
+        "sourceObject": "Middle phalanx of fourth finger of hand.r",
+        "donorVertices": 1338,
+        "targetVertices": 219,
+        "rmsMm": 0.2824838487699346,
+        "meanMm": 0.17109180086976614,
+        "p95Mm": 0.6765888929367065,
+        "maxMm": 1.3014740943908691
+      },
+      {
+        "graphNodeId": "BONE_MIDDLE_PHALANX_OF_LITTLE_FINGER",
+        "sourceObject": "Middle phalanx of fifth finger of hand.r",
+        "donorVertices": 876,
+        "targetVertices": 169,
+        "rmsMm": 0.09279510185876193,
+        "meanMm": 0.06571603444428295,
+        "p95Mm": 0.19837002456188202,
+        "maxMm": 0.507889986038208
+      },
+      {
+        "graphNodeId": "BONE_DISTAL_PHALANX_OF_THUMB",
+        "sourceObject": "Distal phalanx of first finger of hand.r",
+        "donorVertices": 666,
+        "targetVertices": 187,
+        "rmsMm": 0.17062879684500365,
+        "meanMm": 0.11585229199767892,
+        "p95Mm": 0.33644554018974304,
+        "maxMm": 0.8226020336151123
+      },
+      {
+        "graphNodeId": "BONE_DISTAL_PHALANX_OF_INDEX_FINGER",
+        "sourceObject": "Distal phalanx of second finger of hand.r",
+        "donorVertices": 750,
+        "targetVertices": 188,
+        "rmsMm": 0.07464934239144289,
+        "meanMm": 0.05620250171951159,
+        "p95Mm": 0.1448979526758194,
+        "maxMm": 0.2595048248767853
+      },
+      {
+        "graphNodeId": "BONE_DISTAL_PHALANX_OF_MIDDLE_FINGER",
+        "sourceObject": "Distal phalanx of third finger of hand.r",
+        "donorVertices": 576,
+        "targetVertices": 143,
+        "rmsMm": 0.08869636100230485,
+        "meanMm": 0.06565414974186666,
+        "p95Mm": 0.1592145562171936,
+        "maxMm": 0.29276081919670105
+      },
+      {
+        "graphNodeId": "BONE_DISTAL_PHALANX_OF_RING_FINGER",
+        "sourceObject": "Distal phalanx of fourth finger of hand.r",
+        "donorVertices": 402,
+        "targetVertices": 114,
+        "rmsMm": 0.0788548892407066,
+        "meanMm": 0.05884212856353559,
+        "p95Mm": 0.1582793891429901,
+        "maxMm": 0.2256050407886505
+      },
+      {
+        "graphNodeId": "BONE_DISTAL_PHALANX_OF_LITTLE_FINGER",
+        "sourceObject": "Distal phalanx of fifth finger of hand.r",
+        "donorVertices": 576,
+        "targetVertices": 140,
+        "rmsMm": 0.17101262686768276,
+        "meanMm": 0.11207299542205386,
+        "p95Mm": 0.3360552340745926,
+        "maxMm": 0.7452613115310669
+      }
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "heldOutMaxMmLimit": 2,
+    "surfaceRmsMmLimit": 1,
+    "surfaceP95MmLimit": 2
+  },
+  "limitations": "One source atlas registration, not patient-specific or clinical accuracy certification. Small differences reflect source editions, decimation and approximate atlas alignment. No tissue-specific refitting is performed."
+}

@@ -24,17 +24,23 @@ export function getNodeBounds(node: AnatomySceneNode, amount = 0): AnatomySceneN
   return [a + x, b + y, c + z, d + x, e + y, f + z];
 }
 
-export function MeshInstance({ node }: { node: AnatomySceneNode }) {
+export function MeshInstance({ node, overviewLod = 'high' }: { node: AnatomySceneNode; overviewLod?: keyof AnatomySceneNode['lod'] }) {
+  const visible = useAppStore((state) => state.activeLayers.includes(node.layer)
+    && (!state.isolationMode || state.selectedMeshId === node.meshId));
+  // Do not fetch or clone a model until its layer is visible. Hidden anatomy also
+  // leaves the scene entirely because Three.js raycasts invisible meshes.
+  return visible ? <LoadedMeshInstance node={node} overviewLod={overviewLod} /> : null;
+}
+
+function LoadedMeshInstance({ node, overviewLod }: { node: AnatomySceneNode; overviewLod: keyof AnatomySceneNode['lod'] }) {
   const currentState = useAppStore((state) => state.selectedMeshId === node.meshId
     ? HighlightState.Selected : state.hoveredMeshId === node.meshId
       ? HighlightState.Hovered : state.meshHighlightStates[node.meshId] || HighlightState.None);
-  const visible = useAppStore((state) => state.activeLayers.includes(node.layer)
-    && (!state.isolationMode || state.selectedMeshId === node.meshId));
   const explosionAmount = useAppStore((state) => state.explosionAmount);
   const selectAnatomy = useAppStore((state) => state.selectAnatomy);
   const setHoveredMeshId = useAppStore((state) => state.setHoveredMeshId);
   const { gl } = useThree();
-  const { scene } = useGLTF(node.lod.high, '/draco/');
+  const { scene } = useGLTF(node.lod[currentState === HighlightState.Selected ? 'high' : overviewLod], '/draco/');
 
   const instance = useMemo(() => {
     const object = scene.clone(true);
@@ -76,9 +82,6 @@ export function MeshInstance({ node }: { node: AnatomySceneNode }) {
     event.stopPropagation();
     setHoveredMeshId(node.meshId);
   }
-
-  // Three.js raycasts invisible meshes, so detach hidden structures from the scene.
-  if (!visible) return null;
 
   return (
     <group position={position} rotation={node.rotation}>

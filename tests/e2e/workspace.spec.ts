@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { anatomyPixels } from './anatomy-pixels';
 
 test('search, graph and cited evidence complete the hand demo journey', async ({ page }) => {
   const errors: string[] = [];
@@ -20,11 +21,11 @@ test('search, graph and cited evidence complete the hand demo journey', async ({
   await page.getByRole('button', { name: 'Knowledge graph', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'See the connections.' })).toBeVisible();
   await page.getByLabel('Find a graph node').fill('median');
-  await page.getByRole('button', { name: 'Median Nerve Graph', exact: true }).click();
-  await expect(page.getByTestId('metadata-panel').getByRole('heading', { name: 'Median Nerve', exact: true })).toBeVisible();
-  await expect(page.getByTestId('metadata-panel').getByText('Graph entry · No 3D model', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: /^(Right )?Median Nerve 3D$/i }).click();
+  await expect(page.getByTestId('metadata-panel').getByRole('heading', { name: /^(Right )?Median Nerve$/i })).toBeVisible();
+  await expect(page.getByTestId('metadata-panel').getByText('Selected in 3D', { exact: true })).toBeVisible();
   await page.getByRole('navigation').getByRole('button', { name: 'Find evidence' }).click();
-  await page.getByRole('button', { name: 'What muscles are innervated by the median nerve?', exact: true }).click();
+  await page.getByRole('button', { name: 'What innervates abductor pollicis brevis?', exact: true }).click();
   await expect(page.getByRole('heading', { name: '1 evidence connection', exact: true })).toBeVisible();
   const card = page.locator('.evidence-panel .relation-card');
   await expect(card).toHaveCount(1);
@@ -78,9 +79,10 @@ test('the bundled demo loads models and retrieves evidence with external network
   await page.goto('/');
   await expect(page.getByRole('heading', { name: 'Anatomy, connected.' })).toBeVisible();
   await expect(page.locator('canvas').first()).toBeVisible();
+  await expect.poll(async () => (await anatomyPixels(page)).count, { timeout: 30_000 }).toBeGreaterThan(5_000);
   await expect(page.getByText('Loading 3D models…')).toHaveCount(0);
   await page.getByRole('navigation').getByRole('button', { name: 'Find evidence' }).click();
-  await page.getByRole('button', { name: 'What muscles are innervated by the median nerve?', exact: true }).click();
+  await page.getByRole('button', { name: 'What innervates abductor pollicis brevis?', exact: true }).click();
   await expect(page.getByRole('heading', { name: '1 evidence connection' })).toBeVisible();
   expect(external).toEqual([]);
 });

@@ -3,6 +3,8 @@ import type { RetrievalResponse } from '../src/lib/anatomy-types';
 const base = process.env.TEST_BASE_URL || 'http://127.0.0.1:3000';
 async function run() {
   for (const [query, status, relation] of [
+    ['What innervates abductor pollicis brevis?', 'ok', 'INNERVATES'],
+    ['What passes through the carpal tunnel?', 'ok', 'PASSES_THROUGH'],
     ['What muscles are innervated by the median nerve?', 'ok', 'INNERVATES'],
     ['What structures are affected in carpal tunnel syndrome?', 'ok', 'AFFECTED_BY'],
     ['What articulates with the scaphoid?', 'ok', 'ARTICULATES_WITH'],

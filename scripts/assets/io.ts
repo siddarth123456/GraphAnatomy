@@ -25,7 +25,7 @@ export function publicFile(publicDir: string, url: string) {
 
 export interface GlbJSON {
   asset: { version: string };
-  meshes?: { name?: string; primitives: { extensions?: Record<string, unknown> }[] }[];
+  meshes?: { name?: string; extras?: Record<string, unknown>; primitives: { extensions?: Record<string, unknown> }[] }[];
   buffers?: { uri?: string }[];
   images?: { uri?: string }[];
   extensionsRequired?: string[];

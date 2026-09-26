@@ -1,6 +1,6 @@
 # GraphAnatomy
 
-An interactive hand-anatomy demo connecting 3D structures, a medical knowledge graph, and source-backed evidence retrieval.
+An interactive right-hand and wrist atlas connecting 3D structures, a cited anatomical knowledge graph, and evidence retrieval.
 
 ## Run the demo
 
@@ -14,25 +14,32 @@ npm start
 
 Open **http://localhost:3000**. For development, use `npm run dev`.
 
-Start with **Scaphoid** in Explore, inspect the model, then follow **Median Nerve → Abductor Pollicis Brevis** in Knowledge graph. In Find evidence, try **“What muscles are innervated by the median nerve?”**
+Start with the **Skeleton** preset and search **Scaphoid**. Switch to **Nerves & vessels** and select **Right median nerve**. In Find evidence, try **“What innervates abductor pollicis brevis?”** to follow its named recurrent-median branch connection.
 
-[Three-minute demo script and recovery steps](docs/DEMO.md) · [Asset provenance and import pipeline](docs/ASSETS.md)
+[Three-minute demo](docs/DEMO.md) · [Anatomical coverage and gaps](docs/HAND_COVERAGE.md) · [Asset provenance and import pipelines](docs/ASSETS.md)
 
-## What the MVP includes
+## Current roadmap
 
-| Capability | Delivered behavior |
+The original **Current** roadmap is the acceptance checklist for this release. Its six items map to the following implemented scope:
+
+| Roadmap item | Delivered behavior |
 | --- | --- |
-| Interactive hand viewer | 31 Draco-compressed anatomical meshes, keyboard search, selection, layers and presets, isolation, exploded view, three section planes, labels, camera fitting, and reset |
-| Knowledge graph | 32 anatomical structures (31 with meshes), one clinical condition, and 25 directed, cited relationships; 3D and graph selections stay synchronized |
-| GraphQL API | Bounded read-only list, detail, asset, relationship, and clinical queries at `/api/graphql` |
-| Neo4j | Optional real graph database, constraints/full-text indexes, idempotent seeding, shared data contract, and connection error handling |
-| Ontology and asset validation | Checks identifiers, source mappings, provenance, relationship categories, graph/mesh bindings, decoded bounds, and all 93 LOD files; invalid data exits nonzero |
-| GraphRAG foundation | Deterministic entity matching and one-hop retrieval with citations, stable IDs, explicit no-match responses, and unsupported spatial-query handling |
-| BodyParts3D pipeline | Source OBJ checksums and mappings, centered/scaled GLB generation, three compressed LODs, generated manifests, and import reports |
+| Interactive Hand Anatomy MVP | 190 source meshes; searchable catalog, synchronized selection, tissue layers and presets, isolation, exploded view, three section planes, labels, camera fitting, and reset |
+| Neo4j Knowledge Graph | 392 anatomical entries, one clinical condition, and 599 directed, cited relationships; optional Neo4j storage, constraints/full-text indexes, idempotent seeding, and explicit connection errors |
+| GraphQL API Layer | Read-only list, detail, asset, relationship, and clinical queries at `/api/graphql`; bounded pagination and named branch/group traversal |
+| Ontology Validation Engine | Identifier and source-mapping consistency, graph/mesh bindings, relationship categories, provenance, registration, decoded bounds, and all 570 LOD files; authoritative FMA/SNOMED certification remains outside the implementation |
+| GraphRAG Foundation | Deterministic entity matching and direct, one-hop cited retrieval; stable IDs, no-match responses, unsupported spatial-query handling, and disclosed result truncation |
+| BodyParts3D Asset Pipeline | Checksummed OBJ ingestion, multipart source mappings, regional cropping, centered/scaled GLBs, three Draco-compressed LODs, generated registry, and import reports |
 
-The 3D subset has **29 bones, the radial artery, and abductor pollicis brevis**. The median nerve is explicitly **graph-only**; placeholder nerve geometry is never rendered. This is a selected educational atlas, not complete hand coverage.
+The hand expansion adds a [pinned Z-Anatomy import pipeline](scripts/assets/Z_ANATOMY_IMPORT.md). The current inventory is **392 anatomical entries: 190 with geometry and 202 without a separate mesh**. Rendered anatomy includes 29 bones, 29 muscle source units, 22 nerves, 25 arteries, 15 veins, 46 ligaments, 15 fascia structures, and 9 skin/nail source units. These are asset counts: muscle groups, heads, and whole muscles must not be added together as a count of distinct muscles.
 
-FMA mappings are inherited from BodyParts3D and checked against the included source-mapping snapshot. They are **not independently certified against the complete FMA ontology**. No SNOMED CT mappings are asserted. Evidence is curated educational reference material, not diagnosis or generated medical advice. Vector retrieval, a generative AI tutor, full-body coverage, cloud infrastructure, and clinical decision support remain future work.
+The scope is right-hand/wrist gross anatomy with necessary forearm context. The median nerve now has real geometry. Named groups such as lumbricals and nail plates retain one source mesh; individual members remain graph-only where they lack independent segmentation. Some original ligament meshes are low-polygon surfaces with no modeled anatomical thickness, disclosed on selection. Tendons, sesamoids, variable structures, and other missing source geometry remain explicit catalog entries. See the [coverage checklist](docs/HAND_COVERAGE.md) for exact inclusions and gaps.
+
+FMA mappings are inherited from BodyParts3D and checked against the recorded source table; they are **not independently certified against the full ontology**. Z-Anatomy assets do not receive invented FMA identifiers. No SNOMED CT mappings are asserted. Atlas registration is measured against shared reference bones; it does not establish patient or clinical accuracy. Evidence is curated educational reference material, not diagnosis or generated medical advice.
+
+### Upcoming
+
+Full-body expansion, advanced graph/vector retrieval, an AI medical tutor, cloud-native infrastructure, clinical learning modules, and collaborative learning workspaces remain future work. The current retrieval service uses neither vector search nor a generative model.
 
 ## Optional Neo4j setup
 
@@ -68,10 +75,10 @@ GraphQL request to `POST /api/graphql`:
 Evidence request to `POST /api/retrieval`:
 
 ```json
-{ "query": "What muscles are innervated by the median nerve?" }
+{ "query": "What innervates abductor pollicis brevis?" }
 ```
 
-Results preserve anatomical edge direction, cite the source, and qualify branches represented by a parent nerve/artery. The endpoint accepts 1–500 characters. Unknown questions return `no_results`; spatial questions return `unsupported` with no invented proximity evidence. GraphQL rejects mutations and bounds query size, nesting, and result limits.
+The example returns **recurrent branch of median nerve → INNERVATES → abductor pollicis brevis**, with its citation. Retrieval follows direct edges only; query or select a named branch to explore its own connections. It does not infer all downstream targets from a parent nerve. The endpoint accepts 1–500 characters. Unknown questions return `no_results`; spatial questions return `unsupported` with no invented proximity evidence. GraphQL rejects mutations and bounds query size and nesting; list queries accept `offset` with `limit` capped at 100.
 
 ## Verification
 
@@ -88,7 +95,7 @@ With an app running on port 3000, `npm run test:retrieval` verifies the live HTT
 ## Project map
 
 - `public/manifests/hand_region.json`: geometry paths, transforms, bounds, and layers.
-- `src/lib/anatomy-data.ts`: canonical structure metadata, graph-only entries, relationships, and citations.
+- `src/lib/anatomy-data.ts` and `hand-expansion.ts`: canonical metadata, coverage checklist, graph-only entries, relationships, and citations.
 - `src/lib/anatomy-repository.ts`: explicit bundled/Neo4j backend selection.
 - `src/lib/retrieval.ts`: evidence selection and unsupported-query handling.
 - `src/features/anatomy-viewer`: 3D viewer and control interactions.
@@ -97,6 +104,6 @@ With an app running on port 3000, `npm run test:retrieval` verifies the live HTT
 
 ## Attribution and configuration safety
 
-BodyParts3D, © The Database Center for Life Science, licensed under **CC Attribution 4.0 International**. See [the archive license](https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html) and [asset documentation](docs/ASSETS.md). Draco decoder files are vendored under their [Apache 2.0 license](public/draco/LICENSE), so rendering does not depend on a decoder CDN. Relationship references include OpenStax and Kenhub, linked per connection.
+**93 assets:** BodyParts3D, © The Database Center for Life Science, under [CC BY 4.0](https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html). **97 assets:** Z-Anatomy project, Lluís Vinent Juanico and contributors, under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Preserve each source’s attribution and the ShareAlike terms for Z-Anatomy derivatives; see [asset documentation](docs/ASSETS.md). Draco decoder files are vendored under their [Apache 2.0 license](public/draco/LICENSE), so rendering does not depend on a decoder CDN. Relationship references include OpenStax and Kenhub, linked per connection.
 
 Keep connection secrets in `.env.local` or the deployment environment, never in source. Earlier repository history contained hardcoded Neo4j credentials in diagnostic scripts; those scripts have been removed. **Revoke or rotate those historical credentials before using the old remote database.** Removal from the current source does not remove them from Git history.

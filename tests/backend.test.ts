@@ -12,12 +12,11 @@ process.env.ANATOMY_DATA_MODE = 'bundled';
 const dataset = getBundledDataset();
 const request = (payload: unknown) => new Request('http://localhost/api/retrieval', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
 
-test('canonical dataset maps 31 assets and a graph-only median nerve without asserted ontology validation', () => {
-  assert.equal(dataset.structures.length, 32);
-  assert.equal(dataset.structures.filter((node) => node.asset).length, 31);
+test('expanded canonical dataset retains unique sourced structures and honest ontology status', () => {
+  assert.ok(dataset.structures.length >= 390);
+  assert.ok(dataset.structures.filter((node) => node.asset).length >= 94);
   assert.ok(dataset.structures.every((node) => !node.ontologyValidated));
   const nerve = dataset.structures.find((node) => node.graphNodeId === 'NERVE_MEDIAN_NERVE')!;
-  assert.equal(nerve.asset, null);
   assert.equal(nerve.fmaId, null);
   const ids = new Set([...dataset.structures.map((node) => node.graphNodeId), ...dataset.clinicalConditions.map((node) => node.id)]);
   assert.equal(new Set(dataset.relationships.map((edge) => edge.id)).size, dataset.relationships.length);
@@ -28,19 +27,28 @@ test('canonical dataset maps 31 assets and a graph-only median nerve without ass
 });
 
 test('retrieval preserves anatomical direction, source citations and branch qualification', () => {
-  for (const query of ['What does the median nerve innervate?', 'What innervates abductor pollicis brevis?', 'What is the nerve supply of APB?', 'Which nerve supplies abductor pollicis brevis?', 'Is APB supplied by the median nerve?']) {
+  for (const query of ['What innervates abductor pollicis brevis?', 'What is the nerve supply of APB?', 'Which nerve supplies abductor pollicis brevis?']) {
     const result = retrieveEvidence(query, dataset);
     assert.equal(result.status, 'ok');
     assert.equal(result.evidence.length, 1);
     const edge = result.evidence[0];
-    assert.equal(edge.sourceNode.graphNodeId, 'NERVE_MEDIAN_NERVE');
+    assert.equal(edge.sourceNode.graphNodeId, 'NERVE_MEDIAN_RECURRENT_BRANCH');
     assert.equal(edge.relationship, 'INNERVATES');
     assert.equal(edge.targetNode.graphNodeId, 'MUSCLE_ABDUCTOR_POLLICIS_BREVIS');
-    assert.match(edge.description, /recurrent branch/i);
+    assert.match(edge.description, /recurrent median branch/i);
     assert.match(edge.citation.url, /kenhub/);
     assert.equal(edge.sourceNode.ontologyValidated, false);
     assert.equal(edge.targetNode.ontologyValidated, false);
   }
+  const parent = retrieveEvidence('What does the median nerve innervate?', dataset);
+  assert.ok(parent.evidence.some(edge => edge.targetNode.graphNodeId === 'MUSCLE_FLEXOR_CARPI_RADIALIS'));
+  assert.ok(parent.evidence.every(edge => edge.sourceNode.graphNodeId === 'NERVE_MEDIAN_NERVE'));
+  const branch = retrieveEvidence('What does the recurrent branch of median nerve innervate?', dataset);
+  assert.ok(branch.evidence.some(edge => edge.targetNode.graphNodeId === 'MUSCLE_ABDUCTOR_POLLICIS_BREVIS'));
+  assert.ok(branch.evidence.every(edge => edge.sourceNode.graphNodeId === 'NERVE_MEDIAN_RECURRENT_BRANCH'));
+  const both = retrieveEvidence('What do the median nerve and recurrent branch of median nerve innervate?', dataset);
+  assert.ok(both.evidence.some(edge => edge.sourceNode.graphNodeId === 'NERVE_MEDIAN_NERVE'));
+  assert.ok(both.evidence.some(edge => edge.sourceNode.graphNodeId === 'NERVE_MEDIAN_RECURRENT_BRANCH'));
 });
 
 test('clinical aliases retrieve anatomy → condition and spatial queries remain unsupported', () => {
@@ -60,10 +68,28 @@ test('clinical aliases retrieve anatomy → condition and spatial queries remain
   assert.equal(retrieveEvidence('What articulates with the distal phalanx of thumb?', dataset).status, 'ok');
 });
 
+test('anatomical passages are not overridden by overlapping clinical aliases', () => {
+  const tunnel = retrieveEvidence('What passes through the carpal tunnel?', dataset);
+  assert.equal(tunnel.intent, 'ANATOMY_RELATIONSHIP_QUERY');
+  assert.equal(tunnel.evidence.length, 10, 'Median nerve plus nine flexor tendons');
+  assert.ok(tunnel.evidence.every(edge => edge.relationship === 'PASSES_THROUGH' && edge.targetNode.graphNodeId === 'SPACE_CARPAL_TUNNEL'));
+  assert.ok(tunnel.evidence.some(edge => edge.sourceNode.graphNodeId === 'NERVE_MEDIAN_NERVE'));
+  assert.ok(!tunnel.extractedTerms.includes('Carpal Tunnel Syndrome'));
+  const components = retrieveEvidence('What is part of the radiocarpal joint?', dataset);
+  assert.ok(components.evidence.length);
+  assert.ok(components.evidence.every(edge => edge.relationship === 'PART_OF'));
+  for (const query of ['What structures are affected in carpal tunnel syndrome?', 'What is affected in carpal tunnel?', 'CTS']) {
+    const result = retrieveEvidence(query, dataset);
+    assert.equal(result.intent, 'CLINICAL_CONDITION_QUERY');
+    assert.ok(result.evidence.every(edge => edge.relationship === 'AFFECTED_BY'));
+    assert.ok(result.evidence.length);
+  }
+});
+
 test('REST contracts and invalid retrieval bodies', async () => {
   const catalog = await anatomy();
   assert.equal(catalog.status, 200);
-  assert.equal((await catalog.json()).metadata.renderableCount, 31);
+  assert.equal((await catalog.json()).metadata.renderableCount, dataset.structures.filter(node => node.asset).length);
   for (const value of [{}, null, [], { query: 42 }, { query: '' }, { query: '  ' }, { query: 'x'.repeat(501) }]) {
     assert.equal((await retrieval(request(value))).status, 400);
   }
@@ -71,7 +97,7 @@ test('REST contracts and invalid retrieval bodies', async () => {
   const response = await retrieval(request({ query: 'What supplies APB?' }));
   assert.equal(response.status, 200);
   const body = await response.json();
-  assert.equal(body.evidence[0].sourceNode.graphNodeId, 'ARTERY_RADIAL_ARTERY');
+  assert.equal(body.evidence[0].sourceNode.graphNodeId, 'ARTERY_RADIAL_SUPERFICIAL_PALMAR_BRANCH');
   assert.equal(body.evidence[0].relationship, 'SUPPLIES');
 });
 
@@ -83,14 +109,31 @@ test('GraphQL exposes list, detail, asset, relationship and graph reads', async 
   assert.equal(response.status, 200);
   const body = await response.json();
   assert.equal(body.errors, undefined);
-  assert.equal(body.data.anatomicalStructures[0].innervatedBy[0].graphNodeId, 'NERVE_MEDIAN_NERVE');
+  assert.equal(body.data.anatomicalStructures[0].innervatedBy[0].graphNodeId, 'NERVE_MEDIAN_RECURRENT_BRANCH');
   assert.equal(body.data.anatomicalStructures[0].asset.meshId, 'mesh_abductor_pollicis_brevis_01');
-  assert.equal(body.data.anatomyGraph.metadata.structureCount, 32);
+  assert.equal(body.data.anatomyGraph.metadata.structureCount, dataset.structures.length);
   const url = new URL('http://localhost/api/graphql');
   url.searchParams.set('query', '{ anatomyAssets(limit: 2) { meshId } clinicalConditions { id affectedStructures { graphNodeId } } }');
   const get = await graphGet(new Request(url));
   assert.equal(get.status, 200);
   assert.equal((await get.json()).data.anatomyAssets.length, 2);
+});
+
+test('GraphQL pagination reaches the full expanded catalog and exposes branch relationships', async () => {
+  const ids: string[] = [];
+  for (let offset = 0; offset < dataset.structures.length; offset += 100) {
+    const response = await graphPost(request({ query: `query { anatomicalStructures(limit: 100, offset: ${offset}) { graphNodeId } }` }));
+    const body = await response.json();
+    assert.equal(body.errors, undefined);
+    ids.push(...body.data.anatomicalStructures.map((node: { graphNodeId: string }) => node.graphNodeId));
+  }
+  assert.deepEqual(ids, dataset.structures.map(node => node.graphNodeId));
+  assert.equal(new Set(ids).size, ids.length);
+  const result = await graphPost(request({ query: '{ anatomicalStructure(graphNodeId: "NERVE_MEDIAN_RECURRENT_BRANCH") { branchesFrom { graphNodeId } innervates { graphNodeId } } }' }));
+  const body = await result.json();
+  assert.ok(body.data.anatomicalStructure.branchesFrom.some((node: { graphNodeId: string }) => node.graphNodeId === 'NERVE_MEDIAN_NERVE'));
+  assert.ok(body.data.anatomicalStructure.innervates.some((node: { graphNodeId: string }) => node.graphNodeId === 'MUSCLE_ABDUCTOR_POLLICIS_BREVIS'));
+  assert.equal((await graphPost(request({ query: '{ anatomicalStructures(offset: -1) { graphNodeId } }' }))).status, 400);
 });
 
 test('GraphQL rejects mutations, bad variables and malformed queries', async () => {

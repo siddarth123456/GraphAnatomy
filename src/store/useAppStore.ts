@@ -7,7 +7,8 @@ export interface ClippingState {
   position: number;
 }
 
-export type ViewPreset = 'SKELETON' | 'MUSCULOSKELETAL' | 'NEUROVASCULAR' | 'CLINICAL' | 'SURGICAL' | 'EDUCATIONAL' | 'CUSTOM';
+export type ViewPreset = 'SKELETON' | 'MUSCULOSKELETAL' | 'NEUROVASCULAR' | 'CLINICAL' | 'SURGICAL' | 'EDUCATIONAL' | 'COMPLETE' | 'SURFACE' | 'CUSTOM';
+export const DEFAULT_ANATOMY_LAYERS = Object.values(AnatomyLayer).filter(layer => ![AnatomyLayer.Skin, AnatomyLayer.Fat, AnatomyLayer.Fascia].includes(layer));
 export type LearningMode = 'BEGINNER' | 'INTERMEDIATE' | 'ADVANCED';
 export type GraphPanelMode = 'HIDDEN' | 'DRAWER' | 'FULLSCREEN';
 
@@ -82,7 +83,7 @@ export const useAppStore = create<AppState>((set) => ({
   resetView: () => set((state) => ({
     ...clearSelectionState(state),
     meshHighlightStates: {},
-    activeLayers: Object.values(AnatomyLayer),
+    activeLayers: [...DEFAULT_ANATOMY_LAYERS],
     activePreset: 'EDUCATIONAL',
     explosionAmount: 0,
     clippingState: { enabled: false, plane: 'axial', position: 0 },
@@ -98,7 +99,7 @@ export const useAppStore = create<AppState>((set) => ({
   setIsolationMode: (enabled) => set((state) => ({ isolationMode: enabled && !!state.selectedMeshId })),
   explosionAmount: 0,
   setExplosionAmount: (amount) => set({ explosionAmount: Number.isFinite(amount) ? Math.max(0, Math.min(2, amount)) : 0 }),
-  activeLayers: Object.values(AnatomyLayer),
+  activeLayers: [...DEFAULT_ANATOMY_LAYERS],
   clippingState: { enabled: false, plane: 'axial', position: 0 },
   setClippingState: (state) => set((prev) => ({
     hoveredMeshId: null,

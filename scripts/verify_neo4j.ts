@@ -22,7 +22,7 @@ async function verify() {
       const result = await session.run('MATCH (n:AnatomicalStructure) RETURN count(n) AS structures');
       return result.records[0].get('structures').toNumber();
     });
-    assert.ok(counts >= 32);
+    assert.ok(counts >= getBundledDataset().structures.length);
     console.log('Neo4j verified: two idempotent seeds, catalog parity, relationships, assets, and retrieval.', first);
   } finally { await closeNeo4jDriver(); }
 }

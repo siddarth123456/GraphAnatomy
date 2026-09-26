@@ -11,6 +11,10 @@ export interface AnatomyAsset {
   manifestPath: string;
   sourceDataset: string;
   sourceVersion: string;
+  sourceUrl?: string;
+  licenseUrl?: string;
+  attribution?: string;
+  geometryRepresentation?: 'source-mesh' | 'source-surface';
 }
 
 export interface AnatomicalStructure {
@@ -35,11 +39,16 @@ export interface ClinicalCondition {
   citation: Citation;
 }
 
+export const ANATOMY_RELATIONSHIP_TYPES = [
+  'ARTICULATES_WITH', 'INNERVATES', 'SUPPLIES', 'ORIGINATES_ON', 'INSERTS_ON', 'AFFECTED_BY',
+  'PART_OF', 'CONTINUES_AS', 'ATTACHES_TO', 'PASSES_THROUGH', 'DRAINS_TO', 'BRANCHES_FROM', 'COMMUNICATES_WITH',
+] as const;
+
 export interface AnatomyRelationship {
   id: string;
   source: string;
   target: string;
-  type: 'ARTICULATES_WITH' | 'INNERVATES' | 'SUPPLIES' | 'ORIGINATES_ON' | 'INSERTS_ON' | 'AFFECTED_BY';
+  type: typeof ANATOMY_RELATIONSHIP_TYPES[number];
   description: string;
   citation: Citation;
 }

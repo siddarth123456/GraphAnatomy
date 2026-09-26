@@ -14,7 +14,7 @@ const dataset = getBundledDataset();
 test('all published LODs decode and agree with graph bindings, source rows and registry', async () => {
   const report = await validateAssets({ dataset });
   assert.deepEqual(report.issues, []);
-  assert.equal(report.assetsChecked, 93);
+  assert.equal(report.assetsChecked, dataset.metadata.renderableCount * 3);
 });
 
 test('ontology validation rejects duplicate IDs, dangling relationships, invalid IDs and unsupported certification', () => {
@@ -37,15 +37,21 @@ test('asset validation fails on missing LODs, finite but wrong bounds, duplicate
     fs.cpSync('public/manifests', path.join(root, 'public/manifests'), { recursive: true });
     fs.cpSync('public/models', path.join(root, 'public/models'), { recursive: true });
     fs.copyFileSync('scripts/assets/bodyparts3d-mapping.json', path.join(root, 'scripts/assets/bodyparts3d-mapping.json'));
+    if (fs.existsSync('scripts/assets/z-anatomy-mapping.json')) fs.copyFileSync('scripts/assets/z-anatomy-mapping.json', path.join(root, 'scripts/assets/z-anatomy-mapping.json'));
     const file = path.join(root, 'public/manifests/hand_region.json');
     const manifest = readJSON<AssetManifest>(file);
     manifest.meshes[0].lod.low = '/models/missing.glb';
     manifest.meshes[1].boundingBox[0] -= 1;
     manifest.meshes[2].meshId = manifest.meshes[3].meshId;
+    const surface = manifest.meshes.find(mesh => mesh.geometryRepresentation === 'source-surface')!;
+    surface.sourceTriangleCount! += 1;
+    const tinyLigament = manifest.meshes.find(mesh => mesh.sourceTriangleCount === 12)!;
+    tinyLigament.geometryRepresentation = 'source-mesh';
     fs.writeFileSync(file, JSON.stringify(manifest));
     const report = await validateAssets({ root, dataset });
     const issues = report.issues.join('\n');
-    for (const expected of ['missing.glb', 'bounds disagree', 'Duplicate/invalid mesh ID', 'Registry is stale', 'Asset-to-graph mismatch']) assert.ok(issues.includes(expected), expected);
+    for (const expected of ['missing.glb', 'bounds disagree', 'Duplicate/invalid mesh ID', 'Registry is stale', 'Asset-to-graph mismatch',
+      'Invalid source geometry representation', 'differs from source triangle count', 'Placeholder-sized high LOD geometry']) assert.ok(issues.includes(expected), expected);
     fs.writeFileSync(path.join(root, 'public/models/bad.glb'), Buffer.from('not a GLB'));
     assert.throws(() => readGlbJSON(path.join(root, 'public/models/bad.glb')), /Invalid GLB/);
     assert.throws(() => publicFile(path.join(root, 'public'), '/../private.glb'), /escapes/);

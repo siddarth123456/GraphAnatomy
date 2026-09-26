@@ -1,0 +1,42 @@
+{
+  "dataset": "Z-Anatomy",
+  "sourceVersion": "6c7f9016bd5899ac8edafd31b9900c151df42ed6",
+  "sources": [
+    {
+      "sourceFile": "SkeletalSystem100.fbx",
+      "sourceUrl": "https://raw.githubusercontent.com/LluisV/Z-Anatomy/6c7f9016bd5899ac8edafd31b9900c151df42ed6/Resources/Models/FBX/SkeletalSystem100.fbx",
+      "sourceSha256": "294a649765cd060a62a4095da52b9c8ef2d97769aa447e196448aa5f7d596dea",
+      "bytes": 41339660
+    },
+    {
+      "sourceFile": "Joints100.fbx",
+      "sourceUrl": "https://raw.githubusercontent.com/LluisV/Z-Anatomy/6c7f9016bd5899ac8edafd31b9900c151df42ed6/Resources/Models/FBX/Joints100.fbx",
+      "sourceSha256": "f4ba7a910cdaef99e31530f368628780d9f06b5d77853f8b721f47f67137e823",
+      "bytes": 9804796
+    },
+    {
+      "sourceFile": "NervousSystem100.fbx",
+      "sourceUrl": "https://raw.githubusercontent.com/LluisV/Z-Anatomy/6c7f9016bd5899ac8edafd31b9900c151df42ed6/Resources/Models/FBX/NervousSystem100.fbx",
+      "sourceSha256": "3ea1aad64956cad27348a27b8fb50494b7cc307c6bc77bee0810ec2a67dff2b1",
+      "bytes": 53887724
+    },
+    {
+      "sourceFile": "Regions of human body100.fbx",
+      "sourceUrl": "https://raw.githubusercontent.com/LluisV/Z-Anatomy/6c7f9016bd5899ac8edafd31b9900c151df42ed6/Resources/Models/FBX/Regions%20of%20human%20body100.fbx",
+      "sourceSha256": "9d8da01d4719f9a61ee6ccfcaef85f788c4c67e9bcd74f5725c6946ab8b44199",
+      "bytes": 4433260
+    },
+    {
+      "sourceFile": "MuscularSystem100.fbx",
+      "sourceUrl": "https://raw.githubusercontent.com/LluisV/Z-Anatomy/6c7f9016bd5899ac8edafd31b9900c151df42ed6/Resources/Models/FBX/MuscularSystem100.fbx",
+      "sourceSha256": "4c19df534d5d84aabbce08604306aa0485b43e8a2483c72a95b569e1dfea2279",
+      "bytes": 37343180
+    },
+    {
+      "sourceFile": "CardioVascular41.fbx",
+      "sourceUrl": "https://raw.githubusercontent.com/LluisV/Z-Anatomy/6c7f9016bd5899ac8edafd31b9900c151df42ed6/Resources/Models/FBX/CardioVascular41.fbx",
+      "sourceSha256": "ed7d049117cc944a8c47a416b16ade642cbd1392bbcce3c677450d3234dbf680",
+      "bytes": 64889388
+    }
+  ]
+}

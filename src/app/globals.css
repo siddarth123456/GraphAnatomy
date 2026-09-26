@@ -33,6 +33,8 @@ h3 { font-size:10px; text-transform:uppercase; letter-spacing:1.6px; font-weight
 .layer-list button { display:flex; align-items:center; gap:10px; text-align:left; padding:10px 8px; border:0; border-radius:5px; background:transparent; color:#c5d0de; font-size:12px; }
 .layer-list button:hover,.layer-list button[aria-pressed=true] { background:#1d293a; }
 .layer-list button[aria-pressed=false] { color:#738197; }
+.layer-list button:disabled { opacity:1; color:var(--muted); cursor:default; }
+.layer-list button:disabled:hover { background:transparent; }
 .layer-list small { margin-left:auto; font-size:10px; color:var(--muted); }
 .layer-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
 .hint { font-size:11px!important; line-height:1.65!important; color:var(--muted)!important; margin:12px 0 0; }
@@ -51,9 +53,12 @@ select { display:block; width:100%; padding:8px; background:#1c293b; border:1px 
 .anatomy-search { position:relative; min-width:0; flex:1; display:flex; align-items:center; gap:9px; padding:0 13px; background:#172234ee; border:1px solid #39465a; border-radius:7px; color:var(--muted); box-shadow:0 3px 16px #0002; }
 .anatomy-search input { padding:12px 0; width:100%; min-width:0; border:0; background:transparent; outline:0; color:var(--text); font-size:12px; }
 .anatomy-search button { border:0; background:transparent; color:var(--muted); }
-.search-results { position:absolute; top:calc(100% + 8px); left:0; right:0; border:1px solid #3c4b5e; background:#152133; max-height:360px; overflow:auto; border-radius:7px; box-shadow:0 15px 40px #0007; }
-.search-results > button { display:block; width:100%; padding:13px; text-align:left; border-bottom:1px solid #2b384a; font-size:12px; color:var(--text); }
-.search-results > button[aria-selected=true] { background:#284747; }
+.search-results { position:absolute; top:calc(100% + 8px); left:0; right:0; border:1px solid #3c4b5e; background:#152133; max-height:360px; display:flex; flex-direction:column; overflow:hidden; border-radius:7px; box-shadow:0 15px 40px #0007; }
+.search-options { overflow:auto; overscroll-behavior:contain; }
+.search-options > button { display:block; width:100%; padding:13px; text-align:left; border-bottom:1px solid #2b384a; font-size:12px; color:var(--text); }
+.search-options > button[aria-selected=true] { background:#284747; }
+.search-result-summary { flex-shrink:0; padding:10px 13px; border-bottom:1px solid var(--line); font-size:10px; color:var(--muted); }
+.search-message button { margin:0 12px 12px; color:var(--accent); text-decoration:underline; }
 .search-results small { display:block; font-size:10px; color:#a5b6c7; margin-top:5px; }
 .search-results p { padding:12px; font-size:12px; line-height:1.6; }
 .reset-button,.icon-button { display:flex; align-items:center; justify-content:center; gap:7px; color:#c1cfde; background:#172234ed; border:1px solid #39465a; border-radius:6px; min-height:40px; padding:9px; font-size:11px; flex-shrink:0; }
@@ -75,6 +80,15 @@ select { display:block; width:100%; padding:8px; background:#1c293b; border:1px 
 .explore-link:hover { color:var(--accent); }
 .explore-link small { display:block; color:var(--muted); font-size:10px; margin-top:7px; }
 .scope-note { font-size:10px!important; line-height:1.8!important; color:#96a7bc!important; padding:16px 0 0; margin-top:25px!important; border-top:1px solid var(--line); }
+.catalog-coverage { margin-top:24px; border-top:1px solid var(--line); }
+.catalog-coverage summary { padding:15px 0; cursor:pointer; font-size:11px; color:var(--text); }
+.catalog-coverage summary span { float:right; color:var(--muted); font-size:10px; }
+.catalog-coverage table { width:100%; border-collapse:collapse; margin-top:13px; font-size:10px; }
+.catalog-coverage th,.catalog-coverage td { padding:8px 4px; border-bottom:1px solid var(--line); text-align:right; font-weight:400; }
+.catalog-coverage th:first-child { text-align:left; }
+.catalog-coverage thead { color:var(--muted); }
+.asset-note { padding:11px 12px; border-left:2px solid #7c939f; background:#1a2737; font-size:11px!important; }
+.anatomy-label { max-width:200px; width:max-content; text-align:center; line-height:1.45; }
 .detail-heading { display:flex; justify-content:space-between; align-items:center; }
 .detail-heading .eyebrow { font-size:9px; color:var(--accent); letter-spacing:1.8px; text-transform:uppercase; margin:0 0 10px; }
 .badge { display:inline-block; font-size:9px; background:#203539; color:#add6d1; padding:5px 8px; border:1px solid #365552; border-radius:4px; margin:0 0 20px; }

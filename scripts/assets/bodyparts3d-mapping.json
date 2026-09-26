@@ -6,8 +6,8 @@
   "sourceSha256": "a3de74423f943b0d724ae8f59b3a817f87c423a544f8db98113b1980817cbeaf",
   "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
   "licenseEvidenceUrl": "https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html",
-  "attribution": "BodyParts3D, © The Database Center for Life Science licensed under CC Attribution 4.0 International",
-  "scope": "Exact FMA-to-element-file rows extracted from the source table. Confirms archive mapping, not clinical correctness or ontology certification. Existing GLB source names are preserved lineage, not a byte-for-byte source OBJ audit.",
+  "attribution": "BodyParts3D, \u00a9 The Database Center for Life Science licensed under CC Attribution 4.0 International",
+  "scope": "Exact FMA-to-element-file rows extracted from the official table, including additional sourceParts for concepts composed of several elements. Confirms archive mapping, not clinical correctness or ontology certification. Source geometry laterality is independently checked against right-hand coordinates; known generic/convention scopes are documented in hand coverage evidence. Existing GLB source names are preserved lineage, not a byte-for-byte source OBJ audit.",
   "mappings": [
     {
       "meshId": "mesh_right_radius_01",
@@ -256,6 +256,575 @@
       "sourceName": "abductor pollicis brevis",
       "sourceFile": "FJ1483.obj",
       "sourceRow": "FMA37373\tabductor pollicis brevis\tFJ1483"
+    },
+    {
+      "meshId": "mesh_flexor_pollicis_brevis_01",
+      "graphNodeId": "MUSCLE_FLEXOR_POLLICIS_BREVIS",
+      "fmaId": "FMA37378",
+      "sourceName": "flexor pollicis brevis",
+      "sourceFile": "FJ1469.obj",
+      "sourceRow": "FMA37378\tflexor pollicis brevis\tFJ1469"
+    },
+    {
+      "meshId": "mesh_flexor_pollicis_brevis_superficial_head_01",
+      "graphNodeId": "MUSCLE_FLEXOR_POLLICIS_BREVIS_SUPERFICIAL_HEAD",
+      "fmaId": "FMA65198",
+      "sourceName": "superficial head of right flexor pollicis brevis",
+      "sourceFile": "FJ1514.obj",
+      "sourceRow": "FMA65198\tsuperficial head of right flexor pollicis brevis\tFJ1514"
+    },
+    {
+      "meshId": "mesh_opponens_pollicis_01",
+      "graphNodeId": "MUSCLE_OPPONENS_POLLICIS",
+      "fmaId": "FMA37390",
+      "sourceName": "right opponens pollicis",
+      "sourceFile": "FJ1501.obj",
+      "sourceRow": "FMA37390\tright opponens pollicis\tFJ1501"
+    },
+    {
+      "meshId": "mesh_abductor_digiti_minimi_01",
+      "graphNodeId": "MUSCLE_ABDUCTOR_DIGITI_MINIMI",
+      "fmaId": "FMA37396",
+      "sourceName": "abductor digiti minimi of right hand",
+      "sourceFile": "FJ1466.obj",
+      "sourceRow": "FMA37396\tabductor digiti minimi of right hand\tFJ1466"
+    },
+    {
+      "meshId": "mesh_flexor_digiti_minimi_brevis_01",
+      "graphNodeId": "MUSCLE_FLEXOR_DIGITI_MINIMI_BREVIS",
+      "fmaId": "FMA37398",
+      "sourceName": "flexor digiti minimi brevis of right hand",
+      "sourceFile": "FJ1470.obj",
+      "sourceRow": "FMA37398\tflexor digiti minimi brevis of right hand\tFJ1470"
+    },
+    {
+      "meshId": "mesh_opponens_digiti_minimi_01",
+      "graphNodeId": "MUSCLE_OPPONENS_DIGITI_MINIMI",
+      "fmaId": "FMA37400",
+      "sourceName": "opponens digiti minimi of right hand",
+      "sourceFile": "FJ1482.obj",
+      "sourceRow": "FMA37400\topponens digiti minimi of right hand\tFJ1482"
+    },
+    {
+      "meshId": "mesh_adductor_pollicis_oblique_head_01",
+      "graphNodeId": "MUSCLE_ADDUCTOR_POLLICIS_OBLIQUE_HEAD",
+      "fmaId": "FMA46121",
+      "sourceName": "oblique head of right adductor pollicis",
+      "sourceFile": "FJ1481.obj",
+      "sourceRow": "FMA46121\toblique head of right adductor pollicis\tFJ1481"
+    },
+    {
+      "meshId": "mesh_adductor_pollicis_transverse_head_01",
+      "graphNodeId": "MUSCLE_ADDUCTOR_POLLICIS_TRANSVERSE_HEAD",
+      "fmaId": "FMA46123",
+      "sourceName": "transverse head of right adductor pollicis",
+      "sourceFile": "FJ1515.obj",
+      "sourceRow": "FMA46123\ttransverse head of right adductor pollicis\tFJ1515"
+    },
+    {
+      "meshId": "mesh_lumbricals_01",
+      "graphNodeId": "MUSCLE_LUMBRICALS",
+      "fmaId": "FMA42398",
+      "sourceName": "set of lumbricals of right hand",
+      "sourceFile": "FJ1510.obj",
+      "sourceRow": "FMA42398\tset of lumbricals of right hand\tFJ1510"
+    },
+    {
+      "meshId": "mesh_palmar_interossei_01",
+      "graphNodeId": "MUSCLE_PALMAR_INTEROSSEI",
+      "fmaId": "FMA42402",
+      "sourceName": "set of palmar interossei of right hand",
+      "sourceFile": "FJ1511.obj",
+      "sourceRow": "FMA42402\tset of palmar interossei of right hand\tFJ1511"
+    },
+    {
+      "meshId": "mesh_dorsal_interossei_01",
+      "graphNodeId": "MUSCLE_DORSAL_INTEROSSEI",
+      "fmaId": "FMA42404",
+      "sourceName": "set of dorsal interossei of right hand",
+      "sourceFile": "FJ1509.obj",
+      "sourceRow": "FMA42404\tset of dorsal interossei of right hand\tFJ1509"
+    },
+    {
+      "meshId": "mesh_flexor_carpi_radialis_01",
+      "graphNodeId": "MUSCLE_FLEXOR_CARPI_RADIALIS",
+      "fmaId": "FMA38460",
+      "sourceName": "right flexor carpi radialis",
+      "sourceFile": "FJ1496.obj",
+      "sourceRow": "FMA38460\tright flexor carpi radialis\tFJ1496"
+    },
+    {
+      "meshId": "mesh_flexor_carpi_ulnaris_humeral_head_01",
+      "graphNodeId": "MUSCLE_FLEXOR_CARPI_ULNARIS_HUMERAL_HEAD",
+      "fmaId": "FMA38617",
+      "sourceName": "humeral head of right flexor carpi ulnaris",
+      "sourceFile": "FJ1473.obj",
+      "sourceRow": "FMA38617\thumeral head of right flexor carpi ulnaris\tFJ1473"
+    },
+    {
+      "meshId": "mesh_flexor_carpi_ulnaris_ulnar_head_01",
+      "graphNodeId": "MUSCLE_FLEXOR_CARPI_ULNARIS_ULNAR_HEAD",
+      "fmaId": "FMA38619",
+      "sourceName": "ulnar head of right flexor carpi ulnaris",
+      "sourceFile": "FJ1518.obj",
+      "sourceRow": "FMA38619\tulnar head of right flexor carpi ulnaris\tFJ1518"
+    },
+    {
+      "meshId": "mesh_palmaris_longus_01",
+      "graphNodeId": "MUSCLE_PALMARIS_LONGUS",
+      "fmaId": "FMA38463",
+      "sourceName": "right palmaris longus",
+      "sourceFile": "FJ1502.obj",
+      "sourceRow": "FMA38463\tright palmaris longus\tFJ1502"
+    },
+    {
+      "meshId": "mesh_flexor_digitorum_superficialis_01",
+      "graphNodeId": "MUSCLE_FLEXOR_DIGITORUM_SUPERFICIALIS",
+      "fmaId": "FMA38470",
+      "sourceName": "right flexor digitorum superficialis",
+      "sourceFile": "FJ1475.obj",
+      "sourceRow": "FMA38470\tright flexor digitorum superficialis\tFJ1475",
+      "sourceParts": [
+        {
+          "sourceName": "right flexor digitorum superficialis",
+          "sourceFile": "FJ1499.obj",
+          "sourceRow": "FMA38470\tright flexor digitorum superficialis\tFJ1499"
+        }
+      ]
+    },
+    {
+      "meshId": "mesh_flexor_digitorum_profundus_01",
+      "graphNodeId": "MUSCLE_FLEXOR_DIGITORUM_PROFUNDUS",
+      "fmaId": "FMA38479",
+      "sourceName": "right flexor digitorum profundus",
+      "sourceFile": "FJ1497.obj",
+      "sourceRow": "FMA38479\tright flexor digitorum profundus\tFJ1497"
+    },
+    {
+      "meshId": "mesh_flexor_pollicis_longus_01",
+      "graphNodeId": "MUSCLE_FLEXOR_POLLICIS_LONGUS",
+      "fmaId": "FMA38482",
+      "sourceName": "right flexor pollicis longus",
+      "sourceFile": "FJ1498.obj",
+      "sourceRow": "FMA38482\tright flexor pollicis longus\tFJ1498"
+    },
+    {
+      "meshId": "mesh_extensor_carpi_radialis_longus_01",
+      "graphNodeId": "MUSCLE_EXTENSOR_CARPI_RADIALIS_LONGUS",
+      "fmaId": "FMA38495",
+      "sourceName": "right extensor carpi radialis longus",
+      "sourceFile": "FJ1490.obj",
+      "sourceRow": "FMA38495\tright extensor carpi radialis longus\tFJ1490"
+    },
+    {
+      "meshId": "mesh_extensor_carpi_radialis_brevis_01",
+      "graphNodeId": "MUSCLE_EXTENSOR_CARPI_RADIALIS_BREVIS",
+      "fmaId": "FMA38498",
+      "sourceName": "right extensor carpi radialis brevis",
+      "sourceFile": "FJ1489.obj",
+      "sourceRow": "FMA38498\tright extensor carpi radialis brevis\tFJ1489"
+    },
+    {
+      "meshId": "mesh_extensor_carpi_ulnaris_01",
+      "graphNodeId": "MUSCLE_EXTENSOR_CARPI_ULNARIS",
+      "fmaId": "FMA38507",
+      "sourceName": "right extensor carpi ulnaris",
+      "sourceFile": "FJ1472.obj",
+      "sourceRow": "FMA38507\tright extensor carpi ulnaris\tFJ1472",
+      "sourceParts": [
+        {
+          "sourceName": "right extensor carpi ulnaris",
+          "sourceFile": "FJ1517.obj",
+          "sourceRow": "FMA38507\tright extensor carpi ulnaris\tFJ1517"
+        }
+      ]
+    },
+    {
+      "meshId": "mesh_extensor_digitorum_01",
+      "graphNodeId": "MUSCLE_EXTENSOR_DIGITORUM",
+      "fmaId": "FMA38501",
+      "sourceName": "right extensor digitorum",
+      "sourceFile": "FJ1492.obj",
+      "sourceRow": "FMA38501\tright extensor digitorum\tFJ1492"
+    },
+    {
+      "meshId": "mesh_extensor_indicis_01",
+      "graphNodeId": "MUSCLE_EXTENSOR_INDICIS",
+      "fmaId": "FMA38525",
+      "sourceName": "right extensor indicis",
+      "sourceFile": "FJ1493.obj",
+      "sourceRow": "FMA38525\tright extensor indicis\tFJ1493"
+    },
+    {
+      "meshId": "mesh_extensor_digiti_minimi_01",
+      "graphNodeId": "MUSCLE_EXTENSOR_DIGITI_MINIMI",
+      "fmaId": "FMA38504",
+      "sourceName": "right extensor digiti minimi",
+      "sourceFile": "FJ1491.obj",
+      "sourceRow": "FMA38504\tright extensor digiti minimi\tFJ1491"
+    },
+    {
+      "meshId": "mesh_abductor_pollicis_longus_01",
+      "graphNodeId": "MUSCLE_ABDUCTOR_POLLICIS_LONGUS",
+      "fmaId": "FMA38516",
+      "sourceName": "right abductor pollicis longus",
+      "sourceFile": "FJ1484.obj",
+      "sourceRow": "FMA38516\tright abductor pollicis longus\tFJ1484"
+    },
+    {
+      "meshId": "mesh_extensor_pollicis_longus_01",
+      "graphNodeId": "MUSCLE_EXTENSOR_POLLICIS_LONGUS",
+      "fmaId": "FMA38522",
+      "sourceName": "right extensor pollicis longus",
+      "sourceFile": "FJ1495.obj",
+      "sourceRow": "FMA38522\tright extensor pollicis longus\tFJ1495"
+    },
+    {
+      "meshId": "mesh_extensor_pollicis_brevis_01",
+      "graphNodeId": "MUSCLE_EXTENSOR_POLLICIS_BREVIS",
+      "fmaId": "FMA38519",
+      "sourceName": "right extensor pollicis brevis",
+      "sourceFile": "FJ1494.obj",
+      "sourceRow": "FMA38519\tright extensor pollicis brevis\tFJ1494"
+    },
+    {
+      "meshId": "mesh_flexor_retinaculum_01",
+      "graphNodeId": "FASCIA_FLEXOR_RETINACULUM",
+      "fmaId": "FMA40120",
+      "sourceName": "flexor retinaculum of right wrist",
+      "sourceFile": "FJ1471.obj",
+      "sourceRow": "FMA40120\tflexor retinaculum of right wrist\tFJ1471"
+    },
+    {
+      "meshId": "mesh_interosseous_membrane_forearm_01",
+      "graphNodeId": "FASCIA_INTEROSSEOUS_MEMBRANE_FOREARM",
+      "fmaId": "FMA23707",
+      "sourceName": "interosseous membrane of right forearm",
+      "sourceFile": "FJ1476.obj",
+      "sourceRow": "FMA23707\tinterosseous membrane of right forearm\tFJ1476"
+    },
+    {
+      "meshId": "mesh_ulnar_artery_01",
+      "graphNodeId": "ARTERY_ULNAR_ARTERY",
+      "fmaId": "FMA22797",
+      "sourceName": "right ulnar artery",
+      "sourceFile": "FJ2310.obj",
+      "sourceRow": "FMA22797\tright ulnar artery\tFJ2310"
+    },
+    {
+      "meshId": "mesh_superficial_palmar_arch_01",
+      "graphNodeId": "ARTERY_SUPERFICIAL_PALMAR_ARCH",
+      "fmaId": "FMA22835",
+      "sourceName": "right superficial palmar arterial arch",
+      "sourceFile": "FJ2300.obj",
+      "sourceRow": "FMA22835\tright superficial palmar arterial arch\tFJ2300"
+    },
+    {
+      "meshId": "mesh_deep_palmar_arch_01",
+      "graphNodeId": "ARTERY_DEEP_PALMAR_ARCH",
+      "fmaId": "FMA22839",
+      "sourceName": "right deep palmar arch",
+      "sourceFile": "FJ2279.obj",
+      "sourceRow": "FMA22839\tright deep palmar arch\tFJ2279"
+    },
+    {
+      "meshId": "mesh_radial_dorsal_carpal_branch_01",
+      "graphNodeId": "ARTERY_RADIAL_DORSAL_CARPAL_BRANCH",
+      "fmaId": "FMA22772",
+      "sourceName": "dorsal carpal branch of right radial artery",
+      "sourceFile": "FJ2283.obj",
+      "sourceRow": "FMA22772\tdorsal carpal branch of right radial artery\tFJ2283"
+    },
+    {
+      "meshId": "mesh_ulnar_dorsal_carpal_branch_01",
+      "graphNodeId": "ARTERY_ULNAR_DORSAL_CARPAL_BRANCH",
+      "fmaId": "FMA22821",
+      "sourceName": "right dorsal carpal branch of ulnar artery",
+      "sourceFile": "FJ2288.obj",
+      "sourceRow": "FMA22821\tright dorsal carpal branch of ulnar artery\tFJ2288"
+    },
+    {
+      "meshId": "mesh_radialis_indicis_01",
+      "graphNodeId": "ARTERY_RADIALIS_INDICIS",
+      "fmaId": "FMA22777",
+      "sourceName": "right arteria radialis indicis",
+      "sourceFile": "FJ2342.obj",
+      "sourceRow": "FMA22777\tright arteria radialis indicis\tFJ2342",
+      "sourceParts": [
+        {
+          "sourceName": "right arteria radialis indicis",
+          "sourceFile": "FJ2363.obj",
+          "sourceRow": "FMA22777\tright arteria radialis indicis\tFJ2363"
+        }
+      ]
+    },
+    {
+      "meshId": "mesh_princeps_pollicis_01",
+      "graphNodeId": "ARTERY_PRINCEPS_POLLICIS",
+      "fmaId": "FMA22905",
+      "sourceName": "right arteria princeps pollicis",
+      "sourceFile": "FJ2371.obj",
+      "sourceRow": "FMA22905\tright arteria princeps pollicis\tFJ2371",
+      "sourceParts": [
+        {
+          "sourceName": "right arteria princeps pollicis",
+          "sourceFile": "FJ2372.obj",
+          "sourceRow": "FMA22905\tright arteria princeps pollicis\tFJ2372"
+        }
+      ]
+    },
+    {
+      "meshId": "mesh_palmar_metacarpal_arteries_01",
+      "graphNodeId": "ARTERY_PALMAR_METACARPAL_ARTERIES",
+      "fmaId": "FMA22864",
+      "sourceName": "right palmar metacarpal artery",
+      "sourceFile": "FJ2289.obj",
+      "sourceRow": "FMA22864\tright palmar metacarpal artery\tFJ2289"
+    },
+    {
+      "meshId": "mesh_dorsal_metacarpal_arteries_01",
+      "graphNodeId": "ARTERY_DORSAL_METACARPAL_ARTERIES",
+      "fmaId": "FMA70800",
+      "sourceName": "set of dorsal metacarpal arteries",
+      "sourceFile": "FJ2347.obj",
+      "sourceRow": "FMA70800\tset of dorsal metacarpal arteries\tFJ2347"
+    },
+    {
+      "meshId": "mesh_dorsal_digital_arteries_01",
+      "graphNodeId": "ARTERY_DORSAL_DIGITAL_ARTERIES",
+      "fmaId": "FMA70801",
+      "sourceName": "set of dorsal digital arteries",
+      "sourceFile": "FJ2346.obj",
+      "sourceRow": "FMA70801\tset of dorsal digital arteries\tFJ2346"
+    },
+    {
+      "meshId": "mesh_common_palmar_digital_2_01",
+      "graphNodeId": "ARTERY_COMMON_PALMAR_DIGITAL_2",
+      "fmaId": "FMA22856",
+      "sourceName": "right first common palmar digital artery",
+      "sourceFile": "FJ2343.obj",
+      "sourceRow": "FMA22856\tright first common palmar digital artery\tFJ2343"
+    },
+    {
+      "meshId": "mesh_common_palmar_digital_3_01",
+      "graphNodeId": "ARTERY_COMMON_PALMAR_DIGITAL_3",
+      "fmaId": "FMA85119",
+      "sourceName": "right second common palmar digital artery",
+      "sourceFile": "FJ2344.obj",
+      "sourceRow": "FMA85119\tright second common palmar digital artery\tFJ2344"
+    },
+    {
+      "meshId": "mesh_common_palmar_digital_4_01",
+      "graphNodeId": "ARTERY_COMMON_PALMAR_DIGITAL_4",
+      "fmaId": "FMA85121",
+      "sourceName": "right third common palmar digital artery",
+      "sourceFile": "FJ2345.obj",
+      "sourceRow": "FMA85121\tright third common palmar digital artery\tFJ2345"
+    },
+    {
+      "meshId": "mesh_fourth_common_palmar_digital_01",
+      "graphNodeId": "ARTERY_FOURTH_COMMON_PALMAR_DIGITAL",
+      "fmaId": "FMA85123",
+      "sourceName": "right fourth common palmar digital artery",
+      "sourceFile": "FJ2370.obj",
+      "sourceRow": "FMA85123\tright fourth common palmar digital artery\tFJ2370"
+    },
+    {
+      "meshId": "mesh_proper_palmar_digital_ulnar_index_finger_01",
+      "graphNodeId": "ARTERY_PROPER_PALMAR_DIGITAL_ULNAR_INDEX_FINGER",
+      "fmaId": "FMA23050",
+      "sourceName": "medial proper palmar digital artery of right index finger",
+      "sourceFile": "FJ2364.obj",
+      "sourceRow": "FMA23050\tmedial proper palmar digital artery of right index finger\tFJ2364"
+    },
+    {
+      "meshId": "mesh_proper_palmar_digital_radial_middle_finger_01",
+      "graphNodeId": "ARTERY_PROPER_PALMAR_DIGITAL_RADIAL_MIDDLE_FINGER",
+      "fmaId": "FMA22858",
+      "sourceName": "lateral proper palmar digital artery of right middle finger",
+      "sourceFile": "FJ2365.obj",
+      "sourceRow": "FMA22858\tlateral proper palmar digital artery of right middle finger\tFJ2365"
+    },
+    {
+      "meshId": "mesh_proper_palmar_digital_ulnar_middle_finger_01",
+      "graphNodeId": "ARTERY_PROPER_PALMAR_DIGITAL_ULNAR_MIDDLE_FINGER",
+      "fmaId": "FMA85112",
+      "sourceName": "medial proper palmar digital artery of right middle finger",
+      "sourceFile": "FJ2367.obj",
+      "sourceRow": "FMA85112\tmedial proper palmar digital artery of right middle finger\tFJ2367"
+    },
+    {
+      "meshId": "mesh_proper_palmar_digital_radial_ring_finger_01",
+      "graphNodeId": "ARTERY_PROPER_PALMAR_DIGITAL_RADIAL_RING_FINGER",
+      "fmaId": "FMA85115",
+      "sourceName": "lateral proper palmar digital artery of right ring finger",
+      "sourceFile": "FJ2366.obj",
+      "sourceRow": "FMA85115\tlateral proper palmar digital artery of right ring finger\tFJ2366"
+    },
+    {
+      "meshId": "mesh_proper_palmar_digital_radial_little_finger_01",
+      "graphNodeId": "ARTERY_PROPER_PALMAR_DIGITAL_RADIAL_LITTLE_FINGER",
+      "fmaId": "FMA23054",
+      "sourceName": "lateral proper palmar digital artery of right little finger",
+      "sourceFile": "FJ2368.obj",
+      "sourceRow": "FMA23054\tlateral proper palmar digital artery of right little finger\tFJ2368"
+    },
+    {
+      "meshId": "mesh_proper_palmar_digital_ulnar_ring_finger_01",
+      "graphNodeId": "ARTERY_PROPER_PALMAR_DIGITAL_ULNAR_RING_FINGER",
+      "fmaId": "FMA23052",
+      "sourceName": "medial proper palmar digital artery of right ring finger",
+      "sourceFile": "FJ2369.obj",
+      "sourceRow": "FMA23052\tmedial proper palmar digital artery of right ring finger\tFJ2369"
+    },
+    {
+      "meshId": "mesh_dorsal_venous_network_01",
+      "graphNodeId": "VEIN_DORSAL_VENOUS_NETWORK",
+      "fmaId": "FMA62506",
+      "sourceName": "dorsal venous network of right hand",
+      "sourceFile": "FJ2280.obj",
+      "sourceRow": "FMA62506\tdorsal venous network of right hand\tFJ2280"
+    },
+    {
+      "meshId": "mesh_deep_palmar_venous_arch_01",
+      "graphNodeId": "VEIN_DEEP_PALMAR_VENOUS_ARCH",
+      "fmaId": "FMA22912",
+      "sourceName": "right deep palmar venous arch",
+      "sourceFile": "FJ2281.obj",
+      "sourceRow": "FMA22912\tright deep palmar venous arch\tFJ2281"
+    },
+    {
+      "meshId": "mesh_superficial_palmar_venous_arch_01",
+      "graphNodeId": "VEIN_SUPERFICIAL_PALMAR_VENOUS_ARCH",
+      "fmaId": "FMA22915",
+      "sourceName": "right superficial palmar venous arch",
+      "sourceFile": "FJ2301.obj",
+      "sourceRow": "FMA22915\tright superficial palmar venous arch\tFJ2301"
+    },
+    {
+      "meshId": "mesh_palmar_metacarpal_veins_01",
+      "graphNodeId": "VEIN_PALMAR_METACARPAL_VEINS",
+      "fmaId": "FMA22920",
+      "sourceName": "right palmar metacarpal vein",
+      "sourceFile": "FJ2290.obj",
+      "sourceRow": "FMA22920\tright palmar metacarpal vein\tFJ2290",
+      "sourceParts": [
+        {
+          "sourceName": "right palmar metacarpal vein",
+          "sourceFile": "FJ2350.obj",
+          "sourceRow": "FMA22920\tright palmar metacarpal vein\tFJ2350"
+        },
+        {
+          "sourceName": "right palmar metacarpal vein",
+          "sourceFile": "FJ2353.obj",
+          "sourceRow": "FMA22920\tright palmar metacarpal vein\tFJ2353"
+        }
+      ]
+    },
+    {
+      "meshId": "mesh_common_palmar_digital_veins_01",
+      "graphNodeId": "VEIN_COMMON_PALMAR_DIGITAL_VEINS",
+      "fmaId": "FMA22923",
+      "sourceName": "common palmar digital vein",
+      "sourceFile": "FJ2352.obj",
+      "sourceRow": "FMA22923\tcommon palmar digital vein\tFJ2352"
+    },
+    {
+      "meshId": "mesh_palmar_digital_index_finger_01",
+      "graphNodeId": "VEIN_PALMAR_DIGITAL_INDEX_FINGER",
+      "fmaId": "FMA85096",
+      "sourceName": "proper palmar digital vein of right index finger",
+      "sourceFile": "FJ2354.obj",
+      "sourceRow": "FMA85096\tproper palmar digital vein of right index finger\tFJ2354",
+      "sourceParts": [
+        {
+          "sourceName": "proper palmar digital vein of right index finger",
+          "sourceFile": "FJ2355.obj",
+          "sourceRow": "FMA85096\tproper palmar digital vein of right index finger\tFJ2355"
+        }
+      ]
+    },
+    {
+      "meshId": "mesh_palmar_digital_middle_finger_01",
+      "graphNodeId": "VEIN_PALMAR_DIGITAL_MIDDLE_FINGER",
+      "fmaId": "FMA85098",
+      "sourceName": "proper palmar digital vein of right middle finger",
+      "sourceFile": "FJ2356.obj",
+      "sourceRow": "FMA85098\tproper palmar digital vein of right middle finger\tFJ2356",
+      "sourceParts": [
+        {
+          "sourceName": "proper palmar digital vein of right middle finger",
+          "sourceFile": "FJ2357.obj",
+          "sourceRow": "FMA85098\tproper palmar digital vein of right middle finger\tFJ2357"
+        }
+      ]
+    },
+    {
+      "meshId": "mesh_palmar_digital_ring_finger_01",
+      "graphNodeId": "VEIN_PALMAR_DIGITAL_RING_FINGER",
+      "fmaId": "FMA85100",
+      "sourceName": "proper palmar digital vein of right ring finger",
+      "sourceFile": "FJ2358.obj",
+      "sourceRow": "FMA85100\tproper palmar digital vein of right ring finger\tFJ2358",
+      "sourceParts": [
+        {
+          "sourceName": "proper palmar digital vein of right ring finger",
+          "sourceFile": "FJ2359.obj",
+          "sourceRow": "FMA85100\tproper palmar digital vein of right ring finger\tFJ2359"
+        }
+      ]
+    },
+    {
+      "meshId": "mesh_palmar_digital_little_finger_01",
+      "graphNodeId": "VEIN_PALMAR_DIGITAL_LITTLE_FINGER",
+      "fmaId": "FMA85102",
+      "sourceName": "proper palmar digital vein of right little finger",
+      "sourceFile": "FJ2349.obj",
+      "sourceRow": "FMA85102\tproper palmar digital vein of right little finger\tFJ2349",
+      "sourceParts": [
+        {
+          "sourceName": "proper palmar digital vein of right little finger",
+          "sourceFile": "FJ2351.obj",
+          "sourceRow": "FMA85102\tproper palmar digital vein of right little finger\tFJ2351"
+        },
+        {
+          "sourceName": "proper palmar digital vein of right little finger",
+          "sourceFile": "FJ2360.obj",
+          "sourceRow": "FMA85102\tproper palmar digital vein of right little finger\tFJ2360"
+        }
+      ]
+    },
+    {
+      "meshId": "mesh_cephalic_vein_01",
+      "graphNodeId": "VEIN_CEPHALIC_VEIN",
+      "fmaId": "FMA13325",
+      "sourceName": "right cephalic vein",
+      "sourceFile": "FJ2272.obj",
+      "sourceRow": "FMA13325\tright cephalic vein\tFJ2272"
+    },
+    {
+      "meshId": "mesh_basilic_vein_01",
+      "graphNodeId": "VEIN_BASILIC_VEIN",
+      "fmaId": "FMA22909",
+      "sourceName": "right basilic vein",
+      "sourceFile": "FJ2270.obj",
+      "sourceRow": "FMA22909\tright basilic vein\tFJ2270"
+    },
+    {
+      "meshId": "mesh_radial_venae_comitantes_01",
+      "graphNodeId": "VEIN_RADIAL_VENAE_COMITANTES",
+      "fmaId": "FMA22948",
+      "sourceName": "right radial vein",
+      "sourceFile": "FJ2296.obj",
+      "sourceRow": "FMA22948\tright radial vein\tFJ2296"
+    },
+    {
+      "meshId": "mesh_ulnar_venae_comitantes_01",
+      "graphNodeId": "VEIN_ULNAR_VENAE_COMITANTES",
+      "fmaId": "FMA22951",
+      "sourceName": "right ulnar vein",
+      "sourceFile": "FJ2312.obj",
+      "sourceRow": "FMA22951\tright ulnar vein\tFJ2312"
     }
   ]
 }

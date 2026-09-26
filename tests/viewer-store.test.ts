@@ -87,7 +87,7 @@ test('graph-only selection does not leave stale mesh focus or isolation', () => 
   assert.equal(state.meshHighlightStates[bone.meshId], undefined);
 });
 
-test('reset restores the complete hand view and emits a fresh camera reset', () => {
+test('reset restores the anatomy view with occluding surface layers hidden and emits a fresh camera reset', () => {
   useAppStore.getState().setLayers([AnatomyLayer.Bone]);
   useAppStore.getState().selectAnatomy(bone);
   useAppStore.getState().setHoveredMeshId(artery.meshId);
@@ -97,7 +97,11 @@ test('reset restores the complete hand view and emits a fresh camera reset', () 
   const resetKey = useAppStore.getState().viewResetKey;
   useAppStore.getState().resetView();
   const state = useAppStore.getState();
-  assert.deepEqual(state.activeLayers, Object.values(AnatomyLayer));
+  assert.ok(state.activeLayers.includes(AnatomyLayer.Bone));
+  assert.ok(state.activeLayers.includes(AnatomyLayer.Muscle));
+  assert.ok(state.activeLayers.includes(AnatomyLayer.Nerve));
+  assert.ok(!state.activeLayers.includes(AnatomyLayer.Skin));
+  assert.ok(!state.activeLayers.includes(AnatomyLayer.Fat));
   assert.equal(state.activePreset, 'EDUCATIONAL');
   assert.equal(state.explosionAmount, 0);
   assert.deepEqual(state.clippingState, { enabled: false, plane: 'axial', position: 0 });

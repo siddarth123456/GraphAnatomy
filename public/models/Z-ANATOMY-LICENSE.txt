@@ -1,0 +1,6 @@
+Z-Anatomy project; PC model collection by Lluís Vinent Juanico and contributors. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
+https://creativecommons.org/licenses/by-sa/4.0/
+Source: https://github.com/LluisV/Z-Anatomy/tree/6c7f9016bd5899ac8edafd31b9900c151df42ed6/Resources/Models/FBX
+
+Changes: Selected exact right-sided source objects, applied one verified anatomical registration, optionally retained triangles inside documented regional bounds, recentered without changing anatomical placement, generated three Draco-compressed LODs. No invented geometry or unsupported source-group splitting.
+Derived model assets are distributed under CC BY-SA 4.0. The application code is a separate work.

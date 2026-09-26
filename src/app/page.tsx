@@ -27,7 +27,7 @@ function Workspace() {
   return <main className="app-shell">
     <header className="app-header"><Link className="brand" href="/" aria-label="GraphAnatomy home"><span className="brand-mark"><Bone size={21} /></span><span>Graph<span className="brand-light">Anatomy</span><small>ANATOMY IN CONTEXT</small></span></Link>
       <nav aria-label="Workspace panels">{([{ id: 'anatomy', label: 'Explore', icon: BookOpen }, { id: 'graph', label: 'Knowledge graph', icon: Network }, { id: 'evidence', label: 'Find evidence', icon: Search }] as const).map((item) => <button key={item.id} aria-pressed={panel === item.id} onClick={() => setPanel(item.id)}><item.icon size={16} /><span>{item.label}</span></button>)}</nav>
-      <div className="header-status"><span className="status-dot" />{data?.mode === 'neo4j' ? 'Neo4j connected' : 'Hand anatomy demo'}</div>
+      <div className="header-status"><span className="status-dot" />{data?.mode === 'neo4j' ? 'Neo4j connected' : 'Right hand anatomy'}</div>
     </header>
     <div className={`workspace ${controls ? 'controls-open' : ''}`}>
       {controls && <button className="controls-backdrop" aria-label="Dismiss controls" onClick={() => setControls(false)} />}
@@ -43,7 +43,7 @@ function Workspace() {
         {panel === 'evidence' && <><EvidencePanel />{id && <details className="selected-details" open><summary>Selected anatomy</summary><MetadataPanel /></details>}</>}
       </aside>
     </div>
-    <footer className="app-footer"><span>BodyParts3D · Educational exploration</span><span>{data ? `${data.metadata.structureCount} structures · ${data.metadata.relationshipCount} relationships` : 'Loading catalog…'}</span></footer>
+    <footer className="app-footer"><span>{data ? [...new Set(data.structures.flatMap(node => node.asset ? [node.asset.sourceDataset] : []))].join(' + ') : 'Anatomy sources'} · Educational exploration</span><span>{data ? `${data.metadata.renderableCount} 3D models · ${data.metadata.structureCount} catalog entries · ${data.metadata.relationshipCount} relationships` : 'Loading catalog…'}</span></footer>
   </main>;
 }
 export default function Home() { return <AnatomyDataProvider><Workspace /></AnatomyDataProvider>; }

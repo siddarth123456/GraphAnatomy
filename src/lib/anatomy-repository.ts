@@ -34,7 +34,12 @@ export async function getAnatomyDataset(): Promise<AnatomyDataset> {
           searchableTerms: props.searchableTerms, description: props.description,
           citation: props.citationUrl ? { title: props.citationTitle, url: props.citationUrl } : null,
           system: { id: system.id, name: system.name },
-          asset: asset ? { meshId: asset.meshId, glbPath: asset.glbPath, manifestPath: asset.manifestPath, sourceDataset: asset.sourceDataset, sourceVersion: asset.sourceVersion } : null,
+          asset: asset ? { meshId: asset.meshId, glbPath: asset.glbPath, manifestPath: asset.manifestPath, sourceDataset: asset.sourceDataset, sourceVersion: asset.sourceVersion,
+            ...(asset.sourceUrl ? { sourceUrl: asset.sourceUrl } : {}),
+            ...(asset.licenseUrl ? { licenseUrl: asset.licenseUrl } : {}),
+            ...(asset.attribution ? { attribution: asset.attribution } : {}),
+            ...(asset.geometryRepresentation ? { geometryRepresentation: asset.geometryRepresentation } : {}),
+          } : null,
         };
       });
       const clinicalConditions: ClinicalCondition[] = conditionResult.records.map((record) => {
