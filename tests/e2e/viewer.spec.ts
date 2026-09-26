@@ -78,11 +78,13 @@ test('canvas raycast selection, isolation, explosion and reset change the render
   expect(errors).toEqual([]);
 });
 
-test('each cross-section plane clips actual pixels at both limits and its midpoint', async ({ page }) => {
+// Give each plane its own test budget: screenshot readback is slow on CI's
+// software GPU, and all three checks together can exceed the per-test deadline.
+for (const plane of ['axial', 'sagittal', 'coronal']) {
+test(`${plane} cross-section clips actual pixels at both limits and its midpoint`, async ({ page }) => {
   await openViewer(page);
   const initial = await anatomyPixels(page);
   await page.getByRole('checkbox', { name: 'Cross section' }).check();
-  for (const plane of ['axial', 'sagittal', 'coronal']) {
     await page.getByRole('combobox', { name: 'Section plane' }).selectOption(plane);
     const slider = page.getByRole('slider', { name: 'Section position' });
     await slider.focus();
@@ -100,10 +102,10 @@ test('each cross-section plane clips actual pixels at both limits and its midpoi
     await page.mouse.move(10, 10);
     await expect.poll(async () => (await anatomyPixels(page)).count).toBeLessThan(initial.count * 0.9);
     expect((await anatomyPixels(page)).count).toBeGreaterThan(1_000);
-  }
   await reset(page);
   await expect.poll(async () => Math.abs((await anatomyPixels(page)).count - initial.count)).toBeLessThan(100);
 });
+}
 
 test('orbit and reset preserve a framed hand on desktop and mobile', async ({ page }) => {
   await openViewer(page);
